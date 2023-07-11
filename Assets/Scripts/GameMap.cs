@@ -16,7 +16,6 @@ public class GameMap : MonoBehaviour {
     List<int>[] _pathList;
 
     private void Start() {
-        Random.InitState(13321);
         _vertexDotPrefab = Resources.Load<GameObject>("Map/vertexDot");
         GeneratePath();
         GenerateNodes();

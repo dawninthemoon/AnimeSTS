@@ -14,20 +14,20 @@ public class GameMap : MonoBehaviour {
     private GameObject _vertexDotPrefab;
     private CustomGrid<Encounter> _mapGrid;
     List<int>[] _pathList;
-    private int CurrentFloor {
-        get;
-        set;
-    }
 
     private void Start() {
+        Random.InitState(13321);
         _vertexDotPrefab = Resources.Load<GameObject>("Map/vertexDot");
-        CurrentFloor = 0;
         GeneratePath();
         GenerateNodes();
         GenerateVertices();
 
+        StartHighlightNode(0);
+    }
+
+    public void StartHighlightNode(int floor) {
         for (int i = 0; i < _width; ++i) {
-            Encounter node = _mapGrid.GetElement(CurrentFloor, i);
+            Encounter node = _mapGrid.GetElement(floor, i);
             if (node) {
                 StartCoroutine(HighlightNode(node));
             }

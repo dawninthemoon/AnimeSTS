@@ -24,6 +24,7 @@ public class GameMap : MonoBehaviour {
     [Inject]
     private void Initialize(RoomHandler roomHandler) {
         _roomHandler = roomHandler;
+        _roomHandler.SetOnRoomExit(SetRoomInteractive);
     }
 
     public void GenerateMap() {
@@ -41,6 +42,7 @@ public class GameMap : MonoBehaviour {
     }
 
     public void SetRoomInteractive() {
+        _isRoomChanged = false;
         foreach (EncounterMarker room in _currentRoom.AdjustSet) {
             StartCoroutine(HighlightRoom(room));
         }
@@ -52,13 +54,10 @@ public class GameMap : MonoBehaviour {
 
         _isRoomChanged = true;
 
-        _roomHandler.ChangeRoomSetting(target.EncounterType);
+        _roomHandler.EnterRoom(target.EncounterType);
         
         _generator.WriteRoomComplete(target.transform.position);
         _currentRoom = target;
-
-        _isRoomChanged = false;
-        SetRoomInteractive();
     }
 
     private IEnumerator HighlightRoom(EncounterMarker room) {

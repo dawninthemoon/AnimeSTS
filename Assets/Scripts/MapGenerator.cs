@@ -50,20 +50,18 @@ public class MapGenerator : MonoBehaviour {
             }
         }
 
-        // Adjust Nodes
         for (int t = 0; t < 6; ++t) {
             for (int floor = 0; floor < GameMap.Height - 1; ++floor) {
                 int x = pathList[t][floor];
                 int nextX = pathList[t][floor + 1];
 
                 Encounter cur = mapGrid.GetElement(floor, x);
-                Rowcol next = new Rowcol(floor + 1, nextX);
+                Encounter next = mapGrid.GetElement(new Rowcol(floor + 1, nextX));
 
-                cur.ConnectNode(mapGrid.GetElement(next));
+                cur.ConnectNode(next);
             }
         }
     }
-
     private Encounter CreateEncounter(Vector3 position, int row, int col) {
         EncounterType encounterType = GetEncounterType(row + 1);
         Encounter nodePrefab = _encounterPrefabs[(int)encounterType];
@@ -78,8 +76,6 @@ public class MapGenerator : MonoBehaviour {
         Queue<Rowcol> bfsQueue = new Queue<Rowcol>();
 
         for (int t = 0; t < 6; ++t) {
-            Dictionary<Rowcol, bool> visitMarker = new Dictionary<Rowcol, bool>();
-
             Rowcol initialRowcol = new Rowcol(0, pathList[t][0]);
             MakeVertex(mapGrid, initialRowcol, new Rowcol(1, pathList[t][1]));
         }

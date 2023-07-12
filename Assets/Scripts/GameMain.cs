@@ -12,22 +12,9 @@ public class GameMain : MonoBehaviour {
         _currentRoom = Instantiate(prefab, Vector3.zero, Quaternion.identity);
     }
 
-    void Start() {
-        SetupGameMap();
+    private void Start() {
+        _currentRoom = _gameMap.GenerateMap();
         StartHighlightRoom();
-    }
-
-    void Update() {
-        
-    }
-
-    private void SetupGameMap() {
-        _gameMap.GenerateMap();
-
-        List<Encounter> initialRooms = _gameMap.GetInitialRooms();
-        foreach (Encounter room in initialRooms) {
-            _currentRoom.ConnectNode(room);
-        }
     }
     
     public void StartHighlightRoom() {

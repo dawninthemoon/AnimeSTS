@@ -4,7 +4,7 @@ using UnityEngine;
 using RieslingUtils;
 
 public class MapGenerator : MonoBehaviour {
-    [SerializeField] private Encounter[] _encounterPrefabs = null;
+    [SerializeField] private EncounterMarker[] _encounterPrefabs = null;
     [SerializeField] private Transform _originPosition = null;
     [SerializeField] private float _offsetX = 1f;
     [SerializeField] private float _offsetY = 1f;
@@ -14,8 +14,8 @@ public class MapGenerator : MonoBehaviour {
         _vertexDotPrefab = Resources.Load<GameObject>("Map/vertexDot");
     }
 
-    public CustomGrid<Encounter> GeneratePath(List<int>[] pathList) {
-        CustomGrid<Encounter> mapGrid = new CustomGrid<Encounter>(GameMap.Width, GameMap.Height, _originPosition.position, _offsetX, _offsetY);
+    public CustomGrid<EncounterMarker> GeneratePath(List<int>[] pathList) {
+        CustomGrid<EncounterMarker> mapGrid = new CustomGrid<EncounterMarker>(GameMap.Width, GameMap.Height, _originPosition.position, _offsetX, _offsetY);
         
         for (int i = 0; i < pathList.Length; ++i) {
             pathList[i] = new List<int>();
@@ -37,14 +37,14 @@ public class MapGenerator : MonoBehaviour {
         return mapGrid;
     }
 
-    public void GenerateNodes(CustomGrid<Encounter> mapGrid, List<int>[] pathList) {
+    public void GenerateNodes(CustomGrid<EncounterMarker> mapGrid, List<int>[] pathList) {
         // Instantiate Nodes
         for (int t = 0; t < 6; ++t) {
             for (int floor = 0; floor < GameMap.Height; ++floor) {
                 int x = pathList[t][floor];
                 if (!mapGrid.GetElement(floor, x)) {
                     Vector3 nodePosition = mapGrid.RowcolToPoint(floor, x).Jiggle(0.3f);
-                    Encounter newEncounter = CreateEncounter(nodePosition, floor, x);
+                    EncounterMarker newEncounter = CreateEncounter(nodePosition, floor, x);
                     mapGrid.SetElement(floor, x, newEncounter);
                 }
             }
@@ -55,24 +55,24 @@ public class MapGenerator : MonoBehaviour {
                 int x = pathList[t][floor];
                 int nextX = pathList[t][floor + 1];
 
-                Encounter cur = mapGrid.GetElement(floor, x);
-                Encounter next = mapGrid.GetElement(new Rowcol(floor + 1, nextX));
+                EncounterMarker cur = mapGrid.GetElement(floor, x);
+                EncounterMarker next = mapGrid.GetElement(new Rowcol(floor + 1, nextX));
 
                 cur.ConnectNode(next);
             }
         }
     }
-    private Encounter CreateEncounter(Vector3 position, int row, int col) {
+    private EncounterMarker CreateEncounter(Vector3 position, int row, int col) {
         EncounterType encounterType = GetEncounterType(row + 1);
-        Encounter nodePrefab = _encounterPrefabs[(int)encounterType];
+        EncounterMarker nodePrefab = _encounterPrefabs[(int)encounterType];
 
-        Encounter node = Instantiate(nodePrefab, position, Quaternion.identity);
+        EncounterMarker node = Instantiate(nodePrefab, position, Quaternion.identity);
         node.EncounterType = encounterType;
         node.RowcolPosition = new Rowcol(row, col);
         return node;
     }
 
-    public void GenerateVertices(CustomGrid<Encounter> mapGrid, List<int>[] pathList) {
+    public void GenerateVertices(CustomGrid<EncounterMarker> mapGrid, List<int>[] pathList) {
         Queue<Rowcol> bfsQueue = new Queue<Rowcol>();
 
         for (int t = 0; t < 6; ++t) {
@@ -81,9 +81,9 @@ public class MapGenerator : MonoBehaviour {
         }
     }
 
-    private void MakeVertex(CustomGrid<Encounter> mapGrid, Rowcol from, Rowcol to) {
-        Encounter prev = mapGrid.GetElement(from);
-        Encounter cur = mapGrid.GetElement(to);
+    private void MakeVertex(CustomGrid<EncounterMarker> mapGrid, Rowcol from, Rowcol to) {
+        EncounterMarker prev = mapGrid.GetElement(from);
+        EncounterMarker cur = mapGrid.GetElement(to);
 
         Vector3 prevPosition = prev.transform.position;
         Vector3 currentPosition = cur.transform.position;
@@ -100,7 +100,7 @@ public class MapGenerator : MonoBehaviour {
             Instantiate(_vertexDotPrefab, dotPosition, Quaternion.Euler(0f, 0f, dotAngle));
         }
         
-        foreach (Encounter nextNode in cur.AdjustSet) { 
+        foreach (EncounterMarker nextNode in cur.AdjustSet) { 
             MakeVertex(mapGrid, to, nextNode.RowcolPosition);
         }
     }

@@ -12,7 +12,7 @@ public enum EncounterType {
     BOSS
 }
 
-public class Encounter : MonoBehaviour {
+public class EncounterMarker : MonoBehaviour {
     public EncounterType EncounterType {
         get;
         set;
@@ -23,16 +23,16 @@ public class Encounter : MonoBehaviour {
         set;
     }
 
-    private HashSet<Encounter> _adjustSet;
-    public HashSet<Encounter> AdjustSet {
+    private HashSet<EncounterMarker> _adjustSet;
+    public HashSet<EncounterMarker> AdjustSet {
         get { return _adjustSet; }
     }
 
     private void Awake() {
-        _adjustSet = new HashSet<Encounter>();
+        _adjustSet = new HashSet<EncounterMarker>();
     }
 
-    public void ConnectNode(Encounter node) {
+    public void ConnectNode(EncounterMarker node) {
         if (!_adjustSet.Contains(node)) {
             _adjustSet.Add(node);
         }

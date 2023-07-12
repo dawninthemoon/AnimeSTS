@@ -9,13 +9,25 @@ public class MapGenerator : MonoBehaviour {
     [SerializeField] private Transform _mapSceneParent = null;
     [SerializeField] private float _offsetX = 1f;
     [SerializeField] private float _offsetY = 1f;
-    private GameObject _vertexDotPrefab;
-    private GameObject _circleMarkerPrefab;
-
+    private ObjectPool<GameObject> _vertextDotPool;
+    private ObjectPool<GameObject> _circleMarkerPool;
 
     private void Awake() {
-        _vertexDotPrefab = Resources.Load<GameObject>("Map/vertexDot");
-        _circleMarkerPrefab = Resources.Load<GameObject>("Map/circleMarker");
+        var vertexDotPrefab = Resources.Load<GameObject>("Map/vertexDot");
+        var circleMarkerPrefab = Resources.Load<GameObject>("Map/circleMarker");
+
+        _vertextDotPool = new ObjectPool<GameObject>(
+            5000,
+            () => Instantiate(vertexDotPrefab, _mapSceneParent),
+            (GameObject obj) => obj.gameObject.SetActive(true),
+            (GameObject obj) => obj.gameObject.SetActive(false));
+
+        _circleMarkerPool = new ObjectPool<GameObject>(
+            15, 
+            () => Instantiate(vertexDotPrefab, _mapSceneParent),
+            (GameObject obj) => obj.gameObject.SetActive(true),
+            (GameObject obj) => obj.gameObject.SetActive(false)
+        );
     }
 
     public CustomGrid<EncounterMarker> GeneratePath(List<int>[] pathList) {
@@ -42,7 +54,8 @@ public class MapGenerator : MonoBehaviour {
     }
 
     public void WriteRoomComplete(Vector3 position) {
-        Instantiate(_circleMarkerPrefab, position, Quaternion.identity, _mapSceneParent);
+        var marker = _circleMarkerPool.GetObject();
+        marker.transform.position = position;
     }
 
     public void GenerateNodes(CustomGrid<EncounterMarker> mapGrid, List<int>[] pathList, OnMarkerSelected callback) {
@@ -105,7 +118,10 @@ public class MapGenerator : MonoBehaviour {
         for (int i = 2; i < dotCounts - 1; ++i) {
             Vector3 dotPosition = Vector3.Lerp(prevPosition, currentPosition, (float)i / dotCounts);
             float dotAngle = angle + Random.Range(-15f, 15f);
-            Instantiate(_vertexDotPrefab, dotPosition, Quaternion.Euler(0f, 0f, dotAngle), _mapSceneParent);
+
+            var dot = _vertextDotPool.GetObject();
+            dot.transform.position = dotPosition;
+            dot.transform.rotation = Quaternion.Euler(0f, 0f, dotAngle);
         }
         
         foreach (EncounterMarker nextNode in cur.AdjustSet) { 

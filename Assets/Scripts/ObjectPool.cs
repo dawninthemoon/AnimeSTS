@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine;
 
 public class ObjectPool<T>  {
     public delegate T ObjectCreateDelegate();
@@ -31,7 +32,9 @@ public class ObjectPool<T>  {
         _usedList = new List<T>(_size);
  
         for (var i = 0; i < _size; ++i) {
-            _freeList.Add(CreateObject());
+            var obj = CreateObject();
+            _freeList.Add(obj);
+            _onObjectDisableCallback.Invoke(obj);
         }
     }
 

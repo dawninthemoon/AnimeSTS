@@ -18,18 +18,23 @@ public class Encounter : MonoBehaviour {
         set;
     }
 
-    private HashSet<Rowcol> _adjustSet;
-    public HashSet<Rowcol> AdjustSet {
+    public Rowcol RowcolPosition {
+        get;
+        set;
+    }
+
+    private HashSet<Encounter> _adjustSet;
+    public HashSet<Encounter> AdjustSet {
         get { return _adjustSet; }
     }
 
     private void Awake() {
-        _adjustSet = new HashSet<Rowcol>();
+        _adjustSet = new HashSet<Encounter>();
     }
 
-    public void ConnectNode(Rowcol rc) {
-        if (!_adjustSet.Contains(rc)) {
-            _adjustSet.Add(rc);
+    public void ConnectNode(Encounter node) {
+        if (!_adjustSet.Contains(node)) {
+            _adjustSet.Add(node);
         }
     }
 }

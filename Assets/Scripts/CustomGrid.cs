@@ -34,6 +34,10 @@ public class CustomGrid<T> where T : class {
         return _gridArray[row, column];
     }
 
+    public T GetElement(Rowcol rowcol) {
+        return GetElement(rowcol.row, rowcol.column);
+    }
+
     public void SetElement(int row, int column, T value) {
         _gridArray[row, column] = value;
     }

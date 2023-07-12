@@ -500,6 +500,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1805009677}
   - component: {fileID: 1805009676}
+  - component: {fileID: 1805009678}
   m_Layer: 0
   m_Name: GameMap
   m_TagString: Untagged
@@ -519,18 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e0ee1452f2deab04a8a098bb3fcd958c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 7
-  _height: 15
-  _encounterPrefabs:
-  - {fileID: 6117908674597042510, guid: 05ecb1b53a5adc043891ac05d20f5b7f, type: 3}
-  - {fileID: 6961272570620965515, guid: 90618e49d24b1344b814b829c69c50c2, type: 3}
-  - {fileID: -5543073844548681308, guid: 690bc7a386bd97b479a3432f4a5f9a92, type: 3}
-  - {fileID: 1757292779246005591, guid: 5c41758db23e8f7489b8c1f26f1f8775, type: 3}
-  - {fileID: 4671857661843462399, guid: 27eaffcb9f1654246ac07efa93dc6546, type: 3}
-  - {fileID: -8381462965287706421, guid: 7fdeebe1c4a984a418eb8f76318dfc7e, type: 3}
-  _originPosition: {fileID: 1620573645}
-  _offsetX: 1.2
-  _offsetY: 1.5
+  _generator: {fileID: 1805009678}
 --- !u!4 &1805009677
 Transform:
   m_ObjectHideFlags: 0
@@ -547,3 +537,25 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1805009678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1805009675}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a120ccd9fdbedc4ca35205c762b2857, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _encounterPrefabs:
+  - {fileID: 6117908674597042510, guid: 05ecb1b53a5adc043891ac05d20f5b7f, type: 3}
+  - {fileID: 6961272570620965515, guid: 90618e49d24b1344b814b829c69c50c2, type: 3}
+  - {fileID: -5543073844548681308, guid: 690bc7a386bd97b479a3432f4a5f9a92, type: 3}
+  - {fileID: 1757292779246005591, guid: 5c41758db23e8f7489b8c1f26f1f8775, type: 3}
+  - {fileID: 4671857661843462399, guid: 27eaffcb9f1654246ac07efa93dc6546, type: 3}
+  - {fileID: -8381462965287706421, guid: 7fdeebe1c4a984a418eb8f76318dfc7e, type: 3}
+  _originPosition: {fileID: 1620573645}
+  _offsetX: 1.5
+  _offsetY: 1.5

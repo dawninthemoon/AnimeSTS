@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 namespace RieslingUtils {
-    public static class VectorUtility {
+    public static class ExVector {
         public static Vector3 Jiggle(this Vector3 origin, float maxAmount) {
             float xAmount = Random.Range(-maxAmount, maxAmount);
             float yAmount = Random.Range(-maxAmount, maxAmount);

@@ -6,6 +6,7 @@ using RieslingUtils;
 public class MapGenerator : MonoBehaviour {
     [SerializeField] private EncounterMarker[] _encounterPrefabs = null;
     [SerializeField] private Transform _originPosition = null;
+    [SerializeField] private Transform _mapSceneParent = null;
     [SerializeField] private float _offsetX = 1f;
     [SerializeField] private float _offsetY = 1f;
     private GameObject _vertexDotPrefab;
@@ -66,7 +67,7 @@ public class MapGenerator : MonoBehaviour {
         EncounterType encounterType = GetEncounterType(row + 1);
         EncounterMarker nodePrefab = _encounterPrefabs[(int)encounterType];
 
-        EncounterMarker node = Instantiate(nodePrefab, position, Quaternion.identity);
+        EncounterMarker node = Instantiate(nodePrefab, position, Quaternion.identity, _mapSceneParent);
         node.EncounterType = encounterType;
         node.RowcolPosition = new Rowcol(row, col);
         return node;
@@ -97,7 +98,7 @@ public class MapGenerator : MonoBehaviour {
         for (int i = 2; i < dotCounts - 1; ++i) {
             Vector3 dotPosition = Vector3.Lerp(prevPosition, currentPosition, (float)i / dotCounts);
             float dotAngle = angle + Random.Range(-15f, 15f);
-            Instantiate(_vertexDotPrefab, dotPosition, Quaternion.Euler(0f, 0f, dotAngle));
+            Instantiate(_vertexDotPrefab, dotPosition, Quaternion.Euler(0f, 0f, dotAngle), _mapSceneParent);
         }
         
         foreach (EncounterMarker nextNode in cur.AdjustSet) { 

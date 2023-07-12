@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RieslingUtils;
+using Zenject;
 
 public class GameMap : MonoBehaviour {
     public static readonly int Width = 7;
@@ -9,9 +9,8 @@ public class GameMap : MonoBehaviour {
     private CustomGrid<EncounterMarker> _mapGrid;
     private MapGenerator _generator;
     private EncounterMarker _neowEncounterPrefab;
-
     private EncounterMarker _currentRoom;
-
+    [Inject] private RoomHandler _roomHandler;
 
     public void Awake() {
         _neowEncounterPrefab = Resources.Load<EncounterMarker>("Map/enc_neow");
@@ -30,19 +29,6 @@ public class GameMap : MonoBehaviour {
         foreach (EncounterMarker room in initialRooms) {
             _currentRoom.ConnectNode(room);
         }
-    }
-
-    private List<EncounterMarker> GetInitialRooms() {
-        List<EncounterMarker> initialRooms = new List<EncounterMarker>();
-
-        for (int i = 0; i < _mapGrid.Width; ++i) {
-            EncounterMarker node = _mapGrid.GetElement(0, i);
-            if (node) {
-                initialRooms.Add(node);
-            }
-        }
-
-        return initialRooms;
     }
 
     public void SetRoomInteractive() {
@@ -71,5 +57,18 @@ public class GameMap : MonoBehaviour {
 
             yield return null;
         }
+    }
+
+    private List<EncounterMarker> GetInitialRooms() {
+        List<EncounterMarker> initialRooms = new List<EncounterMarker>();
+
+        for (int i = 0; i < _mapGrid.Width; ++i) {
+            EncounterMarker node = _mapGrid.GetElement(0, i);
+            if (node) {
+                initialRooms.Add(node);
+            }
+        }
+
+        return initialRooms;
     }
 }

@@ -3,12 +3,23 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class RoomHandler : MonoBehaviour, ISystemHandler {
-    [SerializeField] private Transform _mapSceneParent = null;
-    [SerializeField] private Transform _battleSceneParent = null;
-    [SerializeField] private Transform _eventSceneParent = null;
-    private Transform _currentRoomParent = null;
+    [SerializeField] private GameObject _mapSceneParent = null;
+    [SerializeField] private GameObject _battleSceneParent = null;
+    [SerializeField] private GameObject _eventSceneParent = null;
+    private GameObject _currentRoomParent = null;
 
-    public void ChangeRoomSetting() {
+    public void ChangeRoomSetting(EncounterType encounterType) {
+        _mapSceneParent.SetActive(false);
 
+        switch (encounterType) {
+        case EncounterType.MONSTER:
+        case EncounterType.ELITE:
+        case EncounterType.CHEST:
+            _battleSceneParent.SetActive(true);
+            break;
+        case EncounterType.EVENT:
+            _eventSceneParent.SetActive(true);
+            break;
+        }
     }
 }

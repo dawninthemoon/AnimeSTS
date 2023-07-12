@@ -520,9 +520,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 072bec3ccbb1a6547a28e68a12456442, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _mapSceneParent: {fileID: 112065163}
-  _battleSceneParent: {fileID: 329324879}
-  _eventSceneParent: {fileID: 1166148157}
+  _mapSceneParent: {fileID: 112065162}
+  _battleSceneParent: {fileID: 329324878}
+  _eventSceneParent: {fileID: 1166148156}
 --- !u!1 &905986104
 GameObject:
   m_ObjectHideFlags: 0
@@ -765,7 +765,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1166148156}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -7.443467, y: 9.29448, z: -0.04373242}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

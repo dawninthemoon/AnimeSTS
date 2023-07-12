@@ -1,7 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RieslingUtils;
 using Zenject;
+
+public delegate void OnMarkerSelected(EncounterMarker target);
 
 public class GameMap : MonoBehaviour {
     public static readonly int Width = 7;
@@ -10,18 +13,24 @@ public class GameMap : MonoBehaviour {
     private MapGenerator _generator;
     private EncounterMarker _neowEncounterPrefab;
     private EncounterMarker _currentRoom;
-    [Inject] private RoomHandler _roomHandler;
+    private RoomHandler _roomHandler;
+    private bool _isRoomChanged;
 
     public void Awake() {
         _neowEncounterPrefab = Resources.Load<EncounterMarker>("Map/enc_neow");
         _generator = GetComponent<MapGenerator>();
     }
 
+    [Inject]
+    private void Initialize(RoomHandler roomHandler) {
+        _roomHandler = roomHandler;
+    }
+
     public void GenerateMap() {
         List<int>[] pathList = new List<int>[6];
         
         _mapGrid = _generator.GeneratePath(pathList);
-        _generator.GenerateNodes(_mapGrid, pathList);
+        _generator.GenerateNodes(_mapGrid, pathList, MoveRoom);
         _generator.GenerateVertices(_mapGrid, pathList);
 
         _currentRoom = Instantiate(_neowEncounterPrefab, Vector3.zero, Quaternion.identity);
@@ -37,8 +46,25 @@ public class GameMap : MonoBehaviour {
         }
     }
 
+    private void MoveRoom(EncounterMarker target) {
+        if (!_currentRoom.AdjustSet.Contains(target))
+            return;
+
+        _isRoomChanged = true;
+
+        _roomHandler.ChangeRoomSetting(target.EncounterType);
+        
+        _generator.WriteRoomComplete(target.transform.position);
+        _currentRoom = target;
+
+        _isRoomChanged = false;
+        SetRoomInteractive();
+    }
+
     private IEnumerator HighlightRoom(EncounterMarker room) {
         Transform t = room.transform;
+
+        Vector3 initialScale = t.localScale;
         float minScale = 0.7f;
         float maxScale = 1.2f;
 
@@ -48,6 +74,10 @@ public class GameMap : MonoBehaviour {
 
         t.localScale = new Vector3(minScale, minScale);
         while (true) {
+            if (_isRoomChanged) {
+                break;
+            }
+
             t.localScale += amount * sign;
             if (t.localScale.x > maxScale || t.localScale.x < minScale) {
                 sign = -sign;
@@ -57,6 +87,8 @@ public class GameMap : MonoBehaviour {
 
             yield return null;
         }
+
+        t.localScale = initialScale;
     }
 
     private List<EncounterMarker> GetInitialRooms() {

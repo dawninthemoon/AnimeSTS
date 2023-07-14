@@ -56,4 +56,8 @@ public struct CardInfo {
 public class CardBase : MonoBehaviour {
     [SerializeField] private CardInfo _cardInfo;
     private Sprite _portrait;
+
+    private void OnMouseOver() {
+        
+    }
 }

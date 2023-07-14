@@ -15,8 +15,8 @@ public class RoomHandler : MonoBehaviour {
     private EventRoom _eventRoomEncounter;
 
     [Inject]
-    private void Initialize(IEncounterable[] encounters) {
-        foreach (IEncounterable encounter in encounters) {
+    private void Initialize(RoomBase[] encounters) {
+        foreach (RoomBase encounter in encounters) {
             if (encounter is BattleRoom) {
                 _battleRoomEncounter = encounter as BattleRoom;
             }
@@ -40,24 +40,29 @@ public class RoomHandler : MonoBehaviour {
         _requestedRoomExitCallback = callback;
     }
 
-    public void EnterRoom(EncounterType encounterType) {
+    public void StartEnterRoom(EncounterType encounterType) {
         switch (encounterType) {
         case EncounterType.MONSTER:
-            ChangeRoomSetting(_battleRoomEncounter.transform.parent.gameObject);
+            EnterRoom(_battleRoomEncounter);
             break;
         case EncounterType.ELITE:
-            ChangeRoomSetting(_battleRoomEncounter.transform.parent.gameObject);
+            EnterRoom(_battleRoomEncounter);
             break;
         case EncounterType.SHOP:
-            ChangeRoomSetting(_shopRoomEncounter.transform.parent.gameObject);
+            EnterRoom(_shopRoomEncounter);
             break;
         case EncounterType.CHEST:
-            ChangeRoomSetting(_chestRoomEncounter.transform.parent.gameObject);
+            EnterRoom(_chestRoomEncounter);
             break;
         case EncounterType.EVENT:
-            ChangeRoomSetting(_eventRoomEncounter.transform.parent.gameObject);
+            EnterRoom(_eventRoomEncounter);
             break;
         }
+    }
+
+    private void EnterRoom(RoomBase room) {
+        ChangeRoomSetting(room.transform.parent.gameObject);
+        room.OnEncounter();
     }
 
     private void Update() {

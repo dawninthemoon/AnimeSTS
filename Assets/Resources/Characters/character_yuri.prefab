@@ -46,7 +46,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cb365fb62bf64c4ab2d4ee4e9fbb4f7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _health: 10
+  _info:
+    maxHealth: 50
+    health: 50
+    block: 0
+    strength: 0
+    dexterity: 0
+    weak: 0
+    vulnerable: 0
 --- !u!212 &1186216483090181144
 SpriteRenderer:
   m_ObjectHideFlags: 0

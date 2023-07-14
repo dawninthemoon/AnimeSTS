@@ -54,7 +54,7 @@ public class GameMap : MonoBehaviour {
 
         _isRoomChanged = true;
 
-        _roomHandler.EnterRoom(target.EncounterType);
+        _roomHandler.StartEnterRoom(target.EncounterType);
         
         _generator.WriteRoomComplete(target.transform.position);
         _currentRoom = target;

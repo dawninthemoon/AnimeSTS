@@ -2,11 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[System.Serializable]
+public struct EntityInfo {
+    public int maxHealth;
+    public int health;
+    public int block;
+    public int strength;
+    public int dexterity;
+    public int weak;
+    public int vulnerable;
+}
+
 public class EntityBase : MonoBehaviour {
-    [SerializeField] private int _health = 10;
-    private int _block;
-    private int _strength;
-    private int _dexterity;
-    private int _weak;
-    private int _vulnerable;
+    [SerializeField] private EntityInfo _info;
 }

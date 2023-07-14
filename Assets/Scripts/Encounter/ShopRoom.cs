@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ShopRoom : MonoBehaviour, IEncounterable {
-    public void OnEncounter() {
+public class ShopRoom : RoomBase {
+    public override void OnEncounter() {
         
     }
 }

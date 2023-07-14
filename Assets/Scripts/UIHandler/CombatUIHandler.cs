@@ -83,7 +83,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     private void ChangeReticleColor() {
         Color reticleColor = (BattleRoom.SelectedEnemy) ? Color.red : Color.white;
         int numOfBlocks = _reticleBlocks.Length;
-        for (int i = 1; i < numOfBlocks; ++i) {
+        for (int i = 0; i < numOfBlocks; ++i) {
             _reticleBlocks[i].color = reticleColor;
         }
         _reticleArrow.color = reticleColor;

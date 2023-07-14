@@ -82,7 +82,7 @@ public class CardHandler : MonoBehaviour, IObserver {
     private void UseCard() {
         if (_selectedCard == null)
             return;
-        if (_selectedCard.Info.needTarget && !BattleRoom.SelectedEnemy)
+        if (_selectedCard.NeedTarget() && !BattleRoom.SelectedEnemy)
             return;
         
         _cardContainer.CardsInHand.Remove(_selectedCard);

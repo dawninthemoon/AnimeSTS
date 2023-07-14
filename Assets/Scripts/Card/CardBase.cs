@@ -2,7 +2,6 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RieslingUtils;
-using Zenject;
 
 [System.Serializable]
 public struct CardEffect {
@@ -16,6 +15,12 @@ public struct CardEffect {
 
 [System.Serializable]
 public struct CardInfo {
+    public enum TargetType {
+        NONE,
+        TARGET,
+        RANDOM
+    }
+
     public enum Rarity {
         BASIC,
         COMMON,
@@ -40,7 +45,7 @@ public struct CardInfo {
     public Color color;
 
     public bool isUpgraded;
-    public bool needTarget;
+    public TargetType targetType;
 
     public int cost;
     public int upgradeCost;
@@ -70,6 +75,10 @@ public class CardBase : ObserverSubject {
 
     private void Start() {
         
+    }
+
+    public bool NeedTarget() {
+        return (_cardInfo.targetType == CardInfo.TargetType.TARGET);
     }
 
     public void Initialize(CardHandler cardHandler, CombatUIHandler combatUIHandler) {

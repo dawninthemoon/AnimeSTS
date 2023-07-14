@@ -23,7 +23,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
 
     private void Update() {
         if (_selectedCard) {
-            if (_selectedCard.Info.needTarget) {
+            if (_selectedCard.NeedTarget()) {
                 ChangeReticleColor();
                 MoveReticle();
             }
@@ -39,7 +39,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         if (card.MouseDown) {
             _selectedCard = card;
             _mouseOffset = card.transform.position - ExVector.GetMouseWorldPosition();
-            if (card.Info.needTarget) {
+            if (card.NeedTarget()) {
                 SetReticleActive(true);
                 card.transform.position = card.transform.position.ChangeXPos(0f);
             }

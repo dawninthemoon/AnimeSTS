@@ -40,11 +40,13 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
             _mouseOffset = card.transform.position - ExVector.GetMouseWorldPosition();
             if (card.Info.needTarget) {
                 SetReticleActive(true);
+                card.transform.position = card.transform.position.ChangeXPos(0f);
             }
         }
 
         if (card.MouseUp) {
             _selectedCard = null;
+            SetReticleActive(false);
         }
     }
 
@@ -63,7 +65,8 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         _reticleBlocks[0].transform.position = _selectedCard.transform.position;
         for (int i = 1; i < numOfBlocks; ++i) {
             float t = (float)i / (numOfBlocks);
-            Vector3 blockPosition = Bezier.GetPoint(_selectedCard.transform.position, Vector3.zero, mousePosition, t);
+            Vector3 p0 = new Vector3(0f, 5f);
+            Vector3 blockPosition = Bezier.GetPoint(_selectedCard.transform.position, p0, mousePosition, t);
             _reticleBlocks[i].transform.position = blockPosition;
 
             rotationZ = ExMath.GetDegreeBetween(_reticleBlocks[i - 1].transform.position, blockPosition) - 90f;
@@ -73,6 +76,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         rotationZ = ExMath.GetDegreeBetween(_reticleBlocks[numOfBlocks - 1].transform.position, mousePosition) - 90f;
         _reticleBlocks[numOfBlocks - 1].transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
         _reticleArrow.transform.position = mousePosition;
+        _reticleArrow.transform.rotation = _reticleBlocks[numOfBlocks - 1].transform.rotation;
     }
 
     private void MoveCard() {

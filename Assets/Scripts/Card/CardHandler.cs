@@ -59,10 +59,9 @@ public class CardHandler : MonoBehaviour, IObserver {
         CardBase card = subject as CardBase;
         
         if (card.MouseDown) {
-            //_selectedCard = card;
-            //_mouseOffset = card.transform.position - ExVector.GetMouseWorldPosition();
+            _selectedCard = card;
         }
-        else if (card.MouseOver) {
+        else if (!_selectedCard && card.MouseOver) {
             card.HighlightCard();
         }
         
@@ -70,8 +69,7 @@ public class CardHandler : MonoBehaviour, IObserver {
             _selectedCard = null;
             AlignCards();
         }
-        else if (card.MouseExit) {
-            _selectedCard = null;
+        else if (!_selectedCard && card.MouseExit) {
             AlignCards();
         }
     }

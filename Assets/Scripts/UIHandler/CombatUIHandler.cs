@@ -24,6 +24,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     private void Update() {
         if (_selectedCard) {
             if (_selectedCard.Info.needTarget) {
+                ChangeReticleColor();
                 MoveReticle();
             }
             else {
@@ -77,6 +78,15 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         _reticleBlocks[numOfBlocks - 1].transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
         _reticleArrow.transform.position = mousePosition;
         _reticleArrow.transform.rotation = _reticleBlocks[numOfBlocks - 1].transform.rotation;
+    }
+
+    private void ChangeReticleColor() {
+        Color reticleColor = (BattleRoom.SelectedEnemy) ? Color.red : Color.white;
+        int numOfBlocks = _reticleBlocks.Length;
+        for (int i = 1; i < numOfBlocks; ++i) {
+            _reticleBlocks[i].color = reticleColor;
+        }
+        _reticleArrow.color = reticleColor;
     }
 
     private void MoveCard() {

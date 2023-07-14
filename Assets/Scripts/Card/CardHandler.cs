@@ -73,4 +73,12 @@ public class CardHandler : MonoBehaviour, IObserver {
             AlignCards();
         }
     }
+
+    private void UseCard() {
+        if (_selectedCard == null)
+            return;
+        if (_selectedCard.Info.needTarget && !BattleRoom.SelectedEnemy)
+            return;
+        
+    }
 }

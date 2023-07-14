@@ -10,6 +10,8 @@ public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private float _offsetRotation = 5f;
     private CardContainer _cardContainer;
     [SerializeField] private int handCount = 0;
+    private Vector3 _mouseOffset;
+    private CardBase _selectedCard;
 
     void Start() {
         _cardContainer = new CardContainer();
@@ -22,6 +24,13 @@ public class CardHandler : MonoBehaviour, IObserver {
         }
 
         AlignCards();
+    }
+
+    private void Update() {
+        if (_selectedCard) {
+            Vector3 mousePoint = ExVector.GetMouseWorldPosition();
+            _selectedCard.transform.position = mousePoint + _mouseOffset;
+        }
     }
 
     public void AlignCards(){
@@ -49,12 +58,19 @@ public class CardHandler : MonoBehaviour, IObserver {
         CardBase card = subject as CardBase;
         
         if (card.MouseDown) {
+            _selectedCard = card;
+            _mouseOffset = card.transform.position - ExVector.GetMouseWorldPosition();
         }
         else if (card.MouseOver) {
             card.HighlightCard();
         }
-
-        if (card.MouseExit) {
+        
+        if (card.MouseUp) {
+            _selectedCard = null;
+            AlignCards();
+        }
+        else if (card.MouseExit) {
+            _selectedCard = null;
             AlignCards();
         }
     }

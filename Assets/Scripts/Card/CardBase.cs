@@ -60,6 +60,7 @@ public class CardBase : ObserverSubject {
     public bool MouseOver { get; private set; }
     public bool MouseExit { get; private set; }
     public bool MouseDown { get; private set; }
+    public bool MouseUp { get; private set; }
     public static readonly Vector3 DefaultCardScale = new Vector3(0.3f, 0.3f);
     public static readonly Vector3 HighlightCardScale = new Vector3(0.5f, 0.5f);
 
@@ -69,10 +70,22 @@ public class CardBase : ObserverSubject {
         MouseOver = false;
     }
 
+    private void OnMouseDown() {
+        MouseDown = true;
+        Notify();
+        MouseDown = false;
+    }
+
     public void OnMouseExit() {
         MouseExit = true;
         Notify();
         MouseExit = false;
+    }
+
+    public void OnMouseUp() {
+        MouseUp = true;
+        Notify();
+        MouseUp = false;
     }
 
     public void HighlightCard() {

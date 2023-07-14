@@ -26,5 +26,11 @@ namespace RieslingUtils {
             Vector3 newVector = new Vector3(origin.x, origin.y, zValue);
             return newVector;
         }
+
+        public static Vector3 GetMouseWorldPosition() {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0f;
+            return worldPosition;
+        }
     }
 }

@@ -201,9 +201,9 @@ MonoBehaviour:
     upgradeEffects:
     - type: 0
       amount: S
-    variables: 's=6,STRENGTH
+    variables: 's=6,attack
 
-      S=9,STRENGTH'
+      S=9,attack'
 --- !u!61 &4437520612411843623
 BoxCollider2D:
   m_ObjectHideFlags: 0

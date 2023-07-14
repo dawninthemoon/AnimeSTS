@@ -13,6 +13,7 @@ public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private int handCount = 0;
     private Vector3 _mouseOffset;
     private CardBase _selectedCard;
+    private System.Action<CardInfo> _cardUseCallback;
 
     private void Start() {
         _cardContainer = new CardContainer();
@@ -32,6 +33,10 @@ public class CardHandler : MonoBehaviour, IObserver {
     [Inject]
     private void Initialize(CombatUIHandler uiHandler) {
         _combatUIHandler = uiHandler;
+    }
+
+    public void SetCardUseCallback(System.Action<CardInfo> callback) {
+        _cardUseCallback = callback;
     }
 
     public void AlignCards(){
@@ -66,7 +71,7 @@ public class CardHandler : MonoBehaviour, IObserver {
         }
         
         if (card.MouseUp) {
-            _selectedCard = null;
+            UseCard();
             AlignCards();
         }
         else if (!_selectedCard && card.MouseExit) {
@@ -80,5 +85,11 @@ public class CardHandler : MonoBehaviour, IObserver {
         if (_selectedCard.Info.needTarget && !BattleRoom.SelectedEnemy)
             return;
         
+        _cardContainer.CardsInHand.Remove(_selectedCard);
+        _cardContainer.CardsInDiscardPile.Add(_selectedCard);
+
+        _cardUseCallback.Invoke(_selectedCard.Info);
+        Destroy(_selectedCard.gameObject);
+        _selectedCard = null;
     }
 }

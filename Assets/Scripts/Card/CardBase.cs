@@ -7,7 +7,7 @@ using Zenject;
 [System.Serializable]
 public struct CardEffect {
     public enum Type {
-        DAMAGE,
+        ATTACK,
         BLOCK,
     }
     public Type type;

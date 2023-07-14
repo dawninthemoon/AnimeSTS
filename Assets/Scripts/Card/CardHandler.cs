@@ -1,36 +1,37 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RieslingUtils;
+using Zenject;
 
 public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private AnimationCurve _alignCurve = null;
     [SerializeField] private float _offsetX = 1f;
     [SerializeField] private float _offsetY = 0.1f;
     [SerializeField] private float _offsetRotation = 5f;
+    private CombatUIHandler _combatUIHandler;
     private CardContainer _cardContainer;
     [SerializeField] private int handCount = 0;
     private Vector3 _mouseOffset;
     private CardBase _selectedCard;
 
-    void Start() {
+    private void Start() {
         _cardContainer = new CardContainer();
 
-        CardBase p = Resources.Load<CardBase>("Cards/Defend");
+        CardBase defendPrefab = Resources.Load<CardBase>("Cards/Defend");
+        CardBase strikePrefab = Resources.Load<CardBase>("Cards/Strike");
         for (int i = 0; i < handCount; ++i) {
-            CardBase a = Instantiate(p, transform);
-            a.Attach(this);
-            _cardContainer.CardsInHand.Add(a);
+            var prefab = (i < 5) ? defendPrefab : strikePrefab;
+            CardBase card = Instantiate(prefab, transform);
+            card.Initialize(this, _combatUIHandler);
+            _cardContainer.CardsInHand.Add(card);
         }
 
         AlignCards();
     }
 
-    private void Update() {
-        if (_selectedCard) {
-            Vector3 mousePoint = ExVector.GetMouseWorldPosition();
-            _selectedCard.transform.position = mousePoint + _mouseOffset;
-        }
+    [Inject]
+    private void Initialize(CombatUIHandler uiHandler) {
+        _combatUIHandler = uiHandler;
     }
 
     public void AlignCards(){
@@ -58,8 +59,8 @@ public class CardHandler : MonoBehaviour, IObserver {
         CardBase card = subject as CardBase;
         
         if (card.MouseDown) {
-            _selectedCard = card;
-            _mouseOffset = card.transform.position - ExVector.GetMouseWorldPosition();
+            //_selectedCard = card;
+            //_mouseOffset = card.transform.position - ExVector.GetMouseWorldPosition();
         }
         else if (card.MouseOver) {
             card.HighlightCard();

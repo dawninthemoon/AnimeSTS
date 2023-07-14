@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using RieslingUtils;
+using Zenject;
 
 [System.Serializable]
 public struct CardEffect {
@@ -16,7 +17,7 @@ public struct CardEffect {
 [System.Serializable]
 public struct CardInfo {
     public enum Rarity {
-        STARTER,
+        BASIC,
         COMMON,
         UNCOMMON,
         RARE
@@ -56,6 +57,9 @@ public struct CardInfo {
 
 public class CardBase : ObserverSubject {
     [SerializeField] private CardInfo _cardInfo;
+    public CardInfo Info {
+        get { return _cardInfo;}
+    }
     private Sprite _portrait;
     public bool MouseOver { get; private set; }
     public bool MouseExit { get; private set; }
@@ -63,6 +67,15 @@ public class CardBase : ObserverSubject {
     public bool MouseUp { get; private set; }
     public static readonly Vector3 DefaultCardScale = new Vector3(0.3f, 0.3f);
     public static readonly Vector3 HighlightCardScale = new Vector3(0.5f, 0.5f);
+
+    private void Start() {
+        
+    }
+
+    public void Initialize(CardHandler cardHandler, CombatUIHandler combatUIHandler) {
+        Attach(cardHandler);
+        Attach(combatUIHandler);
+    }
 
     private void OnMouseOver() {
         MouseOver = true;

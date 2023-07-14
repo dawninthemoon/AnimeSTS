@@ -6,5 +6,7 @@ public class GameInstaller : MonoInstaller {
         Container.BindInterfacesAndSelfTo<RoomHandler>().FromComponentInHierarchy().AsSingle().NonLazy();
 
         Container.BindInterfacesAndSelfTo<RoomBase>().FromComponentsInHierarchy().AsSingle().NonLazy();
+
+        Container.BindInterfacesAndSelfTo<CombatUIHandler>().FromComponentInHierarchy().AsSingle().NonLazy();
     }
 }

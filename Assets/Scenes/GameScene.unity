@@ -732,6 +732,7 @@ GameObject:
   m_Component:
   - component: {fileID: 439318625}
   - component: {fileID: 439318626}
+  - component: {fileID: 439318627}
   m_Layer: 0
   m_Name: BattleRoom
   m_TagString: Untagged
@@ -769,6 +770,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _playerPosition: {fileID: 913117645}
+--- !u!114 &439318627
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439318624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 349ff65679b591c438a4459060e0621a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &519420028
 GameObject:
   m_ObjectHideFlags: 0
@@ -2592,7 +2605,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772291611}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: -5.46, z: 0}
+  m_LocalPosition: {x: 0, y: -4.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

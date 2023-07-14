@@ -98,7 +98,7 @@ GameObject:
   - component: {fileID: 4437520612411843623}
   - component: {fileID: 2820111829710416616}
   m_Layer: 0
-  m_Name: Defend
+  m_Name: Strike
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -161,7 +161,7 @@ SpriteRenderer:
   m_SortingLayerID: 228393861
   m_SortingLayer: 3
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 6ec0d02c12e2b7d4ba9b7c23dcbddbae, type: 3}
+  m_Sprite: {fileID: 21300000, guid: f1d097a2ed95da14dbf7aefc8387ed73, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -185,25 +185,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _cardInfo:
-    cardName: "\uC218\uBE44"
+    cardName: "\uD0C0\uACA9"
     rarity: 0
-    type: 1
+    type: 0
     color: 0
     isUpgraded: 0
-    needTarget: 0
+    needTarget: 1
     cost: 1
     upgradeCost: 1
-    baseDescription: "\uBC29\uC5B4\uB3C4\uB97C {d}\uB9CC\uD07C \uC5BB\uC2B5\uB2C8\uB2E4."
-    upgradeDescription: "\uBC29\uC5B4\uB3C4\uB97C {D}\uB9CC\uD07C \uC5BB\uC2B5\uB2C8\uB2E4."
+    baseDescription: "\uBC29\uC5B4\uB3C4\uB97C {s}\uB9CC\uD07C \uC5BB\uC2B5\uB2C8\uB2E4."
+    upgradeDescription: "\uBC29\uC5B4\uB3C4\uB97C {S}\uB9CC\uD07C \uC5BB\uC2B5\uB2C8\uB2E4."
     baseEffects:
-    - type: 1
-      amount: d
+    - type: 0
+      amount: s
     upgradeEffects:
-    - type: 1
-      amount: D
-    variables: 'd=5,DEXTERITY
+    - type: 0
+      amount: S
+    variables: 's=6,STRENGTH
 
-      D=8,DEXTERITY'
+      S=9,STRENGTH'
 --- !u!61 &4437520612411843623
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -221,7 +221,7 @@ BoxCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 5.96, y: 8.38}
+    oldSize: {x: 6.01, y: 8.38}
     newSize: {x: 5.96, y: 8.38}
     adaptiveTilingThreshold: 0.5
     drawMode: 0

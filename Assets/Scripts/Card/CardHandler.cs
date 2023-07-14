@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RieslingUtils;
 
-public class CardHandler : MonoBehaviour {
+public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private AnimationCurve _alignCurve = null;
     [SerializeField] private float _offsetX = 1f;
     [SerializeField] private float _offsetY = 0.1f;
@@ -16,6 +17,7 @@ public class CardHandler : MonoBehaviour {
         CardBase p = Resources.Load<CardBase>("Cards/Defend");
         for (int i = 0; i < handCount; ++i) {
             CardBase a = Instantiate(p, transform);
+            a.Attach(this);
             _cardContainer.CardsInHand.Add(a);
         }
 
@@ -37,8 +39,23 @@ public class CardHandler : MonoBehaviour {
             float rotZ = Mathf.Lerp(maxRotation, -maxRotation, alignAmount);
 
             Transform t = _cardContainer.CardsInHand[cardIndex].transform;
-            t.localPosition = new Vector3(xPos, yPos);
+            t.localPosition = new Vector3(xPos, yPos, -cardIndex);
+            t.localScale = CardBase.DefaultCardScale;
             t.rotation = Quaternion.Euler(0f, 0f, rotZ);
+        }
+    }
+
+    public void Notify(ObserverSubject subject) {
+        CardBase card = subject as CardBase;
+        
+        if (card.MouseDown) {
+        }
+        else if (card.MouseOver) {
+            card.HighlightCard();
+        }
+
+        if (card.MouseExit) {
+            AlignCards();
         }
     }
 }

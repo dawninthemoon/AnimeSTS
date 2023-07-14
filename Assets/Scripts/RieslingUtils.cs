@@ -10,6 +10,21 @@ namespace RieslingUtils {
 
             Vector3 newVector = origin + new Vector3(xAmount, yAmount);
             return newVector;
-        }        
+        }
+
+        public static Vector3 ChangeXPos(this Vector3 origin, float xValue) {
+            Vector3 newVector = new Vector3(xValue, origin.y, origin.z);
+            return newVector;
+        }
+
+        public static Vector3 ChangeYPos(this Vector3 origin, float yValue) {
+            Vector3 newVector = new Vector3(origin.x, yValue, origin.z);
+            return newVector;
+        }
+
+        public static Vector3 ChangeZPos(this Vector3 origin, float zValue) {
+            Vector3 newVector = new Vector3(origin.x, origin.y, zValue);
+            return newVector;
+        }
     }
 }

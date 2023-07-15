@@ -14,7 +14,7 @@ public class CardView : MonoBehaviour {
     private TextMeshPro _typeText = null;
     private TextMeshPro _costText = null;
     private static readonly string CardResourcesPath = "Cards/CardUI/";
-    private static readonly string PortraitPath = "Cards/Portraits";
+    private static readonly string PortraitPath = "Cards/Portraits/";
     private static readonly string NameFrameString = "blanket";
     private static readonly string CostFrameString = "cost";
     private static readonly string[] CardTypeStringArr = {
@@ -22,9 +22,14 @@ public class CardView : MonoBehaviour {
         "skill",
         "power",
     };
+    private static readonly string[] KoreanCardTypeStringArr = {
+        "공격",
+        "스킬",
+        "파워"
+    };
     private static readonly string[] ColorStringArr = {
-        "_red",
-        "_green"
+        "red",
+        "green"
     };
     private static readonly string[] RarityStringArr = {
         "_common",
@@ -39,10 +44,10 @@ public class CardView : MonoBehaviour {
         _costText = _costFrame.GetComponentInChildren<TextMeshPro>();
     }
 
-    public void InitializeCardFrame(CardInfo.Color color, CardInfo.Rarity rarity, CardInfo.Type type) {
+    public void ShowCardFrame(CardInfo.Color color, CardInfo.Rarity rarity, CardInfo.Type type) {
         var resourceManager = ResourceManager.GetInstance();
         
-        string cardFramePath = CardResourcesPath + CardTypeStringArr[(int)type] + ColorStringArr[(int)color];
+        string cardFramePath = CardResourcesPath + CardTypeStringArr[(int)type] + "_" + ColorStringArr[(int)color];
         _cardFrame.sprite = resourceManager.GetSpriteByCache(cardFramePath);
 
         string nameFramePath = NameFrameString + RarityStringArr[(int)rarity];
@@ -51,7 +56,21 @@ public class CardView : MonoBehaviour {
         string typeFramePath = CardTypeStringArr[(int)type] + RarityStringArr[(int)rarity];
         _typeFrame.sprite = resourceManager.GetSpriteByCache(typeFramePath);
 
-        string costFramePath = CostFrameString + ColorStringArr[(int)color];
+        string costFramePath = CostFrameString + "_" + ColorStringArr[(int)color];
         _costFrame.sprite = resourceManager.GetSpriteByCache(costFramePath);
+    }
+
+    public void ShowCardData(string cardName, CardInfo.Color color, CardInfo.Type type, string portraitName) {
+        var resourceManager = ResourceManager.GetInstance();
+
+        _nameText.text = cardName;
+        _typeText.text = KoreanCardTypeStringArr[(int)type];
+
+        string portraitPath = PortraitPath + ColorStringArr[(int)color] + CardTypeStringArr[(int)type] + portraitName;
+        _portrait.sprite = resourceManager.GetSpriteByCache(portraitPath);
+    }
+
+    public void ShowCardText(string text) {
+        _cardText.text = text;
     }
 }

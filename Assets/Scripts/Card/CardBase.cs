@@ -40,6 +40,7 @@ public struct CardInfo {
     }
     
     public string cardName;
+    public string portraitName;
     public Rarity rarity;
     public Type type;
     public Color color;
@@ -65,7 +66,7 @@ public class CardBase : ObserverSubject {
     public CardInfo Info {
         get { return _cardInfo;}
     }
-    private Sprite _portrait;
+    private CardView _cardView;
     public bool MouseOver { get; private set; }
     public bool MouseExit { get; private set; }
     public bool MouseDown { get; private set; }

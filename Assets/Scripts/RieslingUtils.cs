@@ -61,4 +61,11 @@ namespace RieslingUtils {
             return radian * Mathf.Rad2Deg;
         }
     }
+
+    public static class EnumUtil {
+        public static T Parse<T>(string str) {
+            T rarity = (T)System.Enum.Parse(typeof(T), str);
+            return rarity;
+        }
+    }
 }

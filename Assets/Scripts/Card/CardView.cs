@@ -50,17 +50,17 @@ public class CardView : MonoBehaviour {
         string cardFramePath = CardResourcesPath + CardTypeStringArr[(int)type] + "_" + ColorStringArr[(int)color];
         _cardFrame.sprite = resourceManager.GetSpriteByCache(cardFramePath);
 
-        string nameFramePath = NameFrameString + RarityStringArr[(int)rarity];
+        string nameFramePath = CardResourcesPath + NameFrameString + RarityStringArr[(int)rarity];
         _nameFrame.sprite = resourceManager.GetSpriteByCache(nameFramePath);
 
-        string typeFramePath = CardTypeStringArr[(int)type] + RarityStringArr[(int)rarity];
+        string typeFramePath = CardResourcesPath + CardTypeStringArr[(int)type] + RarityStringArr[(int)rarity];
         _typeFrame.sprite = resourceManager.GetSpriteByCache(typeFramePath);
 
-        string costFramePath = CostFrameString + "_" + ColorStringArr[(int)color];
+        string costFramePath = CardResourcesPath + CostFrameString + "_" + ColorStringArr[(int)color];
         _costFrame.sprite = resourceManager.GetSpriteByCache(costFramePath);
     }
 
-    public void ShowCardData(string cardName, CardInfo.Color color, CardInfo.Type type, string portraitName) {
+    public void ShowCardData(string cardName, CardInfo.Color color, CardInfo.Type type, string portraitName, string cost) {
         var resourceManager = ResourceManager.GetInstance();
 
         _nameText.text = cardName;
@@ -68,6 +68,8 @@ public class CardView : MonoBehaviour {
 
         string portraitPath = PortraitPath + ColorStringArr[(int)color] + CardTypeStringArr[(int)type] + portraitName;
         _portrait.sprite = resourceManager.GetSpriteByCache(portraitPath);
+
+        _costText.text = cost;
     }
 
     public void ShowCardText(string text) {

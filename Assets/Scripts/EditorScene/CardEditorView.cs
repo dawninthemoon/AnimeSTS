@@ -21,7 +21,7 @@ public class CardEditorView : MonoBehaviour {
     #endregion
 
     [SerializeField] private GameObject _effectsPrefab = null;
-    private List<TMP_InputField> _effectsTypeList;
+    private List<TMP_Dropdown> _effectsTypeList;
     private List<TMP_InputField> _effectsAmountList;
     private int _currentChildCount;
 
@@ -56,11 +56,11 @@ public class CardEditorView : MonoBehaviour {
             return EnumUtil.Parse<CardInfo.Color>(str);
         }
     }
-    public int Cost {
-        get { return int.Parse(_costDropdown.text); }
+    public string Cost {
+        get { return _costDropdown.text; }
     }
-    public int UpgradeCost {
-        get { return int.Parse(_upgradeCostDropdown.text); }
+    public string UpgradeCost {
+        get { return _upgradeCostDropdown.text; }
     }
     public string Description {
         get { return _baseDescription.text; }
@@ -74,7 +74,7 @@ public class CardEditorView : MonoBehaviour {
     #endregion
     
     private void Start() {
-        _effectsTypeList = new List<TMP_InputField>();
+        _effectsTypeList = new List<TMP_Dropdown>();
         _effectsAmountList = new List<TMP_InputField>();
 
         _currentChildCount = transform.childCount;
@@ -92,8 +92,8 @@ public class CardEditorView : MonoBehaviour {
                 var newEffectsInputFields = Instantiate(_effectsPrefab, transform);
                 newEffectsInputFields.transform.SetSiblingIndex(_currentChildCount);
 
-                _effectsTypeList.Add(newEffectsInputFields.transform.GetChild(0).GetComponent<TMP_InputField>());
-                _effectsAmountList.Add(newEffectsInputFields.transform.GetChild(1).GetComponent<TMP_InputField>());
+                _effectsTypeList.Add(newEffectsInputFields.GetComponentInChildren<TMP_Dropdown>());
+                _effectsAmountList.Add(newEffectsInputFields.GetComponentInChildren<TMP_InputField>());
 
                 ++_currentChildCount;
             }

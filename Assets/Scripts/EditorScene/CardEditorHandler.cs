@@ -19,10 +19,36 @@ public class CardEditorHandler : MonoBehaviour {
         CardInfo.Color color = _cardEditorView.Color;
         CardInfo.Rarity rarity = _cardEditorView.Rarity;
         CardInfo.Type type = _cardEditorView.Type;
-        string description = _cardEditorView.Description;
 
         _cardPreview.ShowCardFrame(color, rarity, type);
         _cardPreview.ShowCardData(name, color, type, portraitName, cost);
+        ShowCardDescription();
+    }
+
+    public void OnStrengthChanged(TMPro.TMP_InputField field) {
+        int strength = int.Parse(field.text);
+        _playerStatus.ChangeEffectValue("strength", strength);
+        ShowCardDescription();
+    }
+
+    public void OnDexterityChanged(TMPro.TMP_InputField field) {
+        int dexterity = int.Parse(field.text);
+        _playerStatus.ChangeEffectValue("dexterity", dexterity);
+        ShowCardDescription();
+    }
+
+    private void ShowCardDescription() {
+        string description = _cardEditorView.Description;
+        string variables = _cardEditorView.variables;
+
+        if (description == "") return;
+        
+        var variableData = _variableParser.Parse(variables);
+        foreach (KeyValuePair<string, int> variable in variableData) {
+            string formatString = '{' + variable.Key + '}';
+            description = description.Replace(formatString, variable.Value.ToString());
+        }
+
         _cardPreview.ShowCardText(description);
     }
 }

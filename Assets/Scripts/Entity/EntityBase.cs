@@ -39,6 +39,10 @@ public class EntityBase : MonoBehaviour {
         _info.block += amount;
     }
 
+    public void ChangeEffectValue(string key, int amount) {
+        _info.effectMap[key] = amount;
+    }
+
     private void OnMouseOver() {
         BattleRoom.SelectedEnemy = this;
     }

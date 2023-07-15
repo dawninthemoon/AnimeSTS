@@ -66,7 +66,7 @@ public class CardView : MonoBehaviour {
         _nameText.text = cardName;
         _typeText.text = KoreanCardTypeStringArr[(int)type];
 
-        string portraitPath = PortraitPath + ColorStringArr[(int)color] + CardTypeStringArr[(int)type] + portraitName;
+        string portraitPath = PortraitPath + ColorStringArr[(int)color] + "/" + CardTypeStringArr[(int)type] + "/" + portraitName;
         _portrait.sprite = resourceManager.GetSpriteByCache(portraitPath);
 
         _costText.text = cost;

@@ -87,7 +87,6 @@ namespace GameEditor {
             CardInfo cardInfo = new CardInfo();
             _cardInfoList.Add(cardInfo);
             _cardEditorView.RefreshAll();
-            OnCardNameChanged(cardInfo.cardName);
         }
 
         public void ChangeCardInfo() {
@@ -95,6 +94,7 @@ namespace GameEditor {
             CardInfo cardInfo = _cardInfoList[index];
             _cardEditorView.ChangeInfo(cardInfo);
             OnCardNameChanged(cardInfo.cardName);
+            OnApplyButtonPressed();
         }
 
         public void OnCardNameChanged(string value) {

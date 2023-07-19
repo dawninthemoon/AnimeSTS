@@ -110,7 +110,11 @@ namespace GameEditor {
             _baseDescription.text = info.baseDescription;
             _upgradeDescription.text = info.upgradeDescription;
             _variables.text = info.variables;
-            _numOfEffectsInput.text = info.baseEffects.Length.ToString();
+    
+            if (info.baseEffects == null)
+                _numOfEffectsInput.text = "0";
+            else
+                _numOfEffectsInput.text = info.baseEffects.Length.ToString();
         }
 
         private int GetDropdownValue(TMP_Dropdown dropdown, string value) {

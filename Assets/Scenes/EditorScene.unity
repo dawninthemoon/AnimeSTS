@@ -12621,7 +12621,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1394861269}
         m_TargetAssemblyTypeName: GameEditor.CardEditorHandler, Assembly-CSharp
-        m_MethodName: GetCardNameList
+        m_MethodName: SetCardList
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

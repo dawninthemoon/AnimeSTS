@@ -39,6 +39,8 @@ namespace GameEditor {
             //info.baseEffects = _cardEditorView.
             //info.upgradeEffects
             _cardInfoList[_cardDropdown.SelectedIndex] = cardInfo;
+
+            OnCardChanged(cardInfo);
         }
 
         public void OnApplyButtonPressed() {
@@ -77,10 +79,10 @@ namespace GameEditor {
             _cardPreview.ShowCardText(description);
         }
 
-        public void GetCardNameList(List<string> cardNameList) {
+        public void SetCardList(List<CardInfo> cardNameList) {
             cardNameList.Clear();
             for (int i = 0; i < _cardInfoList.Count; ++i) {
-                cardNameList.Add(_cardInfoList[i].cardName);
+                cardNameList.Add(_cardInfoList[i]);
             }
         }
 
@@ -94,11 +96,11 @@ namespace GameEditor {
             int index = _cardDropdown.SelectedIndex;
             CardInfo cardInfo = _cardInfoList[index];
             _cardEditorView.ChangeInfo(cardInfo);
-            OnCardNameChanged(cardInfo.cardName);
+            OnCardChanged(cardInfo);
             OnApplyButtonPressed();
         }
 
-        public void OnCardNameChanged(string value) {
+        public void OnCardChanged(CardInfo value) {
             _cardDropdown.OnCurrentOptionChanged(value);
         }
 

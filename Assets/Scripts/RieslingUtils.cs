@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Text.RegularExpressions;
 
 namespace RieslingUtils {
     public static class ExVector {
@@ -66,6 +67,14 @@ namespace RieslingUtils {
         public static T Parse<T>(string str) {
             T rarity = (T)System.Enum.Parse(typeof(T), str);
             return rarity;
+        }
+    }
+
+    public static class StringUtils {
+        private static readonly string RegexContainsPrefix = "^.*(";
+        private static readonly string RegexContainsSuffix = ").*";
+        public static bool Contains(string str, string pattern) {
+            return Regex.Match(str, RegexContainsPrefix + pattern + RegexContainsSuffix).Success;
         }
     }
 }

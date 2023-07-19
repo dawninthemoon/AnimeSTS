@@ -25,7 +25,7 @@ namespace GameEditor {
         }
 
         
-        private CardInfo SaveCurrentSetting() {
+        private void SaveCurrentSetting() {
             CardInfo cardInfo = new CardInfo();
             cardInfo.cardName = _cardEditorView.CardName;
             cardInfo.portraitName = _cardEditorView.PortraitName;
@@ -38,11 +38,12 @@ namespace GameEditor {
             cardInfo.variables = _cardEditorView.Variables;
             //info.baseEffects = _cardEditorView.
             //info.upgradeEffects
-            return cardInfo;
+            _cardInfoList[_cardDropdown.SelectedIndex] = cardInfo;
         }
 
         public void OnApplyButtonPressed() {
-            CardInfo info = SaveCurrentSetting();
+            SaveCurrentSetting();
+            CardInfo info = _cardInfoList[_cardDropdown.SelectedIndex];
             _cardPreview.ShowCardFrame(info.color, info.rarity, info.type);
             _cardPreview.ShowCardData(info.cardName, info.color, info.type, info.portraitName, info.cost.ToString());
             ShowCardDescription();
@@ -99,6 +100,10 @@ namespace GameEditor {
 
         public void OnCardNameChanged(string value) {
             _cardDropdown.OnCurrentOptionChanged(value);
+        }
+
+        public CardInfo[] GetAllCardInformation() {
+            return _cardInfoList.ToArray();
         }
     }
 }

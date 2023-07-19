@@ -65,5 +65,22 @@ namespace GameEditor {
             Toggle();
             _onOptionSelected.Invoke();
         }
+
+        public void OnSearchEndEdit(TMP_InputField input) {
+            string str = input.text;
+            HighlightWithRegex(str, (str == ""));
+        }
+
+        public void HighlightWithRegex(string pattern, bool isNull) {
+            for (int i = 0; i < _contentTransform.childCount; ++i) {
+                TMP_Text contentText = _contentTransform.GetChild(i).GetComponentInChildren<TMP_Text>();
+                if (isNull || !StringUtils.Contains(contentText.text, pattern)) {
+                    contentText.color = Color.black;
+                }
+                else {
+                    contentText.color = Color.red;
+                }
+            }
+        }
     }
 }

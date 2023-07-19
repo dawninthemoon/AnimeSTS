@@ -80,6 +80,23 @@
                 }
             ],
             "variables": "d=5,defense\nD=8,defense"
+        },
+        {
+            "cardID": "",
+            "cardName": "ddd",
+            "portraitName": "",
+            "rarity": 0,
+            "type": 0,
+            "color": 0,
+            "isUpgraded": false,
+            "targetType": 0,
+            "cost": 0,
+            "upgradeCost": 0,
+            "baseDescription": "",
+            "upgradeDescription": "0",
+            "baseEffects": [],
+            "upgradeEffects": [],
+            "variables": ""
         }
     ]
 }

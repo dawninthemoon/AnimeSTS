@@ -1,0 +1,85 @@
+{
+    "items": [
+        {
+            "cardID": "",
+            "cardName": "수비",
+            "portraitName": "defend",
+            "rarity": 0,
+            "type": 1,
+            "color": 0,
+            "isUpgraded": false,
+            "targetType": 0,
+            "cost": 1,
+            "upgradeCost": 1,
+            "baseDescription": "방어도를 {d}만큼 얻습니다.",
+            "upgradeDescription": "방어도를 {D}만큼 얻습니다.",
+            "baseEffects": [
+                {
+                    "type": 1,
+                    "amount": "d"
+                }
+            ],
+            "upgradeEffects": [
+                {
+                    "type": 1,
+                    "amount": "D"
+                }
+            ],
+            "variables": "d=5,defense\nD=8,defense"
+        },
+        {
+            "cardID": "",
+            "cardName": "수비2",
+            "portraitName": "defend",
+            "rarity": 0,
+            "type": 1,
+            "color": 0,
+            "isUpgraded": false,
+            "targetType": 0,
+            "cost": 1,
+            "upgradeCost": 1,
+            "baseDescription": "방어도를 {d}만큼 얻습니다3.",
+            "upgradeDescription": "방어도를 {D}만큼 얻습니다3.",
+            "baseEffects": [
+                {
+                    "type": 1,
+                    "amount": "d"
+                }
+            ],
+            "upgradeEffects": [
+                {
+                    "type": 1,
+                    "amount": "D"
+                }
+            ],
+            "variables": "d=5,defense\nD=8,defense"
+        },
+        {
+            "cardID": "",
+            "cardName": "수비3",
+            "portraitName": "defend",
+            "rarity": 0,
+            "type": 1,
+            "color": 0,
+            "isUpgraded": false,
+            "targetType": 0,
+            "cost": 1,
+            "upgradeCost": 1,
+            "baseDescription": "방어도를 {d}만큼 얻습니다2.",
+            "upgradeDescription": "방어도를 {D}만큼 얻습니다2.",
+            "baseEffects": [
+                {
+                    "type": 1,
+                    "amount": "d"
+                }
+            ],
+            "upgradeEffects": [
+                {
+                    "type": 1,
+                    "amount": "D"
+                }
+            ],
+            "variables": "d=5,defense\nD=8,defense"
+        }
+    ]
+}

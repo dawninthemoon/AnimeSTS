@@ -39,6 +39,7 @@ public struct CardInfo {
         GREEN
     }
     
+    public string cardID;
     public string cardName;
     public string portraitName;
     public Rarity rarity;
@@ -62,9 +63,9 @@ public struct CardInfo {
 }
 
 public class CardBase : ObserverSubject {
-    [SerializeField] private CardInfo _cardInfo;
     public CardInfo Info {
-        get { return _cardInfo;}
+        get;
+        set;
     }
     private CardView _cardView;
     public bool MouseOver { get; private set; }
@@ -79,7 +80,7 @@ public class CardBase : ObserverSubject {
     }
 
     public bool NeedTarget() {
-        return (_cardInfo.targetType == CardInfo.TargetType.TARGET);
+        return (Info.targetType == CardInfo.TargetType.TARGET);
     }
 
     public void Initialize(CardHandler cardHandler, CombatUIHandler combatUIHandler) {

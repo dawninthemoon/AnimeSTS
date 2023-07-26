@@ -12,40 +12,30 @@ public class BattleRoom : RoomBase {
     private CardContainer _cardDeck;
     private CommandDataParser _variableParser;
     public static EntityBase SelectedEnemy;
+    private CommandExecuter _commandExecuter;
+    private GameData _data;
 
     private void Awake() {
         var playerPrefab = Resources.Load<EntityBase>("Entities/Characters/character_yuri");
         _player = Instantiate(playerPrefab, _playerPosition.position, Quaternion.identity, _playerPosition);
         _cardHandler = GetComponentInChildren<CardHandler>();
-
         _cardHandler.SetCardUseCallback(OnCardUsed);
+        _commandExecuter = GetComponent<CommandExecuter>();
     }
+    
+    public override void OnEncounter(GameData data) {
+        _data = data;
 
-    private void Start() {
-
-    }
-
-    public override void OnEncounter() {
         var enemyPrefab = Resources.Load<EntityBase>("Entities/Enemies/enemy_humTank");
         _enemy = Instantiate(enemyPrefab, _enemyPositon.position, Quaternion.identity, _enemyPositon);
     }
 
     private void OnCardUsed(CardInfo card) {
-        CommandInfo[] effects = card.isUpgraded ? card.upgradeCommands : card.baseCommands;
-        var variableData = _variableParser.ParseVariable(_player, card.variables);
-        /*foreach (CommandInfo effect in effects) {
-            ApplyEffect(effect.type, variableData[effect.amount]);
-        }*/
+        CommandInfo[] commands = card.isUpgraded ? card.upgradeCommands : card.baseCommands;
+        var variableData = _variableParser.ParseVariable(card.variables, _player);
+
+        _data.CurrentVariableData = variableData;        
+
+        _commandExecuter.ExecuteCard(commands, _data);
     }
-/*
-    private void ApplyEffect(CommandInfo.Type type, int amount) {
-        switch (type) {
-        case CommandInfo.Type.BLOCK:
-            _player.GainBlock(amount);
-            break;
-        case CommandInfo.Type.ATTACK:
-            _enemy.TakeDamage(amount);
-            break;
-        }
-    }*/
 }

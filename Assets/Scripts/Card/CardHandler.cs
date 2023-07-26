@@ -17,7 +17,7 @@ public class CardHandler : MonoBehaviour, IObserver {
 
     private void Start() {
         _cardContainer = new CardContainer();
-
+/*
         CardBase defendPrefab = Resources.Load<CardBase>("Cards/Defend");
         CardBase strikePrefab = Resources.Load<CardBase>("Cards/Strike");
         for (int i = 0; i < handCount; ++i) {
@@ -25,7 +25,7 @@ public class CardHandler : MonoBehaviour, IObserver {
             CardBase card = Instantiate(prefab, transform);
             card.Initialize(this, _combatUIHandler);
             _cardContainer.CardsInHand.Add(card);
-        }
+        }*/
 
         AlignCards();
     }
@@ -52,11 +52,11 @@ public class CardHandler : MonoBehaviour, IObserver {
             float xPos = Mathf.Lerp(-maxX, maxX, alignAmount);
             float yPos = -Mathf.Abs(Mathf.Lerp(-maxY, maxY, _alignCurve.Evaluate(alignAmount)));
             float rotZ = Mathf.Lerp(maxRotation, -maxRotation, alignAmount);
-
+/*
             Transform t = _cardContainer.CardsInHand[cardIndex].transform;
             t.localPosition = new Vector3(xPos, yPos, -cardIndex);
             t.localScale = CardBase.DefaultCardScale;
-            t.rotation = Quaternion.Euler(0f, 0f, rotZ);
+            t.rotation = Quaternion.Euler(0f, 0f, rotZ);*/
         }
     }
 
@@ -84,9 +84,9 @@ public class CardHandler : MonoBehaviour, IObserver {
             return;
         if (_selectedCard.NeedTarget() && !BattleRoom.SelectedEnemy)
             return;
-        
+        /*
         _cardContainer.CardsInHand.Remove(_selectedCard);
-        _cardContainer.CardsInDiscardPile.Add(_selectedCard);
+        _cardContainer.CardsInDiscardPile.Add(_selectedCard);*/
 
         _cardUseCallback.Invoke(_selectedCard.Info);
         Destroy(_selectedCard.gameObject);

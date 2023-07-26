@@ -3,5 +3,5 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class RoomBase : MonoBehaviour {
-    public abstract void OnEncounter();
+    public abstract void OnEncounter(GameData data);
 }

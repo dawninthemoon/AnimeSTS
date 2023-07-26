@@ -6,6 +6,7 @@ using Zenject;
 public class GameMain : MonoBehaviour {
     [SerializeField] private GameMap _gameMap = null;
     [SerializeField] private RoomHandler _roomHandler = null;
+    private GameData _gameData;
 
     private void Start() {
         InitializeData();
@@ -16,16 +17,20 @@ public class GameMain : MonoBehaviour {
     }
 
     private void InitializeData() {
+        TxtReader reader = new TxtReader();
+        string gameMetaData = reader.ReadFromFile(Application.dataPath + "/Resources/GameData.txt");
+
         GameVariableContainer container = new GameVariableContainer();
         CommandDataParser parser = new CommandDataParser(container);
-        GameData gameData = new GameData(parser);
-        
+
+        parser.ParseAndAdd(gameMetaData);
+        _gameData = new GameData(parser);
     }
 
     public void OnRoomMoveRequested(EncounterMarker target) {
         if (!_gameMap.CanMoveTo(target)) return;
 
         _gameMap.OnRoomChanged(target);
-        _roomHandler.StartEnterRoom(target.EncounterType);
+        _roomHandler.StartEnterRoom(target.EncounterType, _gameData);
     }
 }

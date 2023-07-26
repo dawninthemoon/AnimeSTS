@@ -1,0 +1,3 @@
+hp_yuri=80
+hp_snowflower=80
+gold=100

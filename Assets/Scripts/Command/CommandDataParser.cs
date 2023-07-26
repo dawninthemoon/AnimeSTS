@@ -19,7 +19,14 @@ public class CommandDataParser {
         _conditionCheckCallback.Add("Equal", _gameVariables.Equals);
     }
 
-    public Dictionary<string, int> ParseVariable(EntityBase caster, string metadata) {
+    public void ParseAndAdd(string metaData) {
+        Dictionary<string, int> parsedVariables = ParseVariable(metaData);
+        foreach (KeyValuePair<string, int> variable in parsedVariables) { 
+            _gameVariables.AddValue(variable.Key, variable.Value);
+        }
+    }
+
+    public Dictionary<string, int> ParseVariable(string metadata, EntityBase caster = null) {
         Dictionary<string, int> variableData = new Dictionary<string, int>();
 
         string[] splitedWithNewLine = metadata.Split(NewlineCharacater);
@@ -47,7 +54,13 @@ public class CommandDataParser {
         return _conditionCheckCallback[checkType].Invoke(variableName, value);
     }
 
+    public int GetGlobalVariable(string name) {
+        return _gameVariables.GetVariable(name);
+    }
+
     public int GetEffectAmount(EntityBase caster, string type, int value) {
+        if (!caster) return value;
+
         if (type.Equals("attack")) {
             value += caster.GetEffectAmount("strength");
             if (caster.GetEffectAmount("weak") > 0) {

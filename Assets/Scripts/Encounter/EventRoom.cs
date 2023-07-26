@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EventRoom : RoomBase {
-    public override void OnEncounter() {
+    public override void OnEncounter(GameData data) {
         
     }
 }

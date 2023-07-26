@@ -72,7 +72,7 @@ namespace GameEditor {
 
             if (description == "") return;
             
-            var variableData = _variableParser.ParseVariable(_playerStatus, variables);
+            var variableData = _variableParser.ParseVariable(variables, _playerStatus);
             foreach (KeyValuePair<string, int> variable in variableData) {
                 string formatString = '{' + variable.Key + '}';
                 description = description.Replace(formatString, variable.Value.ToString());

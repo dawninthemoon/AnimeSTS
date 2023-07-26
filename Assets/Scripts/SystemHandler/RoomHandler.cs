@@ -22,29 +22,35 @@ public class RoomHandler : MonoBehaviour {
         _requestedRoomExitCallback = callback;
     }
 
-    public void StartEnterRoom(EncounterType encounterType) {
+    public void StartEnterRoom(EncounterType encounterType, GameData data) {
+        RoomBase targetRoom = null;
         switch (encounterType) {
         case EncounterType.MONSTER:
-            EnterRoom(_battleRoomEncounter);
+            targetRoom = _battleRoomEncounter;
             break;
         case EncounterType.ELITE:
-            EnterRoom(_battleRoomEncounter);
+            targetRoom = _battleRoomEncounter;
             break;
         case EncounterType.SHOP:
-            EnterRoom(_shopRoomEncounter);
+            targetRoom = _shopRoomEncounter;
             break;
         case EncounterType.CHEST:
-            EnterRoom(_chestRoomEncounter);
+            targetRoom = _chestRoomEncounter;
             break;
         case EncounterType.EVENT:
-            EnterRoom(_eventRoomEncounter);
+            targetRoom = _eventRoomEncounter;
             break;
         }
+        EnterRoom(targetRoom, data);
     }
 
-    private void EnterRoom(RoomBase room) {
+    private void EnterRoom(RoomBase room, GameData data) {
+        if (room == null) {
+            Debug.LogError("Room Not Exists");
+            return;
+        }
         ChangeRoomSetting(room.transform.parent.gameObject);
-        room.OnEncounter();
+        room.OnEncounter(data);
     }
 
     private void Update() {

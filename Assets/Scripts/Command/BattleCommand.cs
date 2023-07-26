@@ -6,6 +6,9 @@ public class GameData {
     public CommandDataParser Parser {
         get; private set;
     }
+    public Dictionary<string, int> CurrentVariableData {
+        get; set;
+    }
     public GameData(CommandDataParser parser) {
         Parser = parser;
     }

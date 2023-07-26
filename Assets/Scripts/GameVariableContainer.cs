@@ -5,6 +5,10 @@ using UnityEngine;
 public class GameVariableContainer : MonoBehaviour {
     private readonly Dictionary<string, int> _variables;
 
+    public GameVariableContainer() {
+        _variables = new Dictionary<string, int>();
+    }
+
     public int GetVariable(string variableName) {
         int value = -1;
         if (_variables.TryGetValue(variableName, out int variable)) {

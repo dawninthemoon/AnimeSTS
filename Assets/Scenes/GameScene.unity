@@ -733,6 +733,7 @@ GameObject:
   - component: {fileID: 439318625}
   - component: {fileID: 439318626}
   - component: {fileID: 439318627}
+  - component: {fileID: 439318628}
   m_Layer: 0
   m_Name: BattleRoom
   m_TagString: Untagged
@@ -782,6 +783,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 349ff65679b591c438a4459060e0621a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &439318628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 439318624}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d1b9e2d3e89376d4bb2e27967eb3e711, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &519420028

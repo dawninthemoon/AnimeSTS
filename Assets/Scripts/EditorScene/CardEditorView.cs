@@ -61,17 +61,23 @@ namespace GameEditor {
         public string Cost {
             get { return _costInputField.text; }
         }
-        public string UpgradeCost {
+        public string UpgradedCost {
             get { return _upgradeCostInputField.text; }
         }
         public string Description {
             get { return _baseDescription.text; }
         }
-        public string UpgradeDescription {
+        public string UpgradedDescription {
             get { return _upgradeCostInputField.text; }
         }
         public string Variables {
             get { return _variables.text; }
+        }
+        public CommandInfo[] BaseCommands {
+            get { return GetCommandsFromEditor(_baseCommandsTypeList, _baseCommandsAmountList); }
+        }
+        public CommandInfo[] UpgradedCommands {
+            get { return GetCommandsFromEditor(_upgradedCommandsTypeList, _upgradedCommandsAmountList); }
         }
         #endregion
         
@@ -87,6 +93,7 @@ namespace GameEditor {
                 .Where(type => (type.GetInterface("ICardCommand") != null))
                 .Select(type => type.Name)
                 .ToList();
+            commandDropdown.options.Clear();
             commandDropdown.AddOptions(optionList);
 
             _baseNumOfEffectsInput.onEndEdit.AddListener(OnNumOfBaseCommandsChanged);
@@ -177,6 +184,16 @@ namespace GameEditor {
                     --prevCounts;
                 }
             }
+        }
+
+        private CommandInfo[] GetCommandsFromEditor(List<TMP_Dropdown> typeList, List<TMP_InputField> amountList) {
+            CommandInfo[] commands = new CommandInfo[typeList.Count];
+            for (int i = 0; i < commands.Length; ++i) {
+                string name = typeList[i].options[typeList[i].value].text;
+                string amount = amountList[i].text;
+                commands[i] = new CommandInfo(name, amount);
+            }
+            return commands;
         }
     }
 }

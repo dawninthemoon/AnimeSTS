@@ -5,8 +5,12 @@ using RieslingUtils;
 
 [System.Serializable]
 public struct CommandInfo {
-    public ICardCommand command;
+    public string name;
     public string amount;
+    public CommandInfo(string name, string amount) {
+        this.name = name;
+        this.amount = amount;
+    }
 }
 
 [System.Serializable]

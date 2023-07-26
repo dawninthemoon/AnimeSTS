@@ -23,7 +23,6 @@ namespace GameEditor {
         private void Start() {
             _variableParser = new CardVariableParser(_playerStatus);
         }
-
         
         private void SaveCurrentSetting() {
             CardInfo cardInfo = new CardInfo();
@@ -34,10 +33,10 @@ namespace GameEditor {
             cardInfo.rarity = _cardEditorView.Rarity;
             cardInfo.type = _cardEditorView.Type;
             cardInfo.baseDescription = _cardEditorView.Description;
-            cardInfo.upgradeDescription = _cardEditorView.UpgradeDescription;
+            cardInfo.upgradeDescription = _cardEditorView.UpgradedDescription;
             cardInfo.variables = _cardEditorView.Variables;
-            //info.baseEffects = _cardEditorView.
-            //info.upgradeEffects
+            cardInfo.baseCommands = _cardEditorView.BaseCommands;
+            cardInfo.upgradeCommands = _cardEditorView.UpgradedCommands;
             _cardInfoList[_cardDropdown.SelectedIndex] = cardInfo;
 
             OnCardChanged(cardInfo);

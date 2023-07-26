@@ -32,21 +32,21 @@ public class BattleRoom : RoomBase {
     }
 
     private void OnCardUsed(CardInfo card) {
-        CardEffect[] effects = card.isUpgraded ? card.upgradeEffects : card.baseEffects;
+        CommandInfo[] effects = card.isUpgraded ? card.upgradeCommands : card.baseCommands;
         var variableData = _variableParser.Parse(card.variables);
-        foreach (CardEffect effect in effects) {
+        /*foreach (CommandInfo effect in effects) {
             ApplyEffect(effect.type, variableData[effect.amount]);
-        }
+        }*/
     }
-
-    private void ApplyEffect(CardEffect.Type type, int amount) {
+/*
+    private void ApplyEffect(CommandInfo.Type type, int amount) {
         switch (type) {
-        case CardEffect.Type.BLOCK:
+        case CommandInfo.Type.BLOCK:
             _player.GainBlock(amount);
             break;
-        case CardEffect.Type.ATTACK:
+        case CommandInfo.Type.ATTACK:
             _enemy.TakeDamage(amount);
             break;
         }
-    }
+    }*/
 }

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using RieslingUtils;
+using System.Linq;
 
 namespace GameEditor {
     public class CardEditorView : MonoBehaviour {
@@ -18,13 +19,13 @@ namespace GameEditor {
         [SerializeField] private TMP_InputField _baseDescription = null;
         [SerializeField] private TMP_InputField _upgradeDescription = null;
         [SerializeField] private TMP_InputField _variables = null;
-        [SerializeField] private TMP_InputField _numOfEffectsInput = null;
+        [SerializeField] private TMP_InputField _baseNumOfEffectsInput = null;
+        [SerializeField] private TMP_InputField _upgradedNumOfEffectsInput = null;
         #endregion
 
-        [SerializeField] private GameObject _effectsPrefab = null;
-        private List<TMP_Dropdown> _effectsTypeList;
-        private List<TMP_InputField> _effectsAmountList;
-        private int _currentChildCount;
+        [SerializeField] private GameObject _commandOptionPrefab = null;
+        private List<TMP_Dropdown> _baseCommandsTypeList, _upgradedCommandsTypeList;
+        private List<TMP_InputField> _baseCommandsAmountList, _upgradedCommandsAmountList;
 
         #region Properties
         public string CardName {
@@ -75,12 +76,21 @@ namespace GameEditor {
         #endregion
         
         private void Start() {
-            _effectsTypeList = new List<TMP_Dropdown>();
-            _effectsAmountList = new List<TMP_InputField>();
+            _baseCommandsTypeList = new List<TMP_Dropdown>();
+            _baseCommandsAmountList = new List<TMP_InputField>();
+            _upgradedCommandsTypeList = new List<TMP_Dropdown>();
+            _upgradedCommandsAmountList = new List<TMP_InputField>();
 
-            _currentChildCount = transform.childCount;
+            var nestedType = typeof(CardCommand).GetNestedTypes(System.Reflection.BindingFlags.Public);
+            var commandDropdown = _commandOptionPrefab.GetComponentInChildren<TMP_Dropdown>();
+            List<string> optionList = nestedType
+                .Where(type => (type.GetInterface("ICardCommand") != null))
+                .Select(type => type.Name)
+                .ToList();
+            commandDropdown.AddOptions(optionList);
 
-            _numOfEffectsInput.onValueChanged.AddListener(OnNumOfEffectsChanged);
+            _baseNumOfEffectsInput.onEndEdit.AddListener(OnNumOfBaseCommandsChanged);
+            _upgradedNumOfEffectsInput.onEndEdit.AddListener(OnNumOfUpgradedCommandsChanged);
         }
 
         public void RefreshAll() {
@@ -95,7 +105,7 @@ namespace GameEditor {
             _baseDescription.text = "";
             _upgradeDescription.text = "";
             _variables.text = "";
-            _numOfEffectsInput.text = "0";
+            _baseNumOfEffectsInput.text = "0";
         }
 
         public void ChangeInfo(CardInfo info) {
@@ -111,10 +121,10 @@ namespace GameEditor {
             _upgradeDescription.text = info.upgradeDescription;
             _variables.text = info.variables;
     
-            if (info.baseEffects == null)
-                _numOfEffectsInput.text = "0";
+            if (info.baseCommands == null)
+                _baseNumOfEffectsInput.text = "0";
             else
-                _numOfEffectsInput.text = info.baseEffects.Length.ToString();
+                _baseNumOfEffectsInput.text = info.baseCommands.Length.ToString();
         }
 
         private int GetDropdownValue(TMP_Dropdown dropdown, string value) {
@@ -128,34 +138,43 @@ namespace GameEditor {
             return idx;
         }
 
-        private void OnNumOfEffectsChanged(string str) {
+        private void OnNumOfBaseCommandsChanged(string str) {
             int numofEffects = int.Parse(str);
             numofEffects = Mathf.Clamp(numofEffects, 0, 10);
+            int siblingIndex = _baseNumOfEffectsInput.transform.parent.GetSiblingIndex();
+            OnNumOfCommandsChanged(numofEffects, siblingIndex, _baseCommandsTypeList, _baseCommandsAmountList);
+            
+        }
 
-            int prevCounts = _effectsTypeList.Count;
-            if (prevCounts < numofEffects) {
-                for (int i = 0; i < numofEffects - prevCounts; ++i) {
-                    var newEffectsInputFields = Instantiate(_effectsPrefab, transform);
-                    newEffectsInputFields.transform.SetSiblingIndex(_currentChildCount);
+        private void OnNumOfUpgradedCommandsChanged(string str) {
+            int numofEffects = int.Parse(str);
+            numofEffects = Mathf.Clamp(numofEffects, 0, 10);
+            int siblingIndex = _upgradedNumOfEffectsInput.transform.parent.GetSiblingIndex();
+            OnNumOfCommandsChanged(numofEffects, siblingIndex, _upgradedCommandsTypeList, _upgradedCommandsAmountList);
+        }
 
-                    _effectsTypeList.Add(newEffectsInputFields.GetComponentInChildren<TMP_Dropdown>());
-                    _effectsAmountList.Add(newEffectsInputFields.GetComponentInChildren<TMP_InputField>());
+        private void OnNumOfCommandsChanged(int numOfEffects, int indexStarts, List<TMP_Dropdown> typeList, List<TMP_InputField> amountList) {
+            int prevCounts = typeList.Count;
+            if (prevCounts < numOfEffects) {
+                for (int i = 0; i < numOfEffects - prevCounts; ++i) {
+                    var newEffectsInputFields = Instantiate(_commandOptionPrefab, transform);
 
-                    ++_currentChildCount;
+                    typeList.Add(newEffectsInputFields.GetComponentInChildren<TMP_Dropdown>());
+                    amountList.Add(newEffectsInputFields.GetComponentInChildren<TMP_InputField>());
+
+                    newEffectsInputFields.transform.SetSiblingIndex(indexStarts + typeList.Count);
                 }
             }
-            else if (prevCounts > numofEffects) {
-                while (prevCounts == numofEffects) {
+            else if (prevCounts > numOfEffects) {
+                while (prevCounts > numOfEffects) {
                     int lastIndex = prevCounts - 1;
+                    var content = typeList[lastIndex].transform.parent.gameObject;
 
-                    Destroy(_effectsTypeList[lastIndex].gameObject);
-                    Destroy(_effectsAmountList[lastIndex].gameObject);
-
-                    _effectsTypeList.RemoveAt(lastIndex);
-                    _effectsAmountList.RemoveAt(lastIndex);
+                    typeList.RemoveAt(lastIndex);
+                    amountList.RemoveAt(lastIndex);
+                    Destroy(content);
 
                     --prevCounts;
-                    --_currentChildCount;
                 }
             }
         }

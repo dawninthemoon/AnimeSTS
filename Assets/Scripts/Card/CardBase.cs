@@ -4,12 +4,8 @@ using UnityEngine;
 using RieslingUtils;
 
 [System.Serializable]
-public struct CardEffect {
-    public enum Type {
-        ATTACK,
-        BLOCK,
-    }
-    public Type type;
+public struct CommandInfo {
+    public ICardCommand command;
     public string amount;
 }
 
@@ -55,8 +51,8 @@ public struct CardInfo {
     [TextArea] public string baseDescription;
     [TextArea] public string upgradeDescription;
 
-    public CardEffect[] baseEffects;
-    public CardEffect[] upgradeEffects;
+    public CommandInfo[] baseCommands;
+    public CommandInfo[] upgradeCommands;
 
     [TextArea]
     public string variables;

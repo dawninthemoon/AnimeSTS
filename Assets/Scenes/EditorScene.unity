@@ -6782,7 +6782,7 @@ MonoBehaviour:
   _typeDropdown: {fileID: 1281153351}
   _targetTypeDropdown: {fileID: 1805068794}
   _colorDropdown: {fileID: 730236761}
-  _costInputField: {fileID: 1290354429}
+  _costInputField: {fileID: 1422237318}
   _upgradeCostInputField: {fileID: 1290354429}
   _baseDescription: {fileID: 1718222726}
   _upgradeDescription: {fileID: 1378107511}

@@ -35,22 +35,12 @@
             "type": 0,
             "color": 0,
             "isUpgraded": false,
-            "targetType": 0,
+            "targetType": 1,
             "cost": 1,
             "upgradeCost": 1,
             "baseDescription": "방어도를 {d} 얻습니다.\r\n피해를 {s} 줍니다.",
-            "upgradeDescription": "1",
+            "upgradeDescription": "방어도를 {D} 얻습니다.\r\n피해를 {S} 줍니다.",
             "baseCommands": [
-                {
-                    "name": "Block",
-                    "amount": "D"
-                },
-                {
-                    "name": "Attack",
-                    "amount": "S"
-                }
-            ],
-            "upgradeCommands": [
                 {
                     "name": "Block",
                     "amount": "d"
@@ -58,6 +48,16 @@
                 {
                     "name": "Attack",
                     "amount": "s"
+                }
+            ],
+            "upgradeCommands": [
+                {
+                    "name": "Block",
+                    "amount": "D"
+                },
+                {
+                    "name": "Attack",
+                    "amount": "S"
                 }
             ],
             "variables": "d=5,defense\nD=5,defense\ns=5,attack\nS=5,attack"

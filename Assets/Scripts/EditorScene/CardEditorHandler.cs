@@ -32,6 +32,7 @@ namespace GameEditor {
             cardInfo.upgradeCost = int.Parse(_cardEditorView.UpgradedCost);
             cardInfo.color = _cardEditorView.Color;
             cardInfo.rarity = _cardEditorView.Rarity;
+            cardInfo.targetType = _cardEditorView.TargetType;
             cardInfo.type = _cardEditorView.Type;
             cardInfo.baseDescription = _cardEditorView.Description;
             cardInfo.upgradeDescription = _cardEditorView.UpgradedDescription;

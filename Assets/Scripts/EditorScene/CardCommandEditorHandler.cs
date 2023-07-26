@@ -78,8 +78,8 @@ namespace GameEditor {
         }
 
         public CommandInfo[] GetCommandInformation(bool isUpgraded) {
-            List<CustomDropdown> typeList = isUpgraded ? _baseCommandsTypeList : _upgradedCommandsTypeList;
-            List<TMP_InputField> amountList = isUpgraded ? _baseCommandsAmountList : _upgradedCommandsAmountList;
+            List<CustomDropdown> typeList = isUpgraded ? _upgradedCommandsTypeList : _baseCommandsTypeList;
+            List<TMP_InputField> amountList = isUpgraded ? _upgradedCommandsAmountList : _baseCommandsAmountList;
             return GetCommandsFromEditor(typeList, amountList);
         }
 

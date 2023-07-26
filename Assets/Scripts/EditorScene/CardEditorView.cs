@@ -61,7 +61,7 @@ namespace GameEditor {
             get { return _baseDescription.text; }
         }
         public string UpgradedDescription {
-            get { return _upgradeCostInputField.text; }
+            get { return _upgradeDescription.text; }
         }
         public string Variables {
             get { return _variables.text; }

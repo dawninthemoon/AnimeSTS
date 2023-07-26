@@ -6,11 +6,15 @@ public class GameData {
     public CommandDataParser Parser {
         get; private set;
     }
+    public CardDeck Deck {
+        get; private set;
+    }
     public Dictionary<string, int> CurrentVariableData {
         get; set;
     }
-    public GameData(CommandDataParser parser) {
+    public GameData(CommandDataParser parser, CardDeck cardDeck) {
         Parser = parser;
+        Deck = cardDeck;
     }
 }
 

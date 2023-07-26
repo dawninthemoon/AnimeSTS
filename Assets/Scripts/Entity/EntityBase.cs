@@ -14,7 +14,7 @@ public struct EntityInfo {
 public class EntityBase : MonoBehaviour {
     [SerializeField] private EntityInfo _info;
 
-    private void Start() {
+    private void Awake() {
         _info.effectMap = new Dictionary<string, int>();
         _info.effectMap.Add("dexterity", 0);
         _info.effectMap.Add("strength", 0);

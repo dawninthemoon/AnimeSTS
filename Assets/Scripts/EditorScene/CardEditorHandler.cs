@@ -48,9 +48,7 @@ namespace GameEditor {
         public void OnApplyButtonPressed() {
             SaveCurrentSetting();
             CardInfo info = _cardInfoList[_cardDropdown.SelectedIndex];
-            _cardPreview.ShowCardFrame(info.color, info.rarity, info.type);
-            _cardPreview.ShowCardData(info.cardName, info.color, info.type, info.portraitName, info.cost.ToString());
-            ShowCardDescription();
+            _cardPreview.ShowCard(info, _variableParser, _playerStatus);
         }
 
 

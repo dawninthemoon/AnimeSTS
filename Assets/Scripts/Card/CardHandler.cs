@@ -14,20 +14,10 @@ public class CardHandler : MonoBehaviour, IObserver {
     private Vector3 _mouseOffset;
     private CardBase _selectedCard;
     private System.Action<CardInfo> _cardUseCallback;
+    private System.Action<CardBase> _redrawCardCallback;
 
     private void Start() {
-        _cardContainer = new CardContainer();
-/*
-        CardBase defendPrefab = Resources.Load<CardBase>("Cards/Defend");
-        CardBase strikePrefab = Resources.Load<CardBase>("Cards/Strike");
-        for (int i = 0; i < handCount; ++i) {
-            var prefab = (i < 5) ? defendPrefab : strikePrefab;
-            CardBase card = Instantiate(prefab, transform);
-            card.Initialize(this, _combatUIHandler);
-            _cardContainer.CardsInHand.Add(card);
-        }*/
-
-        AlignCards();
+        _cardContainer = new CardContainer(CreateCard);
     }
 
     [Inject]
@@ -35,11 +25,17 @@ public class CardHandler : MonoBehaviour, IObserver {
         _combatUIHandler = uiHandler;
     }
 
-    public void SetCardUseCallback(System.Action<CardInfo> callback) {
-        _cardUseCallback = callback;
+    public void InitializeBattle(GameData data) {
+        _cardContainer.Refresh(data.Deck);
+        AlignCards();
     }
 
-    public void AlignCards(){
+    public void SetCallback(System.Action<CardInfo> cardUseCallback, System.Action<CardBase> redrawCardCallback) {
+        _cardUseCallback = cardUseCallback;
+        _redrawCardCallback = redrawCardCallback;
+    }
+
+    public void AlignCards() {
         int cardCount = _cardContainer.CardsInHand.Count;
 
         for (int cardIndex = 0; cardIndex < cardCount; ++cardIndex) {
@@ -52,11 +48,11 @@ public class CardHandler : MonoBehaviour, IObserver {
             float xPos = Mathf.Lerp(-maxX, maxX, alignAmount);
             float yPos = -Mathf.Abs(Mathf.Lerp(-maxY, maxY, _alignCurve.Evaluate(alignAmount)));
             float rotZ = Mathf.Lerp(maxRotation, -maxRotation, alignAmount);
-/*
+
             Transform t = _cardContainer.CardsInHand[cardIndex].transform;
-            t.localPosition = new Vector3(xPos, yPos, -cardIndex);
+            t.localPosition = new Vector3(xPos, yPos, -cardIndex * 10f);
             t.localScale = CardBase.DefaultCardScale;
-            t.rotation = Quaternion.Euler(0f, 0f, rotZ);*/
+            t.rotation = Quaternion.Euler(0f, 0f, rotZ);
         }
     }
 
@@ -84,12 +80,24 @@ public class CardHandler : MonoBehaviour, IObserver {
             return;
         if (_selectedCard.NeedTarget() && !BattleRoom.SelectedEnemy)
             return;
-        /*
+        
         _cardContainer.CardsInHand.Remove(_selectedCard);
-        _cardContainer.CardsInDiscardPile.Add(_selectedCard);*/
+        _cardContainer.CardsInDiscardPile.Add(_selectedCard);
 
         _cardUseCallback.Invoke(_selectedCard.Info);
         Destroy(_selectedCard.gameObject);
         _selectedCard = null;
+    }
+
+    private CardBase CreateCard(CardInfo cardInfo) {
+        var cardPrefab = ResourceManager.GetInstance().GetAsset<CardBase>("Cards/CardBase");
+
+        CardBase cardInstance = Instantiate(cardPrefab, transform);
+        cardInstance.Initialize(this, _combatUIHandler);
+        cardInstance.Info = cardInfo;
+
+        _redrawCardCallback.Invoke(cardInstance);
+
+        return cardInstance;
     }
 }

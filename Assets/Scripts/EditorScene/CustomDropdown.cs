@@ -16,7 +16,6 @@ namespace GameEditor {
         [SerializeField] private Button _toggleButton = null;
         [SerializeField] private Button _createButton = null;
         [SerializeField] private Transform _contentTransform = null;
-        [SerializeField] private TMP_InputField _cardSearchInputField = null;
         [SerializeField] private TMP_Text _selectedName;
         private float _defaultToggleYScale;
         private List<string> _optionList;

@@ -18,11 +18,18 @@ public class RoomHandler : MonoBehaviour {
         _currentRoomParent = _mapSceneParent;
     }
 
+    public void InitializeData(GameData data) {
+        _battleRoomEncounter.InitializeData(data);
+        _shopRoomEncounter.InitializeData(data);
+        _chestRoomEncounter.InitializeData(data);
+        _eventRoomEncounter.InitializeData(data);
+    }
+
     public void SetOnRoomExit(OnRoomExit callback) {
         _requestedRoomExitCallback = callback;
     }
 
-    public void StartEnterRoom(EncounterType encounterType, GameData data) {
+    public void StartEnterRoom(EncounterType encounterType) {
         RoomBase targetRoom = null;
         switch (encounterType) {
         case EncounterType.MONSTER:
@@ -41,16 +48,16 @@ public class RoomHandler : MonoBehaviour {
             targetRoom = _eventRoomEncounter;
             break;
         }
-        EnterRoom(targetRoom, data);
+        EnterRoom(targetRoom);
     }
 
-    private void EnterRoom(RoomBase room, GameData data) {
+    private void EnterRoom(RoomBase room) {
         if (room == null) {
             Debug.LogError("Room Not Exists");
             return;
         }
         ChangeRoomSetting(room.transform.parent.gameObject);
-        room.OnEncounter(data);
+        room.OnEncounter();
     }
 
     private void Update() {

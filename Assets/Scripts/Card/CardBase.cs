@@ -74,7 +74,11 @@ public class CardBase : ObserverSubject {
     public static readonly Vector3 HighlightCardScale = new Vector3(0.5f, 0.5f);
 
     private void Start() {
-        
+        _cardView = GetComponent<CardView>();
+    }
+
+    public void ShowCard(CommandDataParser parser, EntityBase caster) {
+        _cardView.ShowCard(Info, parser, caster);
     }
 
     public bool NeedTarget() {
@@ -82,6 +86,7 @@ public class CardBase : ObserverSubject {
     }
 
     public void Initialize(CardHandler cardHandler, CombatUIHandler combatUIHandler) {
+        _cardView = GetComponent<CardView>();
         Attach(cardHandler);
         Attach(combatUIHandler);
     }
@@ -111,7 +116,7 @@ public class CardBase : ObserverSubject {
     }
 
     public void HighlightCard() {
-        transform.localPosition = transform.position.ChangeYPos(0f).ChangeZPos(-20f);
+        transform.localPosition = transform.localPosition.ChangeYPos(0f).ChangeZPos(-110f);
         transform.rotation = Quaternion.identity;
         transform.localScale = HighlightCardScale;
     }

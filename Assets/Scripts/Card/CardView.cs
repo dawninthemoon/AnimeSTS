@@ -10,9 +10,9 @@ public class CardView : MonoBehaviour {
     [SerializeField] private SpriteRenderer _typeFrame = null;
     [SerializeField] private SpriteRenderer _costFrame = null;
     [SerializeField] private TextMeshPro _cardText = null;
-    private TextMeshPro _nameText = null;
-    private TextMeshPro _typeText = null;
-    private TextMeshPro _costText = null;
+    [SerializeField] private TextMeshPro _nameText = null;
+    [SerializeField] private TextMeshPro _typeText = null;
+    [SerializeField] private TextMeshPro _costText = null;
     private static readonly string CardResourcesPath = "Cards/CardUI/";
     private static readonly string PortraitPath = "Cards/Portraits/";
     private static readonly string NameFrameString = "blanket";
@@ -38,13 +38,25 @@ public class CardView : MonoBehaviour {
         "_rare"
     };
 
-    private void Awake() {
-        _nameText = _nameFrame.GetComponentInChildren<TextMeshPro>();
-        _typeText = _typeFrame.GetComponentInChildren<TextMeshPro>();
-        _costText = _costFrame.GetComponentInChildren<TextMeshPro>();
+    public void ShowCard(CardInfo info, CommandDataParser parser, EntityBase caster) {
+        ShowCardFrame(info.color, info.rarity, info.type);
+        ShowCardData(info.cardName, info.color, info.type, info.portraitName, info.cost.ToString());
+
+        string description = info.baseDescription;
+        string variables = info.variables;
+
+        if (description == "") return;
+        
+        var variableData = parser.ParseVariable(variables, caster);
+        foreach (KeyValuePair<string, int> variable in variableData) {
+            string formatString = '{' + variable.Key + '}';
+            description = description.Replace(formatString, variable.Value.ToString());
+        }
+
+        ShowCardText(description);
     }
 
-    public void ShowCardFrame(CardInfo.Color color, CardInfo.Rarity rarity, CardInfo.Type type) {
+    private void ShowCardFrame(CardInfo.Color color, CardInfo.Rarity rarity, CardInfo.Type type) {
         var resourceManager = ResourceManager.GetInstance();
         
         string cardFramePath = CardResourcesPath + CardTypeStringArr[(int)type] + "_" + ColorStringArr[(int)color];
@@ -60,7 +72,7 @@ public class CardView : MonoBehaviour {
         _costFrame.sprite = resourceManager.GetSpriteByCache(costFramePath);
     }
 
-    public void ShowCardData(string cardName, CardInfo.Color color, CardInfo.Type type, string portraitName, string cost) {
+    private void ShowCardData(string cardName, CardInfo.Color color, CardInfo.Type type, string portraitName, string cost) {
         var resourceManager = ResourceManager.GetInstance();
 
         _nameText.text = cardName;

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class ShopRoom : RoomBase {
-    public override void OnEncounter(GameData data) {
+    public override void OnEncounter() {
         
     }
 }

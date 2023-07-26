@@ -73,7 +73,7 @@
             "targetType": 0,
             "cost": 1,
             "upgradeCost": 1,
-            "baseDescription": "무작위 적들에게\u000B피해를 {s} 만큼 {t}번 줍니다.",
+            "baseDescription": "무작위 적들에게\n피해를 {s} 만큼 {t}번 줍니다.",
             "upgradeDescription": "0",
             "baseCommands": [
                 {

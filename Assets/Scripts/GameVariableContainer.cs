@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameVariableContainer : MonoBehaviour {
+public class GameVariableContainer {
     private readonly Dictionary<string, int> _variables;
 
     public GameVariableContainer() {

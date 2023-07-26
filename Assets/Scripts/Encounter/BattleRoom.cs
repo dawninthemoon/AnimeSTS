@@ -9,33 +9,37 @@ public class BattleRoom : RoomBase {
     private EntityBase _player;
     private EntityBase _enemy;
     private CardHandler _cardHandler;
-    private CardContainer _cardDeck;
-    private CommandDataParser _variableParser;
     public static EntityBase SelectedEnemy;
     private CommandExecuter _commandExecuter;
-    private GameData _data;
 
     private void Awake() {
         var playerPrefab = Resources.Load<EntityBase>("Entities/Characters/character_yuri");
         _player = Instantiate(playerPrefab, _playerPosition.position, Quaternion.identity, _playerPosition);
-        _cardHandler = GetComponentInChildren<CardHandler>();
-        _cardHandler.SetCardUseCallback(OnCardUsed);
-        _commandExecuter = GetComponent<CommandExecuter>();
-    }
-    
-    public override void OnEncounter(GameData data) {
-        _data = data;
 
+        _commandExecuter = GetComponent<CommandExecuter>();
+        _cardHandler = GetComponentInChildren<CardHandler>();
+    }
+
+    private void Start() {
+        _cardHandler.SetCallback(OnCardUsed, RedrawCardView);
+        _cardHandler.InitializeBattle(_gameData);
+    }
+
+    public override void OnEncounter() {
         var enemyPrefab = Resources.Load<EntityBase>("Entities/Enemies/enemy_humTank");
         _enemy = Instantiate(enemyPrefab, _enemyPositon.position, Quaternion.identity, _enemyPositon);
     }
 
+    private void RedrawCardView(CardBase card) {
+        card.ShowCard(_gameData.Parser, _player);
+    }
+
     private void OnCardUsed(CardInfo card) {
         CommandInfo[] commands = card.isUpgraded ? card.upgradeCommands : card.baseCommands;
-        var variableData = _variableParser.ParseVariable(card.variables, _player);
+        var variableData = _gameData.Parser.ParseVariable(card.variables, _player);
 
-        _data.CurrentVariableData = variableData;        
+        _gameData.CurrentVariableData = variableData; 
 
-        _commandExecuter.ExecuteCard(commands, _data);
+        _commandExecuter.ExecuteCard(commands, _gameData);
     }
 }

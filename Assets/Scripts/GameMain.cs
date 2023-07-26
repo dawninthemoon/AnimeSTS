@@ -8,12 +8,16 @@ public class GameMain : MonoBehaviour {
     [SerializeField] private RoomHandler _roomHandler = null;
     private GameData _gameData;
 
-    private void Start() {
+    private void Awake() {
         InitializeData();
-        _gameMap.GenerateMap(OnRoomMoveRequested);
-        _gameMap.SetRoomInteractive();
+        _roomHandler.InitializeData(_gameData);
+    }
 
+    private void Start() {
+        _gameMap.GenerateMap(OnRoomMoveRequested);
         _roomHandler.SetOnRoomExit(_gameMap.OnRoomCleared);
+
+        _gameMap.SetRoomInteractive();
     }
 
     private void InitializeData() {
@@ -22,15 +26,18 @@ public class GameMain : MonoBehaviour {
 
         GameVariableContainer container = new GameVariableContainer();
         CommandDataParser parser = new CommandDataParser(container);
+        
+        CardDeck cardDeck = new CardDeck();
+        cardDeck.InitializeDeck();
 
         parser.ParseAndAdd(gameMetaData);
-        _gameData = new GameData(parser);
+        _gameData = new GameData(parser, cardDeck);
     }
 
     public void OnRoomMoveRequested(EncounterMarker target) {
         if (!_gameMap.CanMoveTo(target)) return;
 
         _gameMap.OnRoomChanged(target);
-        _roomHandler.StartEnterRoom(target.EncounterType, _gameData);
+        _roomHandler.StartEnterRoom(target.EncounterType);
     }
 }

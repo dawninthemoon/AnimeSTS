@@ -70,8 +70,8 @@ public class CardBase : ObserverSubject {
     public bool MouseExit { get; private set; }
     public bool MouseDown { get; private set; }
     public bool MouseUp { get; private set; }
-    public static readonly Vector3 DefaultCardScale = new Vector3(0.3f, 0.3f);
-    public static readonly Vector3 HighlightCardScale = new Vector3(0.5f, 0.5f);
+    public static readonly Vector3 DefaultCardScale = new Vector3(0.3f, 0.3f, 1f);
+    public static readonly Vector3 HighlightCardScale = new Vector3(0.5f, 0.5f, 1f);
 
     private void Start() {
         _cardView = GetComponent<CardView>();
@@ -116,7 +116,7 @@ public class CardBase : ObserverSubject {
     }
 
     public void HighlightCard() {
-        transform.localPosition = transform.localPosition.ChangeYPos(0f).ChangeZPos(-110f);
+        transform.localPosition = transform.position.ChangeYPos(0f).ChangeZPos(-110f);
         transform.rotation = Quaternion.identity;
         transform.localScale = HighlightCardScale;
     }

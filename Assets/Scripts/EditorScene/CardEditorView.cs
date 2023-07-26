@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using RieslingUtils;
-using System.Linq;
 
 namespace GameEditor {
     public class CardEditorView : MonoBehaviour {
@@ -19,13 +18,7 @@ namespace GameEditor {
         [SerializeField] private TMP_InputField _baseDescription = null;
         [SerializeField] private TMP_InputField _upgradeDescription = null;
         [SerializeField] private TMP_InputField _variables = null;
-        [SerializeField] private TMP_InputField _baseNumOfEffectsInput = null;
-        [SerializeField] private TMP_InputField _upgradedNumOfEffectsInput = null;
         #endregion
-
-        [SerializeField] private GameObject _commandOptionPrefab = null;
-        private List<TMP_Dropdown> _baseCommandsTypeList, _upgradedCommandsTypeList;
-        private List<TMP_InputField> _baseCommandsAmountList, _upgradedCommandsAmountList;
 
         #region Properties
         public string CardName {
@@ -74,30 +67,17 @@ namespace GameEditor {
             get { return _variables.text; }
         }
         public CommandInfo[] BaseCommands {
-            get { return GetCommandsFromEditor(_baseCommandsTypeList, _baseCommandsAmountList); }
+            get { return _commandEditor.GetCommandInformation(false); }
         }
         public CommandInfo[] UpgradedCommands {
-            get { return GetCommandsFromEditor(_upgradedCommandsTypeList, _upgradedCommandsAmountList); }
+            get { return _commandEditor.GetCommandInformation(true); }
         }
         #endregion
+
+        private CardCommandEditorHandler _commandEditor;
         
         private void Start() {
-            _baseCommandsTypeList = new List<TMP_Dropdown>();
-            _baseCommandsAmountList = new List<TMP_InputField>();
-            _upgradedCommandsTypeList = new List<TMP_Dropdown>();
-            _upgradedCommandsAmountList = new List<TMP_InputField>();
-
-            var nestedType = typeof(CardCommand).GetNestedTypes(System.Reflection.BindingFlags.Public);
-            var commandDropdown = _commandOptionPrefab.GetComponentInChildren<TMP_Dropdown>();
-            List<string> optionList = nestedType
-                .Where(type => (type.GetInterface("ICardCommand") != null))
-                .Select(type => type.Name)
-                .ToList();
-            commandDropdown.options.Clear();
-            commandDropdown.AddOptions(optionList);
-
-            _baseNumOfEffectsInput.onEndEdit.AddListener(OnNumOfBaseCommandsChanged);
-            _upgradedNumOfEffectsInput.onEndEdit.AddListener(OnNumOfUpgradedCommandsChanged);
+            _commandEditor = GetComponent<CardCommandEditorHandler>();
         }
 
         public void RefreshAll() {
@@ -112,7 +92,7 @@ namespace GameEditor {
             _baseDescription.text = "";
             _upgradeDescription.text = "";
             _variables.text = "";
-            _baseNumOfEffectsInput.text = "0";
+            _commandEditor.RefreshCommandEditor();
         }
 
         public void ChangeInfo(CardInfo info) {
@@ -127,30 +107,7 @@ namespace GameEditor {
             _baseDescription.text = info.baseDescription;
             _upgradeDescription.text = info.upgradeDescription;
             _variables.text = info.variables;
-    
-            if (info.baseCommands == null) {
-                _baseNumOfEffectsInput.text = "0";
-            }
-            else {
-                _baseNumOfEffectsInput.text = info.baseCommands.Length.ToString();
-                OnNumOfBaseCommandsChanged(_baseNumOfEffectsInput.text);
-                for (int i = 0; i < _baseCommandsTypeList.Count; ++i) {
-                    _baseCommandsTypeList[i].value = GetDropdownValue(_baseCommandsTypeList[i], info.baseCommands[i].name);
-                    _baseCommandsAmountList[i].text = info.baseCommands[i].amount;
-                }
-            }
-
-            if (info.upgradeCommands == null) {
-                _upgradedNumOfEffectsInput.text = "0";
-            }
-            else {
-                _upgradedNumOfEffectsInput.text = info.upgradeCommands.Length.ToString();
-                OnNumOfUpgradedCommandsChanged(_upgradedNumOfEffectsInput.text);
-                for (int i = 0; i < _upgradedCommandsTypeList.Count; ++i) {
-                    _upgradedCommandsTypeList[i].value = GetDropdownValue(_upgradedCommandsTypeList[i], info.upgradeCommands[i].name);
-                    _upgradedCommandsAmountList[i].text = info.upgradeCommands[i].amount;
-                }
-            }
+            _commandEditor.RefreshCommandEditor(info);
         }
 
         private int GetDropdownValue(TMP_Dropdown dropdown, string value) {
@@ -162,57 +119,6 @@ namespace GameEditor {
                 ++idx;
             }
             return idx;
-        }
-
-        private void OnNumOfBaseCommandsChanged(string str) {
-            int numofEffects = int.Parse(str);
-            numofEffects = Mathf.Clamp(numofEffects, 0, 10);
-            int siblingIndex = _baseNumOfEffectsInput.transform.parent.GetSiblingIndex();
-            OnNumOfCommandsChanged(numofEffects, siblingIndex, _baseCommandsTypeList, _baseCommandsAmountList);
-            
-        }
-
-        private void OnNumOfUpgradedCommandsChanged(string str) {
-            int numofEffects = int.Parse(str);
-            numofEffects = Mathf.Clamp(numofEffects, 0, 10);
-            int siblingIndex = _upgradedNumOfEffectsInput.transform.parent.GetSiblingIndex();
-            OnNumOfCommandsChanged(numofEffects, siblingIndex, _upgradedCommandsTypeList, _upgradedCommandsAmountList);
-        }
-
-        private void OnNumOfCommandsChanged(int numOfEffects, int indexStarts, List<TMP_Dropdown> typeList, List<TMP_InputField> amountList) {
-            int prevCounts = typeList.Count;
-            if (prevCounts < numOfEffects) {
-                for (int i = 0; i < numOfEffects - prevCounts; ++i) {
-                    var newEffectsInputFields = Instantiate(_commandOptionPrefab, transform);
-
-                    typeList.Add(newEffectsInputFields.GetComponentInChildren<TMP_Dropdown>());
-                    amountList.Add(newEffectsInputFields.GetComponentInChildren<TMP_InputField>());
-
-                    newEffectsInputFields.transform.SetSiblingIndex(indexStarts + typeList.Count);
-                }
-            }
-            else if (prevCounts > numOfEffects) {
-                while (prevCounts > numOfEffects) {
-                    int lastIndex = prevCounts - 1;
-                    var content = typeList[lastIndex].transform.parent.gameObject;
-
-                    typeList.RemoveAt(lastIndex);
-                    amountList.RemoveAt(lastIndex);
-                    Destroy(content);
-
-                    --prevCounts;
-                }
-            }
-        }
-
-        private CommandInfo[] GetCommandsFromEditor(List<TMP_Dropdown> typeList, List<TMP_InputField> amountList) {
-            CommandInfo[] commands = new CommandInfo[typeList.Count];
-            for (int i = 0; i < commands.Length; ++i) {
-                string name = typeList[i].options[typeList[i].value].text;
-                string amount = amountList[i].text;
-                commands[i] = new CommandInfo(name, amount);
-            }
-            return commands;
         }
     }
 }

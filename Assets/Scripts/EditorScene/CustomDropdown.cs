@@ -21,15 +21,26 @@ namespace GameEditor {
         private List<string> _optionList;
         private GameObject _selectedContent;
         public int SelectedIndex { get; private set; }
+        public string CurrentOptionName {
+            get { return _optionList[SelectedIndex]; }
+        }
 
         private void Start() {
             _toggleButton.onClick.AddListener(Toggle);
-            _createButton.onClick.AddListener(CreateNew);
-
+            _createButton?.onClick.AddListener(CreateNew);
             InitalizeContent();
         }
 
-        private void InitalizeContent() {
+        public void InitializeDropdownSettings(UnityEvent<List<string>> getModelCallback, UnityEvent onOptionSelected, UnityEvent onOptionCreated) {
+            _getModelCallback = getModelCallback;
+            _onOptionSelected = onOptionSelected;
+            _onOptionCreated = onOptionCreated;
+            InitalizeContent();
+        }
+
+        public void InitalizeContent() {
+            if (_optionList != null || _getModelCallback == null) return;
+
             _optionList = new List<string>();
             _getModelCallback.Invoke(_optionList);
 
@@ -44,15 +55,30 @@ namespace GameEditor {
             _additionalWindow.SetActive(!_additionalWindow.activeSelf);
         }
 
+        private void CloseAdditionalWindow() {
+            var triangleImage = _toggleButton.transform.GetChild(0);
+            triangleImage.localScale = new Vector3(1f, -1f, 1f);
+            _additionalWindow.SetActive(false);
+        }
+
         private void CreateContent(string name, int index) {
             var newContent = Instantiate(_contentPrefab, _contentTransform);
             newContent.GetComponentInChildren<TMP_Text>().text = name;
             newContent.onClick.AddListener(() => OnOptionSelected(index));
         }
 
+        public void SetOptionByName(string name) {
+            for (int i = 0; i < _optionList.Count; ++i) {
+                if (_optionList[i].Equals(name)) {
+                    OnOptionSelected(i);
+                    break;
+                }
+            }
+        }
+
         public void CreateNew() {
             CreateContent("New Content", _contentTransform.childCount);
-            _onOptionCreated.Invoke();
+            _onOptionCreated?.Invoke();
         }
 
         public void OnCurrentOptionChanged(string str) {
@@ -62,10 +88,11 @@ namespace GameEditor {
         }
 
         private void OnOptionSelected(int index) {
+            _selectedName.text = _optionList[index];
             _selectedContent = _contentTransform.GetChild(index).gameObject;
             SelectedIndex = index;
-            Toggle();
-            _onOptionSelected.Invoke();
+            CloseAdditionalWindow();
+            _onOptionSelected?.Invoke();
         }
 
         public void OnSearchEndEdit(TMP_InputField input) {

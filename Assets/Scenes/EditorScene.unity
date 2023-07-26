@@ -3603,7 +3603,7 @@ GameObject:
   m_Component:
   - component: {fileID: 488676010}
   m_Layer: 5
-  m_Name: CardCommands
+  m_Name: BaseCardCommands
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5201,8 +5201,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 502, y: -73}
-  m_SizeDelta: {x: 494.6, y: 47.46}
+  m_AnchoredPosition: {x: 530.72, y: -73}
+  m_SizeDelta: {x: 437.15, y: 47.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &705491906
 MonoBehaviour:
@@ -6680,6 +6680,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 795901704}
+  - component: {fileID: 795901708}
   - component: {fileID: 795901707}
   - component: {fileID: 795901706}
   - component: {fileID: 795901705}
@@ -6786,6 +6787,18 @@ MonoBehaviour:
   _baseDescription: {fileID: 1718222726}
   _upgradeDescription: {fileID: 1378107511}
   _variables: {fileID: 835542388}
+--- !u!114 &795901708
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 795901703}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f97011aeaa912314fba07eddd8ea5515, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
   _baseNumOfEffectsInput: {fileID: 705491906}
   _upgradedNumOfEffectsInput: {fileID: 1642591020}
   _commandOptionPrefab: {fileID: 727361053451513834, guid: 16e23c30dddd90b4f8357c9e57eaf500, type: 3}
@@ -14370,8 +14383,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 502, y: -73}
-  m_SizeDelta: {x: 494.6, y: 47.46}
+  m_AnchoredPosition: {x: 530.72, y: -73}
+  m_SizeDelta: {x: 437.15, y: 47.46}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1642591020
 MonoBehaviour:

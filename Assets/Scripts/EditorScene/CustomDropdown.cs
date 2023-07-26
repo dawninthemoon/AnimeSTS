@@ -18,11 +18,16 @@ namespace GameEditor {
         [SerializeField] private Transform _contentTransform = null;
         [SerializeField] private TMP_InputField _cardSearchInputField = null;
         [SerializeField] private TMP_Text _selectedName;
+        private float _defaultToggleYScale;
         private List<string> _optionList;
         private GameObject _selectedContent;
         public int SelectedIndex { get; private set; }
         public string CurrentOptionName {
             get { return _optionList[SelectedIndex]; }
+        }
+
+        private void Awake() {
+            _defaultToggleYScale = _toggleButton.transform.GetChild(0).localScale.y;
         }
 
         private void Start() {
@@ -57,7 +62,7 @@ namespace GameEditor {
 
         private void CloseAdditionalWindow() {
             var triangleImage = _toggleButton.transform.GetChild(0);
-            triangleImage.localScale = new Vector3(1f, -1f, 1f);
+            triangleImage.localScale = new Vector3(1f, _defaultToggleYScale, 1f);
             _additionalWindow.SetActive(false);
         }
 

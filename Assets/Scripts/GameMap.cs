@@ -12,8 +12,8 @@ public class GameMap : MonoBehaviour {
     private CustomGrid<EncounterMarker> _mapGrid;
     private MapGenerator _generator;
     private EncounterMarker _neowEncounterPrefab;
+    private EncounterMarker _prevRoom;
     private EncounterMarker _currentRoom;
-    private RoomHandler _roomHandler;
     private bool _isRoomChanged;
 
     public void Awake() {
@@ -21,17 +21,11 @@ public class GameMap : MonoBehaviour {
         _generator = GetComponent<MapGenerator>();
     }
 
-    [Inject]
-    private void Initialize(RoomHandler roomHandler) {
-        _roomHandler = roomHandler;
-        _roomHandler.SetOnRoomExit(SetRoomInteractive);
-    }
-
-    public void GenerateMap() {
+    public void GenerateMap(OnMarkerSelected onMarkerSelected) {
         List<int>[] pathList = new List<int>[6];
         
         _mapGrid = _generator.GeneratePath(pathList);
-        _generator.GenerateNodes(_mapGrid, pathList, MoveRoom);
+        _generator.GenerateNodes(_mapGrid, pathList, onMarkerSelected);
         _generator.GenerateVertices(_mapGrid, pathList);
 
         _currentRoom = Instantiate(_neowEncounterPrefab, Vector3.zero, Quaternion.identity);
@@ -48,16 +42,19 @@ public class GameMap : MonoBehaviour {
         }
     }
 
-    private void MoveRoom(EncounterMarker target) {
-        if (!_currentRoom.AdjustSet.Contains(target))
-            return;
+    public bool CanMoveTo(EncounterMarker target) {
+        return _currentRoom.AdjustSet.Contains(target);
+    }
 
+    public void OnRoomChanged(EncounterMarker target) {
         _isRoomChanged = true;
-
-        _roomHandler.StartEnterRoom(target.EncounterType);
-        
-        _generator.WriteRoomComplete(target.transform.position);
+        _prevRoom = _currentRoom;
         _currentRoom = target;
+    }
+
+    public void OnRoomCleared() {
+        _generator.WriteRoomComplete(_prevRoom.transform.position);
+        SetRoomInteractive();
     }
 
     private IEnumerator HighlightRoom(EncounterMarker room) {

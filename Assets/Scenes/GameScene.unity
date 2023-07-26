@@ -942,6 +942,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _gameMap: {fileID: 1805009676}
+  _roomHandler: {fileID: 852809602}
 --- !u!4 &554597476
 Transform:
   m_ObjectHideFlags: 0
@@ -1017,8 +1018,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 0
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
-  m_sharedMaterial: {fileID: -1746508888712612689, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1228,8 +1229,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 61/68
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
-  m_sharedMaterial: {fileID: -1746508888712612689, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -1392,6 +1393,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _mapSceneParent: {fileID: 112065162}
+  _battleRoomEncounter: {fileID: 439318626}
+  _shopRoomEncounter: {fileID: 12834300}
+  _chestRoomEncounter: {fileID: 1440030850}
+  _eventRoomEncounter: {fileID: 816236405}
 --- !u!1 &905986104
 GameObject:
   m_ObjectHideFlags: 0
@@ -1764,8 +1769,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: 99
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
-  m_sharedMaterial: {fileID: -1746508888712612689, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -2503,8 +2508,8 @@ MonoBehaviour:
       m_Calls: []
   m_text: Yuri
   m_isRightToLeft: 0
-  m_fontAsset: {fileID: 11400000, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
-  m_sharedMaterial: {fileID: -1746508888712612689, guid: e956bfc0c05a0ac4db35fda8c08c8c0c, type: 2}
+  m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []

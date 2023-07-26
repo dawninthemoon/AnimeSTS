@@ -16,13 +16,13 @@
             "baseCommands": [
                 {
                     "name": "Block",
-                    "amount": "d"
+                    "value": "d"
                 }
             ],
             "upgradeCommands": [
                 {
                     "name": "Block",
-                    "amount": "D"
+                    "value": "D"
                 }
             ],
             "variables": "d=5,defense\nD=8,defense"
@@ -43,21 +43,21 @@
             "baseCommands": [
                 {
                     "name": "Block",
-                    "amount": "d"
+                    "value": "d"
                 },
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 }
             ],
             "upgradeCommands": [
                 {
                     "name": "Block",
-                    "amount": "D"
+                    "value": "D"
                 },
                 {
                     "name": "Attack",
-                    "amount": "S"
+                    "value": "S"
                 }
             ],
             "variables": "d=5,defense\nD=5,defense\ns=5,attack\nS=5,attack"
@@ -78,33 +78,33 @@
             "baseCommands": [
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 }
             ],
             "upgradeCommands": [
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 }
             ],
             "variables": "s=3,attack\nt=3\nT=4"
@@ -125,21 +125,21 @@
             "baseCommands": [
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "s"
+                    "value": "s"
                 }
             ],
             "upgradeCommands": [
                 {
                     "name": "Attack",
-                    "amount": "S"
+                    "value": "S"
                 },
                 {
                     "name": "Attack",
-                    "amount": "S"
+                    "value": "S"
                 }
             ],
             "variables": "s=5,attack\nS=7,attack"

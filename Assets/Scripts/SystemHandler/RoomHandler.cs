@@ -9,28 +9,10 @@ public class RoomHandler : MonoBehaviour {
     public delegate void OnRoomExit();
     private OnRoomExit _requestedRoomExitCallback;
 
-    private BattleRoom _battleRoomEncounter;
-    private ShopRoom _shopRoomEncounter;
-    private ChestRoom _chestRoomEncounter;
-    private EventRoom _eventRoomEncounter;
-
-    [Inject]
-    private void Initialize(RoomBase[] encounters) {
-        foreach (RoomBase encounter in encounters) {
-            if (encounter is BattleRoom) {
-                _battleRoomEncounter = encounter as BattleRoom;
-            }
-            else if (encounter is EventRoom) {
-                _eventRoomEncounter = encounter as EventRoom;
-            }
-            else if (encounter is ShopRoom) {
-                _shopRoomEncounter = encounter as ShopRoom;
-            }
-            else if (encounter is ChestRoom) {
-                _chestRoomEncounter = encounter as ChestRoom;
-            }
-        }
-    }
+    [SerializeField] private BattleRoom _battleRoomEncounter = null;
+    [SerializeField] private ShopRoom _shopRoomEncounter = null;
+    [SerializeField] private ChestRoom _chestRoomEncounter = null;
+    [SerializeField] private EventRoom _eventRoomEncounter = null;
 
     private void Start() {
         _currentRoomParent = _mapSceneParent;

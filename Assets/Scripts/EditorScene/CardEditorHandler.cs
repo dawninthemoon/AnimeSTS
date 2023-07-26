@@ -9,7 +9,7 @@ namespace GameEditor {
         [SerializeField] private EntityBase _playerStatus = null;
         [SerializeField] private CustomDropdown _cardDropdown = null;
         private List<CardInfo> _cardInfoList;
-        private CardVariableParser _variableParser;
+        private CommandDataParser _variableParser;
         private CardBase _cardBase;
 
         private void Awake() {
@@ -21,7 +21,8 @@ namespace GameEditor {
         }
 
         private void Start() {
-            _variableParser = new CardVariableParser(_playerStatus);
+            GameVariableContainer gameVariables = new GameVariableContainer();
+            _variableParser = new CommandDataParser(gameVariables);
         }
         
         private void SaveCurrentSetting() {
@@ -71,7 +72,7 @@ namespace GameEditor {
 
             if (description == "") return;
             
-            var variableData = _variableParser.Parse(variables);
+            var variableData = _variableParser.ParseVariable(_playerStatus, variables);
             foreach (KeyValuePair<string, int> variable in variableData) {
                 string formatString = '{' + variable.Key + '}';
                 description = description.Replace(formatString, variable.Value.ToString());

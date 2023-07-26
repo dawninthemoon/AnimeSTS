@@ -10,14 +10,13 @@ public class BattleRoom : RoomBase {
     private EntityBase _enemy;
     private CardHandler _cardHandler;
     private CardContainer _cardDeck;
-    private CardVariableParser _variableParser;
+    private CommandDataParser _variableParser;
     public static EntityBase SelectedEnemy;
 
     private void Awake() {
         var playerPrefab = Resources.Load<EntityBase>("Entities/Characters/character_yuri");
         _player = Instantiate(playerPrefab, _playerPosition.position, Quaternion.identity, _playerPosition);
         _cardHandler = GetComponentInChildren<CardHandler>();
-        _variableParser = new CardVariableParser(_player);
 
         _cardHandler.SetCardUseCallback(OnCardUsed);
     }
@@ -33,7 +32,7 @@ public class BattleRoom : RoomBase {
 
     private void OnCardUsed(CardInfo card) {
         CommandInfo[] effects = card.isUpgraded ? card.upgradeCommands : card.baseCommands;
-        var variableData = _variableParser.Parse(card.variables);
+        var variableData = _variableParser.ParseVariable(_player, card.variables);
         /*foreach (CommandInfo effect in effects) {
             ApplyEffect(effect.type, variableData[effect.amount]);
         }*/

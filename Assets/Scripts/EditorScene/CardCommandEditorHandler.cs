@@ -31,9 +31,9 @@ namespace GameEditor {
         private void SetCommandsName(List<string> commandList) {
             commandList.Clear();
 
-            var nestedType = typeof(CardCommand).GetNestedTypes(System.Reflection.BindingFlags.Public);
+            var nestedType = typeof(BattleCommand).GetNestedTypes(System.Reflection.BindingFlags.Public);
             var tempList = nestedType
-                    .Where(type => (type.GetInterface("ICardCommand") != null))
+                    .Where(type => (type.GetInterface("IBattleCommand") != null))
                     .Select(type => type.Name)
                     .ToList();
 
@@ -59,7 +59,7 @@ namespace GameEditor {
                 OnNumOfBaseCommandsChanged(_baseNumOfEffectsInput.text);
                 for (int i = 0; i < _baseCommandsTypeList.Count; ++i) {
                     _baseCommandsTypeList[i].SetOptionByName(card.baseCommands[i].name);
-                    _baseCommandsAmountList[i].text = card.baseCommands[i].amount;
+                    _baseCommandsAmountList[i].text = card.baseCommands[i].value;
                 }
             }
 
@@ -72,7 +72,7 @@ namespace GameEditor {
                 OnNumOfUpgradedCommandsChanged(_upgradedNumOfEffectsInput.text);
                 for (int i = 0; i < _upgradedCommandsTypeList.Count; ++i) {
                     _upgradedCommandsTypeList[i].SetOptionByName(card.upgradeCommands[i].name);
-                    _upgradedCommandsAmountList[i].text = card.upgradeCommands[i].amount;
+                    _upgradedCommandsAmountList[i].text = card.upgradeCommands[i].value;
                 }
             }
         }

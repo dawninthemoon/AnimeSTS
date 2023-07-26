@@ -6,10 +6,10 @@ using RieslingUtils;
 [System.Serializable]
 public struct CommandInfo {
     public string name;
-    public string amount;
+    public string value;
     public CommandInfo(string name, string amount) {
         this.name = name;
-        this.amount = amount;
+        this.value = amount;
     }
 }
 

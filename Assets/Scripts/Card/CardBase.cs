@@ -17,8 +17,7 @@ public struct CommandInfo {
 public struct CardInfo {
     public enum TargetType {
         NONE,
-        TARGET,
-        RANDOM
+        TARGET
     }
 
     public enum Rarity {
@@ -52,13 +51,12 @@ public struct CardInfo {
     public int cost;
     public int upgradeCost;
 
-    [TextArea] public string baseDescription;
-    [TextArea] public string upgradeDescription;
+    public string baseDescription;
+    public string upgradeDescription;
 
     public CommandInfo[] baseCommands;
     public CommandInfo[] upgradeCommands;
 
-    [TextArea]
     public string variables;
 }
 

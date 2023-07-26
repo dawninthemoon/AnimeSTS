@@ -9,12 +9,22 @@
             "color": 0,
             "isUpgraded": false,
             "targetType": 0,
-            "cost": 1,
+            "cost": 0,
             "upgradeCost": 0,
             "baseDescription": "방어도를 {d}만큼 얻습니다.",
-            "upgradeDescription": "1",
-            "baseCommands": [],
-            "upgradeCommands": [],
+            "upgradeDescription": "0",
+            "baseCommands": [
+                {
+                    "name": "Block",
+                    "amount": "d"
+                }
+            ],
+            "upgradeCommands": [
+                {
+                    "name": "Block",
+                    "amount": "D"
+                }
+            ],
             "variables": "d=5,defense\nD=8,defense"
         },
         {
@@ -26,10 +36,10 @@
             "color": 0,
             "isUpgraded": false,
             "targetType": 0,
-            "cost": 1,
+            "cost": 0,
             "upgradeCost": 0,
             "baseDescription": "방어도를 {d} 얻습니다.\r\n피해를 {s} 줍니다.",
-            "upgradeDescription": "1",
+            "upgradeDescription": "0",
             "baseCommands": [
                 {
                     "name": "Block",
@@ -61,43 +71,43 @@
             "color": 0,
             "isUpgraded": false,
             "targetType": 0,
-            "cost": 1,
+            "cost": 0,
             "upgradeCost": 0,
-            "baseDescription": "무작위 적들에게\u000B피해를 3 만큼 {t}번 줍니다.",
-            "upgradeDescription": "1",
+            "baseDescription": "무작위 적들에게\u000B피해를 {s} 만큼 {t}번 줍니다.",
+            "upgradeDescription": "0",
             "baseCommands": [
                 {
                     "name": "Attack",
-                    "amount": "3"
+                    "amount": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "3"
+                    "amount": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "3"
+                    "amount": "s"
                 }
             ],
             "upgradeCommands": [
                 {
                     "name": "Attack",
-                    "amount": "3"
+                    "amount": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "3"
+                    "amount": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "3"
+                    "amount": "s"
                 },
                 {
                     "name": "Attack",
-                    "amount": "3"
+                    "amount": "s"
                 }
             ],
-            "variables": "t=3\nT=4"
+            "variables": "s=3,attack\nt=3\nT=4"
         },
         {
             "cardID": "",
@@ -108,10 +118,10 @@
             "color": 0,
             "isUpgraded": false,
             "targetType": 0,
-            "cost": 1,
+            "cost": 0,
             "upgradeCost": 0,
             "baseDescription": "피해를 {s} 만큼 2번 줍니다.",
-            "upgradeDescription": "1",
+            "upgradeDescription": "0",
             "baseCommands": [
                 {
                     "name": "Attack",

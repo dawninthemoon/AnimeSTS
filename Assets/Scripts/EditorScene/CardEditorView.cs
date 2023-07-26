@@ -128,10 +128,29 @@ namespace GameEditor {
             _upgradeDescription.text = info.upgradeDescription;
             _variables.text = info.variables;
     
-            if (info.baseCommands == null)
+            if (info.baseCommands == null) {
                 _baseNumOfEffectsInput.text = "0";
-            else
+            }
+            else {
                 _baseNumOfEffectsInput.text = info.baseCommands.Length.ToString();
+                OnNumOfBaseCommandsChanged(_baseNumOfEffectsInput.text);
+                for (int i = 0; i < _baseCommandsTypeList.Count; ++i) {
+                    _baseCommandsTypeList[i].value = GetDropdownValue(_baseCommandsTypeList[i], info.baseCommands[i].name);
+                    _baseCommandsAmountList[i].text = info.baseCommands[i].amount;
+                }
+            }
+
+            if (info.upgradeCommands == null) {
+                _upgradedNumOfEffectsInput.text = "0";
+            }
+            else {
+                _upgradedNumOfEffectsInput.text = info.upgradeCommands.Length.ToString();
+                OnNumOfUpgradedCommandsChanged(_upgradedNumOfEffectsInput.text);
+                for (int i = 0; i < _upgradedCommandsTypeList.Count; ++i) {
+                    _upgradedCommandsTypeList[i].value = GetDropdownValue(_upgradedCommandsTypeList[i], info.upgradeCommands[i].name);
+                    _upgradedCommandsAmountList[i].text = info.upgradeCommands[i].amount;
+                }
+            }
         }
 
         private int GetDropdownValue(TMP_Dropdown dropdown, string value) {

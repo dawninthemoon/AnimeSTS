@@ -78,10 +78,10 @@ namespace GameEditor {
             _cardPreview.ShowCardText(description);
         }
 
-        public void SetCardList(List<CardInfo> cardNameList) {
+        public void SetCardList(List<string> cardNameList) {
             cardNameList.Clear();
             for (int i = 0; i < _cardInfoList.Count; ++i) {
-                cardNameList.Add(_cardInfoList[i]);
+                cardNameList.Add(_cardInfoList[i].cardName);
             }
         }
 
@@ -100,7 +100,7 @@ namespace GameEditor {
         }
 
         public void OnCardChanged(CardInfo value) {
-            _cardDropdown.OnCurrentOptionChanged(value);
+            _cardDropdown.OnCurrentOptionChanged(value.cardName);
         }
 
         public CardInfo[] GetAllCardInformation() {

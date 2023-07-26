@@ -8,7 +8,7 @@ using RieslingUtils;
 
 namespace GameEditor {
     public class CustomDropdown : MonoBehaviour {
-        [SerializeField] private UnityEvent<List<CardInfo>> _getModelCallback = null;
+        [SerializeField] private UnityEvent<List<string>> _getModelCallback = null;
         [SerializeField] private UnityEvent _onOptionSelected = null;
         [SerializeField] private UnityEvent _onOptionCreated = null;
         [SerializeField] private Button _contentPrefab = null;
@@ -18,7 +18,7 @@ namespace GameEditor {
         [SerializeField] private Transform _contentTransform = null;
         [SerializeField] private TMP_InputField _cardSearchInputField = null;
         [SerializeField] private TMP_Text _selectedName;
-        private List<CardInfo> _cardList;
+        private List<string> _optionList;
         private GameObject _selectedContent;
         public int SelectedIndex { get; private set; }
 
@@ -30,11 +30,11 @@ namespace GameEditor {
         }
 
         private void InitalizeContent() {
-            _cardList = new List<CardInfo>();
-            _getModelCallback.Invoke(_cardList);
+            _optionList = new List<string>();
+            _getModelCallback.Invoke(_optionList);
 
-            for (int i = 0; i < _cardList.Count; ++i) {
-                CreateContent(_cardList[i].cardName, i);
+            for (int i = 0; i < _optionList.Count; ++i) {
+                CreateContent(_optionList[i], i);
             }
         }
 
@@ -55,10 +55,10 @@ namespace GameEditor {
             _onOptionCreated.Invoke();
         }
 
-        public void OnCurrentOptionChanged(CardInfo card) {
-            _cardList[SelectedIndex] = card;
-            _selectedName.text = card.cardName;
-            _selectedContent.GetComponentInChildren<TMP_Text>().text = card.cardName;
+        public void OnCurrentOptionChanged(string str) {
+            _optionList[SelectedIndex] = str;
+            _selectedName.text = str;
+            _selectedContent.GetComponentInChildren<TMP_Text>().text = str;
         }
 
         private void OnOptionSelected(int index) {
@@ -74,19 +74,10 @@ namespace GameEditor {
         }
 
         public void FilterWithRegex(string pattern, bool isNull) {
-            for (int i = 0; i < _cardList.Count; ++i) {
+            for (int i = 0; i < _optionList.Count; ++i) {
                 GameObject content = _contentTransform.GetChild(i).gameObject;
-                if (CheckAndActive(content, _cardList[i].cardName)) continue;
-                if (CheckAndActive(content, _cardList[i].type.ToString())) continue;
-                if (CheckAndActive(content, _cardList[i].targetType.ToString())) continue;
-                if (CheckAndActive(content, _cardList[i].color.ToString())) continue;
-                if (CheckAndActive(content, _cardList[i].rarity.ToString())) continue;
-            }
-
-            bool CheckAndActive(GameObject content, string str) {
-                bool active = isNull || StringUtils.Contains(str, pattern);
+                bool active = isNull || StringUtils.Contains(_optionList[i], pattern);
                 content.transform.gameObject.SetActive(active);
-                return active;
             }
         }
     }

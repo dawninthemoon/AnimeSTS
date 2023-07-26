@@ -85,7 +85,7 @@ namespace GameEditor {
 
             bool CheckAndActive(GameObject content, string str) {
                 bool active = isNull || StringUtils.Contains(str, pattern);
-                content.transform.parent.gameObject.SetActive(active);
+                content.transform.gameObject.SetActive(active);
                 return active;
             }
         }

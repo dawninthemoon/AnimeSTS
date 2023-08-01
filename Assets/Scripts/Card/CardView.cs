@@ -40,7 +40,7 @@ public class CardView : MonoBehaviour {
 
     public void ShowCard(CardInfo info, CommandDataParser parser, EntityBase caster) {
         ShowCardFrame(info.color, info.rarity, info.type);
-        ShowCardData(info.cardName, info.color, info.type, info.portraitName, info.cost.ToString());
+        ShowCardData(info.cardName, info.color, info.type, info.portraitName, info.cost);
 
         string description = info.baseDescription;
         string variables = info.variables;

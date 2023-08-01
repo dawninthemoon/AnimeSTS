@@ -102,7 +102,7 @@ namespace GameEditor {
             _typeDropdown.value = GetDropdownValue(_typeDropdown, info.type.ToString());
             _targetTypeDropdown.value = GetDropdownValue(_targetTypeDropdown, info.targetType.ToString());
             _colorDropdown.value = GetDropdownValue(_colorDropdown, info.color.ToString());
-            _costInputField.text = info.cost.ToString();
+            _costInputField.text = info.cost;
             _upgradeCostInputField.text = info.upgradeCost.ToString();
             _baseDescription.text = info.baseDescription;
             _upgradeDescription.text = info.upgradeDescription;

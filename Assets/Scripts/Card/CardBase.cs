@@ -48,8 +48,8 @@ public struct CardInfo {
     public bool isUpgraded;
     public TargetType targetType;
 
-    public int cost;
-    public int upgradeCost;
+    public string cost;
+    public string upgradeCost;
 
     public string baseDescription;
     public string upgradeDescription;

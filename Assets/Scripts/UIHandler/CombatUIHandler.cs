@@ -1,15 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using RieslingUtils;
+using UnityEngine.UI;
+using TMPro;
 
 public class CombatUIHandler : MonoBehaviour, IObserver {
     [SerializeField] private CombatEntityStatus _entityStatusPrefab = null;
     [SerializeField] private Vector2 _hpBarOffset = Vector2.zero;
+    [SerializeField] private Button _drawPileButton = null, _discardPileButton = null;
+    private TextMeshProUGUI _drawPileText, _discardPileText;
     private Dictionary<EntityBase, CombatEntityStatus> _entityStatusDictionary;
 
     public void InitializeUI(EntityBase player, List<EntityBase> enemies) {
         _entityStatusDictionary = new Dictionary<EntityBase, CombatEntityStatus>();
+
+        _drawPileText = _drawPileButton.GetComponentInChildren<TextMeshProUGUI>();
+        _discardPileText = _discardPileButton.GetComponentInChildren<TextMeshProUGUI>();
+        _drawPileButton.onClick.AddListener(OnDrawPileButtonClicked);
+        _discardPileButton.onClick.AddListener(OnDiscardPileButtonClicked);
 
         CreateHPBar(player);
         foreach (EntityBase enemy in enemies) {
@@ -40,5 +48,21 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         CombatEntityStatus entityStatus = _entityStatusDictionary[entity];
         entityStatus.UpdateHPBarStatus(entity.CurrentHealth, entity.MaxHealth);
         entityStatus.UpdateBlockStatus(entity.Block);
+    }
+
+    public void UpdateCardPileUI(CardContainer cardContainer) {
+        int drawPileAmount = cardContainer.CardsInDrawPile.Count;
+        int discardPileAmount = cardContainer.CardsInDiscardPile.Count;
+        
+        _drawPileText.text = drawPileAmount.ToString();
+        _discardPileText.text = discardPileAmount.ToString();
+    }
+
+    private void OnDrawPileButtonClicked() {
+        
+    }
+
+    private void OnDiscardPileButtonClicked() {
+
     }
 }

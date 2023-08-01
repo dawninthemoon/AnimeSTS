@@ -8,7 +8,10 @@ public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private float _offsetY = 0.1f;
     [SerializeField] private float _offsetRotation = 5f;
     private CombatReticle _combatReticle;
-    private CardContainer _cardContainer;
+    public CardContainer CardContainer { 
+        get; 
+        set; 
+    }
     [SerializeField] private int handCount = 0;
     private Vector3 _mouseOffset;
     private CardBase _selectedCard;
@@ -17,11 +20,11 @@ public class CardHandler : MonoBehaviour, IObserver {
 
     public void Initialize() {
         _combatReticle = GetComponent<CombatReticle>();
-        _cardContainer = new CardContainer(CreateCard);
+        CardContainer = new CardContainer(CreateCard);
     }
 
     public void InitializeBattle(GameData data) {
-        _cardContainer.Refresh(data.Deck);
+        CardContainer.Refresh(data.Deck);
         AlignCards();
     }
 
@@ -30,8 +33,15 @@ public class CardHandler : MonoBehaviour, IObserver {
         _redrawCardCallback = redrawCardCallback;
     }
 
+    private void Update() {
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            CardContainer.Draw(1);
+            AlignCards();
+        }
+    }
+
     public void AlignCards() {
-        int cardCount = _cardContainer.CardsInHand.Count;
+        int cardCount = CardContainer.CardsInHand.Count;
 
         for (int cardIndex = 0; cardIndex < cardCount; ++cardIndex) {
             float alignAmount = (cardCount == 1) ? 0.5f : (float)cardIndex / (cardCount - 1);
@@ -44,7 +54,7 @@ public class CardHandler : MonoBehaviour, IObserver {
             float yPos = -Mathf.Abs(Mathf.Lerp(-maxY, maxY, _alignCurve.Evaluate(alignAmount)));
             float rotZ = Mathf.Lerp(maxRotation, -maxRotation, alignAmount);
 
-            Transform t = _cardContainer.CardsInHand[cardIndex].transform;
+            Transform t = CardContainer.CardsInHand[cardIndex].transform;
             t.localPosition = new Vector3(xPos, yPos, -cardIndex * 10f);
             t.localScale = CardBase.DefaultCardScale;
             t.rotation = Quaternion.Euler(0f, 0f, rotZ);
@@ -79,8 +89,8 @@ public class CardHandler : MonoBehaviour, IObserver {
             return;
         }
         
-        _cardContainer.CardsInHand.Remove(_selectedCard);
-        _cardContainer.CardsInDiscardPile.Add(_selectedCard);
+        CardContainer.CardsInHand.Remove(_selectedCard);
+        CardContainer.CardsInDiscardPile.Add(_selectedCard);
 
         _cardUseCallback.Invoke(_selectedCard.Info);
         Destroy(_selectedCard.gameObject);

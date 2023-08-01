@@ -12,6 +12,9 @@ public class GameData {
     public Dictionary<string, int> CurrentVariableData {
         get; set;
     }
+    public List<EntityBase> CurrentEnemyList {
+        get; set;
+    }
     public GameData(CommandDataParser parser, CardDeck cardDeck) {
         Parser = parser;
         Deck = cardDeck;
@@ -26,6 +29,15 @@ public class BattleCommand {
     public class Attack : IBattleCommand {
         public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) { 
             int amount = data.CurrentVariableData[value];
+            target.TakeDamage(amount);
+            yield break;
+        }
+    }
+
+    public class AttackRandom : IBattleCommand {
+        public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) { 
+            int amount = data.CurrentVariableData[value];
+            target = data.CurrentEnemyList[Random.Range(0, data.CurrentEnemyList.Count)];
             target.TakeDamage(amount);
             yield break;
         }

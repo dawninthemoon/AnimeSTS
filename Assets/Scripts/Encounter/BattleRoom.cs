@@ -32,6 +32,7 @@ public class BattleRoom : RoomBase {
     private void InitializeBattle() {
         _cardHandler.InitializeBattle(_gameData);
         _combatUIHandler.InitializeUI(_player, _enemyList);
+        _combatUIHandler.UpdateCardPileUI(_cardHandler.CardContainer);
     }
 
     public override void OnEncounter() {
@@ -49,8 +50,11 @@ public class BattleRoom : RoomBase {
         CommandInfo[] commands = card.isUpgraded ? card.upgradeCommands : card.baseCommands;
         var variableData = _gameData.Parser.ParseVariable(card.variables, _player);
 
-        _gameData.CurrentVariableData = variableData; 
+        _gameData.CurrentVariableData = variableData;
+        _gameData.CurrentEnemyList = _enemyList;
 
         _commandExecuter.ExecuteCard(commands, _gameData, _player, SelectedEnemy);
+
+        _combatUIHandler.UpdateCardPileUI(_cardHandler.CardContainer);
     }
 }

@@ -74,36 +74,36 @@
             "cost": 1,
             "upgradeCost": 1,
             "baseDescription": "무작위 적들에게\n피해를 {s} 만큼 {t}번 줍니다.",
-            "upgradeDescription": "0",
+            "upgradeDescription": "무작위 적들에게\n피해를 {s} 만큼 {T}번 줍니다.",
             "baseCommands": [
                 {
-                    "name": "Attack",
+                    "name": "AttackRandom",
                     "value": "s"
                 },
                 {
-                    "name": "Attack",
+                    "name": "AttackRandom",
                     "value": "s"
                 },
                 {
-                    "name": "Attack",
+                    "name": "AttackRandom",
                     "value": "s"
                 }
             ],
             "upgradeCommands": [
                 {
-                    "name": "Attack",
+                    "name": "AttackRandom",
                     "value": "s"
                 },
                 {
-                    "name": "Attack",
+                    "name": "AttackRandom",
                     "value": "s"
                 },
                 {
-                    "name": "Attack",
+                    "name": "AttackRandom",
                     "value": "s"
                 },
                 {
-                    "name": "Attack",
+                    "name": "AttackRandom",
                     "value": "s"
                 }
             ],
@@ -121,7 +121,7 @@
             "cost": 0,
             "upgradeCost": 0,
             "baseDescription": "피해를 {s} 만큼 2번 줍니다.",
-            "upgradeDescription": "0",
+            "upgradeDescription": "피해를 {S} 만큼 2번 줍니다",
             "baseCommands": [
                 {
                     "name": "Attack",
@@ -143,6 +143,33 @@
                 }
             ],
             "variables": "s=5,attack\nS=7,attack"
+        },
+        {
+            "cardID": "",
+            "cardName": "몸통 박치기",
+            "portraitName": "body_slam",
+            "rarity": 0,
+            "type": 0,
+            "color": 0,
+            "isUpgraded": false,
+            "targetType": 1,
+            "cost": 1,
+            "upgradeCost": 0,
+            "baseDescription": "현재 방어도만큼 피해를 줍니다.",
+            "upgradeDescription": "현재 방어도만큼 피해를 줍니다.",
+            "baseCommands": [
+                {
+                    "name": "Attack",
+                    "value": "block"
+                }
+            ],
+            "upgradeCommands": [
+                {
+                    "name": "Attack",
+                    "value": "block"
+                }
+            ],
+            "variables": "block=0,casterVariable"
         }
     ]
 }

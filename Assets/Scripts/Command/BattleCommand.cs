@@ -38,4 +38,12 @@ public class BattleCommand {
             yield break;
         }
     }
+
+    public class Vulnerable : IBattleCommand {
+        public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) {
+            int amount = data.CurrentVariableData[value];
+            target.AddEffectValue("vulnerable", amount);
+            yield break;
+        }
+    }
 }

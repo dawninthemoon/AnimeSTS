@@ -13,7 +13,14 @@ public class EntityBase : ObserverSubject {
     [SerializeField] private EntityInfo _info;
     public int MaxHealth { get; private set; }
     public int CurrentHealth { get; private set; }
-    public int Block { get; private set; }
+    public int Block { 
+        get { 
+            return _info.effectMap["block"]; 
+        }
+        set {
+            _info.effectMap["block"] = value;
+        }
+    }
 
     private void Awake() {
         _info.effectMap = new Dictionary<string, int>();
@@ -22,12 +29,18 @@ public class EntityBase : ObserverSubject {
         _info.effectMap.Add("vulnerable", 0);
         _info.effectMap.Add("weak", 0);
         _info.effectMap.Add("frail", 0);
+        _info.effectMap.Add("block", 0);
         
         CurrentHealth = MaxHealth = Random.Range(_info.minHealth, _info.maxHealth);
     }
 
     public int GetEffectAmount(string effectName) {
-        return _info.effectMap[effectName];
+        int value;
+        if (!_info.effectMap.TryGetValue(effectName, out value)) {
+            value= 0;
+            _info.effectMap.Add(effectName, 0);
+        }
+        return value;
     }
 
     public void TakeDamage(int amount) {
@@ -43,8 +56,18 @@ public class EntityBase : ObserverSubject {
         Notify();
     }
 
-    public void ChangeEffectValue(string key, int amount) {
-        _info.effectMap[key] = amount;
+    public void ChangeEffectValue(string effectName, int amount) {
+        if (!_info.effectMap.TryGetValue(effectName, out int value)) {
+            _info.effectMap.Add(effectName, amount);
+        }
+        else {
+            _info.effectMap[effectName] = amount;
+        }
+    }
+
+    public void AddEffectValue(string effectName, int amount) {
+        int prevValue = GetEffectAmount(effectName);
+        ChangeEffectValue(effectName, prevValue + amount);
     }
 
     private void OnMouseOver() {

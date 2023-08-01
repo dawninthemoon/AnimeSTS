@@ -82,6 +82,7 @@ namespace GameEditor {
 
         public void CreateNew() {
             CreateContent("New Content", _contentTransform.childCount);
+            _optionList.Add("New Content");
             _onOptionCreated?.Invoke();
         }
 

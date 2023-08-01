@@ -9,6 +9,10 @@ public class GameVariableContainer {
         _variables = new Dictionary<string, int>();
     }
 
+    public Dictionary<string, int> GetAllVariables() {
+        return _variables;
+    }
+
     public int GetVariable(string variableName) {
         int value = -1;
         if (_variables.TryGetValue(variableName, out int variable)) {

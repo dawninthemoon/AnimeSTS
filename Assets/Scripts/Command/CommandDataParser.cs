@@ -36,7 +36,7 @@ public class CommandDataParser {
 
             int value = int.Parse(splitedWithEqual[1]);
             for (int i = 1; i < splitedWithComma.Length; ++i) {
-                value = GetEffectAmount(caster, splitedWithComma[i], value);
+                value = GetEffectAmount(caster, splitedWithEqual[0], splitedWithComma[i], value);
             }
             variableData.Add(splitedWithEqual[0], value);
         }
@@ -58,7 +58,7 @@ public class CommandDataParser {
         return _gameVariables.GetVariable(name);
     }
 
-    public int GetEffectAmount(EntityBase caster, string type, int value) {
+    public int GetEffectAmount(EntityBase caster, string name, string type, int value) {
         if (!caster) return value;
 
         if (type.Equals("attack")) {
@@ -72,6 +72,9 @@ public class CommandDataParser {
             if (caster.GetEffectAmount("frail") > 0) {
                 value = Mathf.FloorToInt(value * 0.75f);
             }
+        }
+        else if (type.Equals("casterVariable")) {
+            value += caster.GetEffectAmount(name);
         }
         return value;
     }

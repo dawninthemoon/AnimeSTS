@@ -63,7 +63,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         int numOfBlocks = _reticleBlocks.Length;
         float rotationZ;
 
-        _reticleBlocks[0].transform.position = _selectedCard.transform.position;
+        _reticleBlocks[0].transform.position = _selectedCard.transform.GetChild(0).position;
         for (int i = 1; i < numOfBlocks; ++i) {
             float t = (float)i / (numOfBlocks);
             Vector3 p0 = new Vector3(0f, 5f);

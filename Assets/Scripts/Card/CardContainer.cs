@@ -44,6 +44,7 @@ public class CardContainer {
     }
 
     public void Draw(int amount) {
+        amount = Mathf.Min(amount, CardsInDrawPile.Count);
         for (int i = 0; i < amount; ++i) {
             var card = CardsInDrawPile[i];
             CardsInHand.Add(card);

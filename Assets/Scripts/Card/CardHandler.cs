@@ -39,7 +39,7 @@ public class CardHandler : MonoBehaviour, IObserver {
         int cardCount = _cardContainer.CardsInHand.Count;
 
         for (int cardIndex = 0; cardIndex < cardCount; ++cardIndex) {
-            float alignAmount = (float)cardIndex / (cardCount - 1);
+            float alignAmount = (cardCount == 1) ? 0.5f : (float)cardIndex / (cardCount - 1);
             
             float maxX = _offsetX * cardCount * 0.5f;
             float maxY = _offsetY * cardCount * 0.5f;
@@ -78,8 +78,11 @@ public class CardHandler : MonoBehaviour, IObserver {
     private void UseCard() {
         if (_selectedCard == null)
             return;
-        if (_selectedCard.NeedTarget() && !BattleRoom.SelectedEnemy)
+
+        if (_selectedCard.NeedTarget() && !BattleRoom.SelectedEnemy) {
+            _selectedCard = null;
             return;
+        }
         
         _cardContainer.CardsInHand.Remove(_selectedCard);
         _cardContainer.CardsInDiscardPile.Add(_selectedCard);

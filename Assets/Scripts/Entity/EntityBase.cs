@@ -6,13 +6,14 @@ using UnityEngine;
 public struct EntityInfo {
     public int minHealth;
     public int maxHealth;
-    public int health;
-    public int block;
     public Dictionary<string, int> effectMap;
 }
 
-public class EntityBase : MonoBehaviour {
+public class EntityBase : ObserverSubject {
     [SerializeField] private EntityInfo _info;
+    public int MaxHealth { get; private set; }
+    public int CurrentHealth { get; private set; }
+    public int Block { get; private set; }
 
     private void Awake() {
         _info.effectMap = new Dictionary<string, int>();
@@ -21,6 +22,8 @@ public class EntityBase : MonoBehaviour {
         _info.effectMap.Add("vulnerable", 0);
         _info.effectMap.Add("weak", 0);
         _info.effectMap.Add("frail", 0);
+        
+        CurrentHealth = MaxHealth = Random.Range(_info.minHealth, _info.maxHealth);
     }
 
     public int GetEffectAmount(string effectName) {
@@ -31,12 +34,13 @@ public class EntityBase : MonoBehaviour {
         if (_info.effectMap["vulnerable"] > 0) {
             amount = Mathf.FloorToInt(amount * 1.5f);
         }
-        Debug.Log(gameObject.name + " has recieved " + amount.ToString() + " damage");
+        CurrentHealth = Mathf.Max(0, CurrentHealth - amount);
+        Notify();
     }
 
     public void GainBlock(int amount) {
-        Debug.Log("Current Block: " + amount.ToString());
-        _info.block += amount;
+        Block += amount;
+        Notify();
     }
 
     public void ChangeEffectValue(string key, int amount) {

@@ -49,7 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    minHealth: 48
+    minHealth: 54
     maxHealth: 54
     health: 0
     block: 0

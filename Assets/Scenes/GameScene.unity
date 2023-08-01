@@ -797,7 +797,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b724c075e8fa09a499740ffbe96488ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _hpBarPrefab: {fileID: 1630371748373337543, guid: d2a5f8c323addb2438fd1c79e7d04751, type: 3}
+  _entityStatusPrefab: {fileID: 6706544163530355775, guid: d2a5f8c323addb2438fd1c79e7d04751, type: 3}
   _hpBarOffset: {x: -1.4, y: -0.4}
 --- !u!1 &519420028
 GameObject:
@@ -1601,7 +1601,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1102733233}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.96, y: -0.5, z: 0}
+  m_LocalPosition: {x: 5.96, y: -0.94, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

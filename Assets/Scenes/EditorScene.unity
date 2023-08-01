@@ -1252,7 +1252,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -457.19, y: -418.17004}
+  m_AnchoredPosition: {x: -457.19003, y: -418.17004}
   m_SizeDelta: {x: -1006.38, y: -912.34}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &151582903
@@ -12122,8 +12122,6 @@ MonoBehaviour:
   _info:
     minHealth: 50
     maxHealth: 50
-    health: 50
-    block: 0
 --- !u!1 &1471140984
 GameObject:
   m_ObjectHideFlags: 0
@@ -12439,7 +12437,6 @@ MonoBehaviour:
   _toggleButton: {fileID: 1827317421}
   _createButton: {fileID: 803386524}
   _contentTransform: {fileID: 2033858666}
-  _cardSearchInputField: {fileID: 1267016186}
   _selectedName: {fileID: 1751728034}
 --- !u!1 &1492476565
 GameObject:
@@ -17647,7 +17644,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6509948378702037889, guid: 7495bec2d472a86419a20a950094e227, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.78
+      value: -1.89
       objectReference: {fileID: 0}
     - target: {fileID: 6509948378702037889, guid: 7495bec2d472a86419a20a950094e227, type: 3}
       propertyPath: m_LocalPosition.z

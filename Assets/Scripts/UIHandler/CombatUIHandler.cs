@@ -1,24 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using TMPro;
+using RieslingUtils;
 
-public class CombatUIHandler : MonoBehaviour {
-    private struct HpBarContainer {
-        public SpriteRenderer fill;
-        public TMP_Text text;
-        public HpBarContainer(SpriteRenderer fill, TMP_Text text) {
-            this.fill = fill;
-            this.text = text;
-        }
-    }
-
-    [SerializeField] private GameObject _hpBarPrefab = null;
+public class CombatUIHandler : MonoBehaviour, IObserver {
+    [SerializeField] private CombatEntityStatus _entityStatusPrefab = null;
     [SerializeField] private Vector2 _hpBarOffset = Vector2.zero;
-    private Dictionary<EntityBase, HpBarContainer> _hpBarDictionary;
+    private Dictionary<EntityBase, CombatEntityStatus> _entityStatusDictionary;
 
     public void InitializeUI(EntityBase player, List<EntityBase> enemies) {
-        _hpBarDictionary = new Dictionary<EntityBase, HpBarContainer>();
+        _entityStatusDictionary = new Dictionary<EntityBase, CombatEntityStatus>();
 
         CreateHPBar(player);
         foreach (EntityBase enemy in enemies) {
@@ -26,17 +17,28 @@ public class CombatUIHandler : MonoBehaviour {
         }
     }
 
+    public void Notify(ObserverSubject subject) {
+        EntityBase entity = subject as EntityBase;
+        if (entity == null) return;
+        UpdateUIStatus(entity);
+    }
+
     private void CreateHPBar(EntityBase entity) {
         Vector2 hpBarPosition = entity.transform.position;
         hpBarPosition += _hpBarOffset;
 
-        var hpBarObject = Instantiate(_hpBarPrefab, hpBarPosition, Quaternion.identity);
-        hpBarObject.transform.SetParent(transform);
+        var combatEntityStatus = Instantiate(_entityStatusPrefab, hpBarPosition, Quaternion.identity);
+        combatEntityStatus.transform.SetParent(transform);
 
-        SpriteRenderer fill = hpBarObject.transform.GetChild(0).GetComponent<SpriteRenderer>();
-        TMP_Text text = hpBarObject.GetComponentInChildren<TMP_Text>();
-        HpBarContainer hpBarContainer = new HpBarContainer(fill, text);
+        _entityStatusDictionary.Add(entity, combatEntityStatus);
 
-        _hpBarDictionary.Add(entity, hpBarContainer);
+        UpdateUIStatus(entity);
+        entity.Attach(this);
+    }
+
+    private void UpdateUIStatus(EntityBase entity) {
+        CombatEntityStatus entityStatus = _entityStatusDictionary[entity];
+        entityStatus.UpdateHPBarStatus(entity.CurrentHealth, entity.MaxHealth);
+        entityStatus.UpdateBlockStatus(entity.Block);
     }
 }

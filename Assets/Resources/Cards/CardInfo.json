@@ -170,6 +170,76 @@
                 }
             ],
             "variables": "block=0,casterVariable"
+        },
+        {
+            "cardID": "",
+            "cardName": "강타",
+            "portraitName": "bash",
+            "rarity": 0,
+            "type": 0,
+            "color": 0,
+            "isUpgraded": false,
+            "targetType": 1,
+            "cost": 2,
+            "upgradeCost": 2,
+            "baseDescription": "피해를 {s} 줍니다.\r\n취약을 {v} 부여합니다.",
+            "upgradeDescription": "피해를 {S} 줍니다.\r\n취약을 {V} 부여합니다.",
+            "baseCommands": [
+                {
+                    "name": "Attack",
+                    "value": "s"
+                },
+                {
+                    "name": "Vulnerable",
+                    "value": "v"
+                }
+            ],
+            "upgradeCommands": [
+                {
+                    "name": "Attack",
+                    "value": "S"
+                },
+                {
+                    "name": "Vulnerable",
+                    "value": "V"
+                }
+            ],
+            "variables": "s=8,attack\nS=10,attack\nv=2\nV=3"
+        },
+        {
+            "cardID": "",
+            "cardName": "천둥",
+            "portraitName": "thunder_clap",
+            "rarity": 1,
+            "type": 0,
+            "color": 0,
+            "isUpgraded": false,
+            "targetType": 0,
+            "cost": 1,
+            "upgradeCost": 1,
+            "baseDescription": "적 전체에게 피해를 {s} 주고 취약 <color=yellow></color>을 1 부여합니다.",
+            "upgradeDescription": "적 전체에게 피해를 {S} 주고 취약 <color=yellow></color>을 1 부여합니다.",
+            "baseCommands": [
+                {
+                    "name": "AttackAll",
+                    "value": "s"
+                },
+                {
+                    "name": "Vulnerable",
+                    "value": "1"
+                }
+            ],
+            "upgradeCommands": [
+                {
+                    "name": "AttackAll",
+                    "value": "S"
+                },
+                {
+                    "name": "Vulnerable",
+                    "value": "1"
+                }
+            ],
+            "variables": "s=4,attack\nS=4,attack"
         }
     ]
 }

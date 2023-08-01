@@ -43,6 +43,18 @@ public class BattleCommand {
         }
     }
 
+    public class AttackAll : IBattleCommand {
+        public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) { 
+            int amount = data.CurrentVariableData[value];
+            int numOfEnemies = data.CurrentEnemyList.Count;
+            for (int i = 0; i < numOfEnemies; ++i) {
+                target = data.CurrentEnemyList[i];
+                target.TakeDamage(amount);
+            }
+            yield break;
+        }
+    }
+
     public class Block : IBattleCommand {
         public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) {
             int amount = data.CurrentVariableData[value];

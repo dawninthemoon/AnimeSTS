@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class RoomBase : MonoBehaviour {
     protected GameData _gameData;
-    public void InitializeData(GameData data) {
+    public virtual void InitializeData(GameData data) {
         _gameData = data;
     }
     public abstract void OnEncounter();

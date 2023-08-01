@@ -1,14 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Zenject;
 
 public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private AnimationCurve _alignCurve = null;
     [SerializeField] private float _offsetX = 1f;
     [SerializeField] private float _offsetY = 0.1f;
     [SerializeField] private float _offsetRotation = 5f;
-    private CombatUIHandler _combatUIHandler;
+    private CombatReticle _combatReticle;
     private CardContainer _cardContainer;
     [SerializeField] private int handCount = 0;
     private Vector3 _mouseOffset;
@@ -16,13 +15,9 @@ public class CardHandler : MonoBehaviour, IObserver {
     private System.Action<CardInfo> _cardUseCallback;
     private System.Action<CardBase> _redrawCardCallback;
 
-    private void Start() {
+    public void Initialize() {
+        _combatReticle = GetComponent<CombatReticle>();
         _cardContainer = new CardContainer(CreateCard);
-    }
-
-    [Inject]
-    private void Initialize(CombatUIHandler uiHandler) {
-        _combatUIHandler = uiHandler;
     }
 
     public void InitializeBattle(GameData data) {
@@ -96,7 +91,7 @@ public class CardHandler : MonoBehaviour, IObserver {
         var cardPrefab = ResourceManager.GetInstance().GetAsset<CardBase>("Cards/CardBase");
 
         CardBase cardInstance = Instantiate(cardPrefab, transform);
-        cardInstance.Initialize(this, _combatUIHandler);
+        cardInstance.Initialize(this, _combatReticle);
         cardInstance.Info = cardInfo;
 
         _redrawCardCallback.Invoke(cardInstance);

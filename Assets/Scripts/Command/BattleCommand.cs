@@ -19,18 +19,22 @@ public class GameData {
 }
 
 public interface IBattleCommand {
-    IEnumerator Execute(GameData data, string value);
+    IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value);
 }
 
 public class BattleCommand {
     public class Attack : IBattleCommand {
-        public IEnumerator Execute(GameData data, string value) { 
+        public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) { 
+            int amount = data.CurrentVariableData[value];
+            target.TakeDamage(amount);
             yield break;
         }
     }
 
     public class Block : IBattleCommand {
-        public IEnumerator Execute(GameData data, string value) { 
+        public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) {
+            int amount = data.CurrentVariableData[value];
+            caster.GainBlock(amount);
             yield break;
         }
     }

@@ -53,10 +53,6 @@ MonoBehaviour:
     maxHealth: 80
     health: 0
     block: 0
-    strength: 0
-    dexterity: 0
-    weak: 0
-    vulnerable: 0
 --- !u!212 &1186216483090181144
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -142,10 +138,10 @@ BoxCollider2D:
   m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.3692292, y: -0.113609195}
+  m_Offset: {x: 0.3692292, y: 1.21}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0.5, y: 0.5}
+    pivot: {x: 0.51, y: 0.35}
     oldSize: {x: 8, y: 8}
     newSize: {x: 1.28, y: 1.28}
     adaptiveTilingThreshold: 0.5

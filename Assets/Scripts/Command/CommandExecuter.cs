@@ -15,15 +15,15 @@ public class CommandExecuter : MonoBehaviour {
                                 .ToDictionary(type => type.Name, type => System.Activator.CreateInstance(type) as IBattleCommand);
     }
 
-    public void ExecuteCard(CommandInfo[] commands, GameData data) {
+    public void ExecuteCard(CommandInfo[] commands, GameData data, EntityBase caster, EntityBase target) {
         foreach (CommandInfo command in commands) {
-            StartCoroutine(ExecuteCommand(command, data));
+            StartCoroutine(ExecuteCommand(command, data, caster, target));
         }
     }
 
-    private IEnumerator ExecuteCommand(CommandInfo commandInfo, GameData data) {
+    private IEnumerator ExecuteCommand(CommandInfo commandInfo, GameData data, EntityBase caster, EntityBase target) {
         if (_commandDictionary.TryGetValue(commandInfo.name, out IBattleCommand instance)) {
-            IEnumerator coroutine = instance.Execute(data, commandInfo.value);
+            IEnumerator coroutine = instance.Execute(caster, target, data, commandInfo.value);
             while (coroutine.MoveNext()) {
                 var nestCoroutine = coroutine?.Current as YieldInstruction;
                 yield return nestCoroutine;

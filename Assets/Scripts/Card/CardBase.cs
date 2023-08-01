@@ -85,10 +85,10 @@ public class CardBase : ObserverSubject {
         return (Info.targetType == CardInfo.TargetType.TARGET);
     }
 
-    public void Initialize(CardHandler cardHandler, CombatUIHandler combatUIHandler) {
+    public void Initialize(CardHandler cardHandler, CombatReticle combatReticle) {
         _cardView = GetComponent<CardView>();
         Attach(cardHandler);
-        Attach(combatUIHandler);
+        Attach(combatReticle);
     }
 
     private void OnMouseOver() {

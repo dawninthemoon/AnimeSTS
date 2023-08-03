@@ -38,9 +38,9 @@ public class CardView : MonoBehaviour {
         "_rare"
     };
 
-    public void ShowCard(CardInfo info, CommandDataParser parser, EntityBase caster) {
+    public void ShowCard(CardInfo info, string costText, CommandDataParser parser, EntityBase caster) {
         ShowCardFrame(info.color, info.rarity, info.type);
-        ShowCardData(info.cardName, info.color, info.type, info.portraitName, info.cost);
+        ShowCardData(info.cardName, info.color, info.type, info.portraitName, costText);
 
         string description = info.baseDescription;
         string variables = info.variables;

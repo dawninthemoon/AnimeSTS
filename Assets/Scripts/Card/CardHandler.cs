@@ -17,7 +17,7 @@ public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private int handCount = 0;
     private Vector3 _mouseOffset;
     private CardBase _selectedCard;
-    private System.Action<CardBase> _cardUseCallback;
+    private System.Func<CardBase, bool> _cardUseCallback;
     private System.Action<CardBase> _redrawCardCallback;
 
     public void Initialize() {
@@ -30,7 +30,7 @@ public class CardHandler : MonoBehaviour, IObserver {
         AlignCards();
     }
 
-    public void SetCallback(System.Action<CardBase> cardUseCallback, System.Action<CardBase> redrawCardCallback) {
+    public void SetCallback(System.Func<CardBase, bool> cardUseCallback, System.Action<CardBase> redrawCardCallback) {
         _cardUseCallback = cardUseCallback;
         _redrawCardCallback = redrawCardCallback;
     }
@@ -83,24 +83,18 @@ public class CardHandler : MonoBehaviour, IObserver {
     }
 
     private void UseCard() {
-        if (_selectedCard == null)
-            return;
-
-        if (_selectedCard.NeedTarget() && !BattleRoom.SelectedEnemy) {
-            _selectedCard = null;
+        if (_selectedCard == null) {
             return;
         }
 
-        if (MouseUtils.IsMouseOverCollider(_cardCancelArea)) {
-            _selectedCard = null;
-            return;
-        }
-        
-        CardContainer.CardsInHand.Remove(_selectedCard);
-        CardContainer.CardsInDiscardPile.Add(_selectedCard);
+        if (!MouseUtils.IsMouseOverCollider(_cardCancelArea) && (!_selectedCard.NeedTarget() || BattleRoom.SelectedEnemy)) {
+            if (_cardUseCallback.Invoke(_selectedCard)) {
+                CardContainer.CardsInHand.Remove(_selectedCard);
+                CardContainer.CardsInDiscardPile.Add(_selectedCard);
 
-        _cardUseCallback.Invoke(_selectedCard);
-        Destroy(_selectedCard.gameObject);
+                Destroy(_selectedCard.gameObject);
+            }
+        }
         _selectedCard = null;
     }
 

@@ -78,8 +78,8 @@ public class CardBase : ObserverSubject {
         _cardView = GetComponent<CardView>();
     }
 
-    public void ShowCard(CommandDataParser parser, EntityBase caster) {
-        _cardView.ShowCard(Info, parser, caster);
+    public void ShowCard(string costText, CommandDataParser parser, EntityBase caster) {
+        _cardView.ShowCard(Info, costText, parser, caster);
     }
 
     public bool NeedTarget() {

@@ -8,6 +8,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     [SerializeField] private CombatEntityStatus _entityStatusPrefab = null;
     [SerializeField] private Vector2 _hpBarOffset = Vector2.zero;
     [SerializeField] private Button _drawPileButton = null, _discardPileButton = null;
+    [SerializeField] private TextMeshProUGUI _costText = null;
     private TextMeshProUGUI _drawPileText, _discardPileText;
     private Dictionary<EntityBase, CombatEntityStatus> _entityStatusDictionary;
 
@@ -56,6 +57,10 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         
         _drawPileText.text = drawPileAmount.ToString();
         _discardPileText.text = discardPileAmount.ToString();
+    }
+
+    public void UpdateCostUI(int currentCost, int maxCost) {
+        _costText.text = currentCost.ToString() + "/" + maxCost.ToString();
     }
 
     private void OnDrawPileButtonClicked() {

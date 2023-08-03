@@ -11,12 +11,13 @@ public class BattleRoom : RoomBase {
     public static EntityBase SelectedEnemy;
     private CommandExecuter _commandExecuter;
     private CombatUIHandler _combatUIHandler;
+    private CostHandler _costHandler;
 
     public override void InitializeData(GameData data) {
         base.InitializeData(data);
 
+        _costHandler = GetComponent<CostHandler>();
         _combatUIHandler = GetComponent<CombatUIHandler>();
-
         _commandExecuter = GetComponent<CommandExecuter>();
         _cardHandler = GetComponentInChildren<CardHandler>();
 
@@ -33,6 +34,8 @@ public class BattleRoom : RoomBase {
         _cardHandler.InitializeBattle(_gameData);
         _combatUIHandler.InitializeUI(_player, _enemyList);
         _combatUIHandler.UpdateCardPileUI(_cardHandler.CardContainer);
+        _combatUIHandler.UpdateCostUI(_costHandler.CurrentCost, _costHandler.MaxCost);
+        _costHandler.ChargeCost();
     }
 
     public override void OnEncounter() {
@@ -43,10 +46,15 @@ public class BattleRoom : RoomBase {
     }
 
     private void RedrawCardView(CardBase card) {
-        card.ShowCard(_gameData.Parser, _player);
+        string costText = _costHandler.GetRequireCost(card).ToString();
+        card.ShowCard(costText, _gameData.Parser, _player);
     }
 
-    private void OnCardUsed(CardBase card) {
+    private bool OnCardUsed(CardBase card) {
+        if (!_costHandler.TryUseCard(card)) {
+            return false;
+        }
+
         CommandInfo[] commands = card.IsUpgraded ? card.Info.upgradeCommands : card.Info.baseCommands;
         var variableData = _gameData.Parser.ParseVariable(card.Info.variables, _player);
 
@@ -54,7 +62,9 @@ public class BattleRoom : RoomBase {
         _gameData.CurrentEnemyList = _enemyList;
 
         _commandExecuter.ExecuteCard(commands, _gameData, _player, SelectedEnemy);
-
         _combatUIHandler.UpdateCardPileUI(_cardHandler.CardContainer);
+        _combatUIHandler.UpdateCostUI(_costHandler.CurrentCost, _costHandler.MaxCost);
+
+        return true;
     }
 }

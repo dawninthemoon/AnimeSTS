@@ -38,7 +38,7 @@ public class CombatReticle : MonoBehaviour, IObserver {
         
         if (card.MouseDown) {
             _selectedCard = card;
-            _mouseOffset = card.transform.position - ExVector.GetMouseWorldPosition();
+            _mouseOffset = card.transform.position - MouseUtils.GetMouseWorldPosition();
             if (card.NeedTarget()) {
                 SetReticleActive(true);
                 card.transform.position = card.transform.position.ChangeXPos(0f);
@@ -59,7 +59,7 @@ public class CombatReticle : MonoBehaviour, IObserver {
     }
 
     private void MoveReticle() {
-        Vector3 mousePosition = ExVector.GetMouseWorldPosition();
+        Vector3 mousePosition = MouseUtils.GetMouseWorldPosition();
         int numOfBlocks = _reticleBlocks.Length;
         float rotationZ;
 
@@ -90,7 +90,7 @@ public class CombatReticle : MonoBehaviour, IObserver {
     }
 
     private void MoveCard() {
-        Vector3 mousePoint = ExVector.GetMouseWorldPosition();
+        Vector3 mousePoint = MouseUtils.GetMouseWorldPosition();
         _selectedCard.transform.position = mousePoint + _mouseOffset;
     }
 }

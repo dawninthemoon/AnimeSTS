@@ -27,12 +27,6 @@ namespace RieslingUtils {
             Vector3 newVector = new Vector3(origin.x, origin.y, zValue);
             return newVector;
         }
-
-        public static Vector3 GetMouseWorldPosition() {
-            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-            worldPosition.z = 0f;
-            return worldPosition;
-        }
     }
 
     public static class Bezier {
@@ -75,6 +69,20 @@ namespace RieslingUtils {
         private static readonly string RegexContainsSuffix = ").*";
         public static bool Contains(string str, string pattern) {
             return Regex.Match(str, RegexContainsPrefix + pattern + RegexContainsSuffix).Success;
+        }
+    }
+
+    public static class MouseUtils {
+        public static Vector3 GetMouseWorldPosition() {
+            Vector3 worldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+            worldPosition.z = 0f;
+            return worldPosition;
+        }
+
+        public static bool IsMouseOverCollider(Collider2D collider) {
+            Vector3 mousePosition = GetMouseWorldPosition();
+            bool? isOverlaped = Physics2D.OverlapPoint(mousePosition)?.Equals(collider);
+            return isOverlaped.HasValue ? isOverlaped.Value : false;
         }
     }
 }

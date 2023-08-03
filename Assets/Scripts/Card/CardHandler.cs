@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using RieslingUtils;
 
 public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private AnimationCurve _alignCurve = null;
+    [SerializeField] private BoxCollider2D _cardCancelArea = null;
     [SerializeField] private float _offsetX = 1f;
     [SerializeField] private float _offsetY = 0.1f;
     [SerializeField] private float _offsetRotation = 5f;
@@ -15,7 +17,7 @@ public class CardHandler : MonoBehaviour, IObserver {
     [SerializeField] private int handCount = 0;
     private Vector3 _mouseOffset;
     private CardBase _selectedCard;
-    private System.Action<CardInfo> _cardUseCallback;
+    private System.Action<CardBase> _cardUseCallback;
     private System.Action<CardBase> _redrawCardCallback;
 
     public void Initialize() {
@@ -28,7 +30,7 @@ public class CardHandler : MonoBehaviour, IObserver {
         AlignCards();
     }
 
-    public void SetCallback(System.Action<CardInfo> cardUseCallback, System.Action<CardBase> redrawCardCallback) {
+    public void SetCallback(System.Action<CardBase> cardUseCallback, System.Action<CardBase> redrawCardCallback) {
         _cardUseCallback = cardUseCallback;
         _redrawCardCallback = redrawCardCallback;
     }
@@ -88,11 +90,16 @@ public class CardHandler : MonoBehaviour, IObserver {
             _selectedCard = null;
             return;
         }
+
+        if (MouseUtils.IsMouseOverCollider(_cardCancelArea)) {
+            _selectedCard = null;
+            return;
+        }
         
         CardContainer.CardsInHand.Remove(_selectedCard);
         CardContainer.CardsInDiscardPile.Add(_selectedCard);
 
-        _cardUseCallback.Invoke(_selectedCard.Info);
+        _cardUseCallback.Invoke(_selectedCard);
         Destroy(_selectedCard.gameObject);
         _selectedCard = null;
     }

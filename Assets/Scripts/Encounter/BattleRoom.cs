@@ -46,9 +46,9 @@ public class BattleRoom : RoomBase {
         card.ShowCard(_gameData.Parser, _player);
     }
 
-    private void OnCardUsed(CardInfo card) {
-        CommandInfo[] commands = card.isUpgraded ? card.upgradeCommands : card.baseCommands;
-        var variableData = _gameData.Parser.ParseVariable(card.variables, _player);
+    private void OnCardUsed(CardBase card) {
+        CommandInfo[] commands = card.IsUpgraded ? card.Info.upgradeCommands : card.Info.baseCommands;
+        var variableData = _gameData.Parser.ParseVariable(card.Info.variables, _player);
 
         _gameData.CurrentVariableData = variableData;
         _gameData.CurrentEnemyList = _enemyList;

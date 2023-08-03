@@ -66,6 +66,7 @@ public class CardBase : ObserverSubject {
         set;
     }
     private CardView _cardView;
+    public bool IsUpgraded { get; set; }
     public bool MouseOver { get; private set; }
     public bool MouseExit { get; private set; }
     public bool MouseDown { get; private set; }

@@ -65,7 +65,7 @@ public class CardBase : ObserverSubject {
         get;
         set;
     }
-    private CardView _cardView;
+    private CardSpriteView _cardView;
     public bool IsUpgraded { get; set; }
     public bool MouseOver { get; private set; }
     public bool MouseExit { get; private set; }
@@ -73,10 +73,6 @@ public class CardBase : ObserverSubject {
     public bool MouseUp { get; private set; }
     public static readonly Vector3 DefaultCardScale = new Vector3(0.3f, 0.3f, 1f);
     public static readonly Vector3 HighlightCardScale = new Vector3(0.5f, 0.5f, 1f);
-
-    private void Start() {
-        _cardView = GetComponent<CardView>();
-    }
 
     public void ShowCard(string costText, CommandDataParser parser, EntityBase caster) {
         _cardView.ShowCard(Info, costText, parser, caster);
@@ -87,7 +83,7 @@ public class CardBase : ObserverSubject {
     }
 
     public void Initialize(CardHandler cardHandler, CombatReticle combatReticle) {
-        _cardView = GetComponent<CardView>();
+        _cardView = GetComponent<CardSpriteView>();
         Attach(cardHandler);
         Attach(combatReticle);
     }

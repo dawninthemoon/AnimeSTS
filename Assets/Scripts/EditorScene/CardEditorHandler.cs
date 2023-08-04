@@ -5,7 +5,7 @@ using UnityEngine;
 namespace GameEditor {
     public class CardEditorHandler : MonoBehaviour {
         [SerializeField] private CardEditorView _cardEditorView = null;
-        [SerializeField] private CardView _cardPreview = null;
+        [SerializeField] private CardSpriteView _cardPreview = null;
         [SerializeField] private EntityBase _playerStatus = null;
         [SerializeField] private CustomDropdown _cardDropdown = null;
         private List<CardInfo> _cardInfoList;
@@ -76,7 +76,7 @@ namespace GameEditor {
                 description = description.Replace(formatString, variable.Value.ToString());
             }
 
-            _cardPreview.ShowCardText(description);
+            _cardPreview.SetCardText(description);
         }
 
         public void SetCardList(List<string> cardNameList) {

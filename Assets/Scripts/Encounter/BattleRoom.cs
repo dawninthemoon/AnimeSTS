@@ -32,8 +32,8 @@ public class BattleRoom : RoomBase {
 
     private void InitializeBattle() {
         _cardHandler.InitializeBattle(_gameData);
-        _combatUIHandler.InitializeUI(_player, _enemyList);
-        _combatUIHandler.UpdateCardPileUI(_cardHandler.CardContainer);
+        _combatUIHandler.InitializeUI(_player, _enemyList, _cardHandler.CardContainer, _gameData.Parser);
+        _combatUIHandler.UpdateCardPileUI();
         _combatUIHandler.UpdateCostUI(_costHandler.CurrentCost, _costHandler.MaxCost);
         _costHandler.ChargeCost();
     }
@@ -62,7 +62,7 @@ public class BattleRoom : RoomBase {
         _gameData.CurrentEnemyList = _enemyList;
 
         _commandExecuter.ExecuteCard(commands, _gameData, _player, SelectedEnemy);
-        _combatUIHandler.UpdateCardPileUI(_cardHandler.CardContainer);
+        _combatUIHandler.UpdateCardPileUI();
         _combatUIHandler.UpdateCostUI(_costHandler.CurrentCost, _costHandler.MaxCost);
 
         return true;

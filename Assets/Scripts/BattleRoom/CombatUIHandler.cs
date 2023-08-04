@@ -8,17 +8,25 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     [SerializeField] private CombatEntityStatus _entityStatusPrefab = null;
     [SerializeField] private Vector2 _hpBarOffset = Vector2.zero;
     [SerializeField] private Button _drawPileButton = null, _discardPileButton = null;
+    [SerializeField] private CardPileView _drawPileView = null, _discardPileView = null;
     [SerializeField] private TextMeshProUGUI _costText = null;
     private TextMeshProUGUI _drawPileText, _discardPileText;
     private Dictionary<EntityBase, CombatEntityStatus> _entityStatusDictionary;
+    private CardContainer _cardContainer;
+    private CommandDataParser _parser;
 
-    public void InitializeUI(EntityBase player, List<EntityBase> enemies) {
+    public void InitializeUI(EntityBase player, List<EntityBase> enemies, CardContainer cardContainer, CommandDataParser parser) {
+        _cardContainer = cardContainer;
+        _parser = parser;
         _entityStatusDictionary = new Dictionary<EntityBase, CombatEntityStatus>();
 
         _drawPileText = _drawPileButton.GetComponentInChildren<TextMeshProUGUI>();
         _discardPileText = _discardPileButton.GetComponentInChildren<TextMeshProUGUI>();
         _drawPileButton.onClick.AddListener(OnDrawPileButtonClicked);
         _discardPileButton.onClick.AddListener(OnDiscardPileButtonClicked);
+
+        _drawPileView.Initialize();
+        _discardPileView.Initialize();
 
         CreateHPBar(player);
         foreach (EntityBase enemy in enemies) {
@@ -51,9 +59,9 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         entityStatus.UpdateBlockStatus(entity.Block);
     }
 
-    public void UpdateCardPileUI(CardContainer cardContainer) {
-        int drawPileAmount = cardContainer.CardsInDrawPile.Count;
-        int discardPileAmount = cardContainer.CardsInDiscardPile.Count;
+    public void UpdateCardPileUI() {
+        int drawPileAmount = _cardContainer.CardsInDrawPile.Count;
+        int discardPileAmount = _cardContainer.CardsInDiscardPile.Count;
         
         _drawPileText.text = drawPileAmount.ToString();
         _discardPileText.text = discardPileAmount.ToString();
@@ -64,7 +72,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     }
 
     private void OnDrawPileButtonClicked() {
-        
+        _drawPileView.ShowDrawPileView(_cardContainer.CardsInDrawPile, _parser);
     }
 
     private void OnDiscardPileButtonClicked() {

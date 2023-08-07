@@ -19,6 +19,7 @@ public class CardHandler : MonoBehaviour, IObserver {
     private CardBase _selectedCard;
     private System.Func<CardBase, bool> _cardUseCallback;
     private System.Action<CardBase> _redrawCardCallback;
+    public bool IsInteractive { get; set; }
 
     public void Initialize() {
         _combatReticle = GetComponent<CombatReticle>();
@@ -88,7 +89,7 @@ public class CardHandler : MonoBehaviour, IObserver {
         }
 
         if (!MouseUtils.IsMouseOverCollider(_cardCancelArea) && (!_selectedCard.NeedTarget() || BattleRoom.SelectedEnemy)) {
-            if (_cardUseCallback.Invoke(_selectedCard)) {
+            if (IsInteractive && _cardUseCallback.Invoke(_selectedCard)) {
                 CardContainer.CardsInHand.Remove(_selectedCard);
                 CardContainer.CardsInDiscardPile.Add(_selectedCard);
 

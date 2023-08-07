@@ -14,6 +14,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     private Dictionary<EntityBase, CombatEntityStatus> _entityStatusDictionary;
     private CardContainer _cardContainer;
     private CommandDataParser _parser;
+    public bool IsInteractive { get; set; }
 
     public void InitializeUI(EntityBase player, List<EnemyBase> enemies, CardContainer cardContainer, CommandDataParser parser) {
         _cardContainer = cardContainer;
@@ -71,10 +72,12 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     }
 
     private void OnDrawPileButtonClicked() {
-        _cardPileView.ShowDrawPileView(_cardContainer.CardsInDrawPile);
+        if (IsInteractive)
+            _cardPileView.ShowDrawPileView(_cardContainer.CardsInDrawPile);
     }
 
     private void OnDiscardPileButtonClicked() {
-        _cardPileView.ShowDiscardPileView(_cardContainer.CardsInDiscardPile);
+        if (IsInteractive)
+            _cardPileView.ShowDiscardPileView(_cardContainer.CardsInDiscardPile);
     }
 }

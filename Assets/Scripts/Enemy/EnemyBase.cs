@@ -26,10 +26,12 @@ public class EnemyBase : EntityBase {
         EnemyIntent behaviour = _intents[Random.Range(0, intentCounts)];
 
         if (behaviour.attackAmount > 0) {
-            player.TakeDamage(behaviour.attackAmount);
+            BattleCommand.Attack attackCommand = new BattleCommand.Attack();
+            StartCoroutine(attackCommand.Execute(this, player, behaviour.attackAmount));
         }
         if (behaviour.blockAmount > 0) {
-            GainBlock(behaviour.blockAmount);
+            BattleCommand.Attack blockCommand = new BattleCommand.Attack();
+            StartCoroutine(blockCommand.Execute(this, player, behaviour.blockAmount));
         }
     }
 }

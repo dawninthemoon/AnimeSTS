@@ -14,7 +14,6 @@ public class BattleRoom : RoomBase {
     private CommandExecuter _commandExecuter;
     private CombatUIHandler _combatUIHandler;
     private CostHandler _costHandler;
-    private bool _isPlayerTurn;
 
     public override void InitializeData(GameData data) {
         base.InitializeData(data);
@@ -49,11 +48,18 @@ public class BattleRoom : RoomBase {
 
     public override void OnEncounter() {
         InitializeBattle();
+        _cardHandler.IsInteractive = true;
+        _combatUIHandler.IsInteractive = true;
     }
 
     private void EndTurn() {
-        _isPlayerTurn = false;
+        _cardHandler.IsInteractive = false;
+        _combatUIHandler.IsInteractive = false;
+
         _enemyHandler.ExecuteEnemyBehaviour(_player);
+        
+        _cardHandler.IsInteractive = true;
+        _combatUIHandler.IsInteractive = true;
     }
 
     private void RedrawCardView(CardBase card) {

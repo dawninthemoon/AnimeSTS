@@ -11,6 +11,7 @@ public struct EntityInfo {
 
 public class EntityBase : ObserverSubject {
     [SerializeField] private EntityInfo _info;
+    private Animator _animator;
     public int MaxHealth { get; private set; }
     public int CurrentHealth { get; private set; }
     public int Block { 
@@ -23,6 +24,8 @@ public class EntityBase : ObserverSubject {
     }
 
     private void Awake() {
+        _animator = GetComponent<Animator>();
+
         _info.effectMap = new Dictionary<string, int>();
         _info.effectMap.Add("dexterity", 0);
         _info.effectMap.Add("strength", 0);
@@ -68,6 +71,10 @@ public class EntityBase : ObserverSubject {
     public void AddEffectValue(string effectName, int amount) {
         int prevValue = GetEffectAmount(effectName);
         ChangeEffectValue(effectName, prevValue + amount);
+    }
+
+    public void StartAnimation(string animationName) {
+        _animator.Play(animationName);
     }
 
     private void OnMouseOver() {

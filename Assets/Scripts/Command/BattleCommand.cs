@@ -29,6 +29,13 @@ public class BattleCommand {
     public class Attack : IBattleCommand {
         public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) { 
             int amount = data.CurrentVariableData[value];
+            caster.StartAnimation("attack");
+            target.TakeDamage(amount);
+            yield break;
+        }
+
+        public IEnumerator Execute(EntityBase caster, EntityBase target, int amount) { 
+            caster.StartAnimation("attack");
             target.TakeDamage(amount);
             yield break;
         }
@@ -61,11 +68,21 @@ public class BattleCommand {
             caster.GainBlock(amount);
             yield break;
         }
+
+        public IEnumerator Execute(EntityBase caster, EntityBase target, int amount) {
+            caster.GainBlock(amount);
+            yield break;
+        }
     }
 
     public class Vulnerable : IBattleCommand {
         public IEnumerator Execute(EntityBase caster, EntityBase target, GameData data, string value) {
             int amount = data.CurrentVariableData[value];
+            target.AddEffectValue("vulnerable", amount);
+            yield break;
+        }
+
+        public IEnumerator Execute(EntityBase caster, EntityBase target, int amount) {
             target.AddEffectValue("vulnerable", amount);
             yield break;
         }

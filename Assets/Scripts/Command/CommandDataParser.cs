@@ -10,6 +10,8 @@ public class CommandDataParser {
     private delegate bool ConditionCheckDelegate(string name, int value);
     private readonly Dictionary<string, ConditionCheckDelegate> _conditionCheckCallback;
 
+    public CommandDataParser() { }
+
     public CommandDataParser(GameVariableContainer variables) {
         _gameVariables = variables;
 

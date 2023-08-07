@@ -8,7 +8,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     [SerializeField] private CombatEntityStatus _entityStatusPrefab = null;
     [SerializeField] private Vector2 _hpBarOffset = Vector2.zero;
     [SerializeField] private Button _drawPileButton = null, _discardPileButton = null;
-    [SerializeField] private CardPileView _drawPileView = null, _discardPileView = null;
+    [SerializeField] private CardPileView _cardPileView = null;
     [SerializeField] private TextMeshProUGUI _costText = null;
     private TextMeshProUGUI _drawPileText, _discardPileText;
     private Dictionary<EntityBase, CombatEntityStatus> _entityStatusDictionary;
@@ -25,8 +25,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
         _drawPileButton.onClick.AddListener(OnDrawPileButtonClicked);
         _discardPileButton.onClick.AddListener(OnDiscardPileButtonClicked);
 
-        _drawPileView.Initialize();
-        _discardPileView.Initialize();
+        _cardPileView.Initialize();
 
         CreateHPBar(player);
         foreach (EntityBase enemy in enemies) {
@@ -72,10 +71,10 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     }
 
     private void OnDrawPileButtonClicked() {
-        _drawPileView.ShowDrawPileView(_cardContainer.CardsInDrawPile, _parser);
+        _cardPileView.ShowDrawPileView(_cardContainer.CardsInDrawPile);
     }
 
     private void OnDiscardPileButtonClicked() {
-
+        _cardPileView.ShowDiscardPileView(_cardContainer.CardsInDiscardPile);
     }
 }

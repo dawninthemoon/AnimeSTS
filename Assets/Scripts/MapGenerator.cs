@@ -16,9 +16,11 @@ public class MapGenerator : MonoBehaviour {
         var vertexDotPrefab = Resources.Load<GameObject>("Map/vertexDot");
         var circleMarkerPrefab = Resources.Load<GameObject>("Map/circleMarker");
 
+        GameObject vertexdotParent = new GameObject("vertextDotParent");
+        vertexdotParent.transform.SetParent(_mapSceneParent);
         _vertextDotPool = new ObjectPool<GameObject>(
             5000,
-            () => Instantiate(vertexDotPrefab, _mapSceneParent),
+            () => Instantiate(vertexDotPrefab, vertexdotParent.transform),
             (GameObject obj) => obj.gameObject.SetActive(true),
             (GameObject obj) => obj.gameObject.SetActive(false));
 

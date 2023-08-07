@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6393793979449231221}
-  - component: {fileID: 1841401015217517372}
+  - component: {fileID: 2695511379266730133}
   - component: {fileID: 1022283722909993328}
   - component: {fileID: 3567501885618362554}
   - component: {fileID: 9096768700843038252}
@@ -36,7 +36,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1841401015217517372
+--- !u!114 &2695511379266730133
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -45,14 +45,39 @@ MonoBehaviour:
   m_GameObject: {fileID: 3229179334275912969}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0cb365fb62bf64c4ab2d4ee4e9fbb4f7, type: 3}
+  m_Script: {fileID: 11500000, guid: 0276ed1eb10f0ac49a273b5806b320e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _info:
-    minHealth: 54
-    maxHealth: 54
-    health: 0
-    block: 0
+    minHealth: 40
+    maxHealth: 44
+  _intents:
+  - intentName: 
+    behaviourName: "\uB0E0\uB0E0"
+    minAttack: 11
+    maxAttack: 11
+    minBlock: 0
+    maxBlock: 0
+    effectConfig: []
+    certainly: 0
+  - intentName: 
+    behaviourName: "\uC6C5\uD06C\uB9AC\uAE30"
+    minAttack: 7
+    maxAttack: 7
+    minBlock: 5
+    maxBlock: 5
+    effectConfig: []
+    certainly: 0
+  - intentName: 
+    behaviourName: Bellow
+    minAttack: 0
+    maxAttack: 0
+    minBlock: 6
+    maxBlock: 6
+    effectConfig:
+    - effectName: strength
+      amount: 3
+    certainly: 0
 --- !u!212 &1022283722909993328
 SpriteRenderer:
   m_ObjectHideFlags: 0

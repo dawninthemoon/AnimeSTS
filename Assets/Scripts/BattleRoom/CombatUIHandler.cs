@@ -15,7 +15,7 @@ public class CombatUIHandler : MonoBehaviour, IObserver {
     private CardContainer _cardContainer;
     private CommandDataParser _parser;
 
-    public void InitializeUI(EntityBase player, List<EntityBase> enemies, CardContainer cardContainer, CommandDataParser parser) {
+    public void InitializeUI(EntityBase player, List<EnemyBase> enemies, CardContainer cardContainer, CommandDataParser parser) {
         _cardContainer = cardContainer;
         _parser = parser;
         _entityStatusDictionary = new Dictionary<EntityBase, CombatEntityStatus>();

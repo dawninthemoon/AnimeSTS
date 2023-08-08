@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class BattleRoom : RoomBase {
     [SerializeField] private Transform _playerPosition = null;
-    [SerializeField] private Transform _enemyPositon = null;
+    [SerializeField] private Transform[] _enemyPositons = null;
     [SerializeField] private Button _endturnButton = null;
     private EntityBase _player;
     private EnemyHandler _enemyHandler;
@@ -37,7 +37,7 @@ public class BattleRoom : RoomBase {
 
     private void InitializeBattle() {
         _cardHandler.InitializeBattle(_gameData);
-        _enemyHandler.InitializeBattle(_enemyPositon);
+        _enemyHandler.InitializeBattle(_enemyPositons);
 
         _combatUIHandler.InitializeUI(_player, _enemyHandler.EnemyList, _cardHandler.CardContainer, _gameData.Parser);
         _combatUIHandler.UpdateCardPileUI();

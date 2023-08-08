@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EnemyBase : EntityBase {
+    public enum EnemyType {
+        Hum_Tank,
+    }
+
+    [SerializeField] private EnemyType _enemyType;
     [SerializeField] private EnemyIntent[] _intents;
     public EnemyIntent[] Intents {
         get { return _intents; }

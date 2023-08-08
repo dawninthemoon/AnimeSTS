@@ -2,17 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyEncounterConfig : MonoBehaviour
-{
-    // Start is called before the first frame update
-    void Start()
-    {
-        
+public class EnemyEncounterConfig : MonoBehaviour {
+    [System.Serializable]
+    public struct Party {
+        public EnemyBase.EnemyType[] enemies;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
+    [SerializeField] private Party[] _enemyParties;
+
+    public EnemyBase.EnemyType[] GetRandomParty() {
+        int selectedIndex = Random.Range(0, _enemyParties.Length);
+        return _enemyParties[selectedIndex].enemies;
     }
 }
